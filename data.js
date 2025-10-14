@@ -31,3 +31,11 @@ const activities = [
     { name: "Cookie decorating", cost: 2 },
     { name: "Board games", cost: 0 },
 ]
+
+const items = [
+    "Microphone",
+    "Wine glass",
+    "Champagne flute",
+    "Cocktail shaker",
+    "Playing cards"
+]
