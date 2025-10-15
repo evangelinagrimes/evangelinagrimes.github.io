@@ -19,3 +19,15 @@ div {
     background-color: rgb(46, 46, 107);
     color: white;
 }
+
+.my-text-field {
+  width: 100%; /* Make the field span the full width of its container */
+  padding: 12px; /* Add internal spacing */
+  margin: 10px 0; /* Add external spacing (top/bottom) */
+  border: 1px solid #ccc; /* Define a border */
+  border-radius: 4px; /* Add rounded corners */
+  box-sizing: border-box; /* Include padding and border in the element's total width/height */
+  font-family: sans-serif; /* Set a font */
+  font-size: 16px; /* Set font size */
+  color: #333; /* Set text color */
+}
