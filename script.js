@@ -1,10 +1,4 @@
-
 const button = document.getElementById('generateBtn');
-const themeElement = document.getElementById('theme');
-const itemElement = document.getElementById('item');
-const activityElement = document.getElementById('activity');
-const locationElement = document.getElementById('location');
-const priceElement = document.getElementById('price');
 
 // Listen for button clicks
 button.addEventListener('click', generateGirlsNight);
@@ -21,26 +15,32 @@ function convertCostToSymbols(costNumber) {
     return "$".repeat(costNumber);
 }
 
-// Function that runs when button is clicked
+// Main generator function - uses any data structure
 function generateGirlsNight() {
-    const randomTheme = getRandomItem(themes);
-    const randomItem = getRandomItem(items);
-    const randomActivity = getRandomItem(activities);
-    const randomLocation = getRandomItem(locations);
-    
-    // Calculate total cost
-    const totalCost = randomActivity.cost + randomLocation.cost;
+    const results = {
+        theme: getRandomItem(themes),
+        item: getRandomItem(items),
+        activity: getRandomItem(activities),
+        location: getRandomItem(locations)
+    };
 
-    // Convert to $ symbols for display
-    const displayCost = convertCostToSymbols(totalCost);
+    // Calculate total cost
+    const totalCost = results.activity.cost + results.location.cost;
+    results.price = convertCostToSymbols(totalCost);
+
+    // Update HTML dynamically based on results object keys
+    displayResults(results);
     
-    // Update HTML display
-    themeElement.textContent = randomTheme;
-    itemElement.textContent = randomItem;
-    activityElement.textContent = randomActivity.name;
-    locationElement.textContent = randomLocation.name;
-    priceElement.textContent = displayCost;
-    
-    console.log("Generated:", randomTheme, randomItem, randomActivity.name, randomLocation.name, totalCost);
+    return results;
 }
 
+// Generic display function - works with any results object
+function displayResults(results) {
+    Object.keys(results).forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+            // Handle objects with .name property, otherwise use value directly
+            element.textContent = results[key].name || results[key];
+        }
+    });
+}
