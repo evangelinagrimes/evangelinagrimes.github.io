@@ -35,7 +35,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 20vw;
 }
 
 .cover-image {
@@ -96,5 +96,45 @@ section {
     }
     60% {
         transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* ===================
+   Media Queries
+   =================== */
+
+   /* Tablet and smaller */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+        letter-spacing: 5px;
+    }
+    
+    .description {
+        font-size: 1em;
+        padding: 0 15px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+        letter-spacing: 3px;
+    }
+    
+    section {
+        padding: 10px;
+    }
+    
+    .scroll-arrow {
+        width: 30px; /* Smaller on mobile */
+    }
+}
+    /* Minimum 44x44px for touch targets */
+@media (max-width: 768px) {
+    .scroll-arrow {
+        width: 44px;
+        min-height: 44px;
     }
 }
