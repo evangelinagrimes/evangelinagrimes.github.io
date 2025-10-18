@@ -131,10 +131,4 @@ section {
         width: 30px; /* Smaller on mobile */
     }
 }
-    /* Minimum 44x44px for touch targets */
-@media (max-width: 768px) {
-    .scroll-arrow {
-        width: 44px;
-        min-height: 44px;
-    }
-}
+    
