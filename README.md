@@ -34,6 +34,9 @@ No installation needed! Simply visit the GitHub Pages link and start planning yo
 
 Have suggestions or found a bug? Feel free to reach out with your feedback!
 
+## Credits
+[CC LottieFiles](https://lottiefiles.com/free-animation/arrow-9dOMnqfwcT?trigger_action=download&trigger_action_from=animation-header)
+
 ---
 
 **Ready to plan your girls night?** Let's go!!
