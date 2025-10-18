@@ -18,7 +18,7 @@ body {
    Typography
    =================== */
 h1 {
-    font-size: 8em; 
+    font-size: 6em; 
     font-family: "Rubik Bubbles", system-ui;
     font-weight: 400;
     font-style: normal;
@@ -39,11 +39,11 @@ section {
 }
 
 .cover-image {
-     position: absolute;
-    top: 70%;
-    left: 70%;
+    position: absolute;
+    top: 100%;
+    left: 30%;
     opacity: 50%;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     max-width: 80%;
     max-height: 60vh;
     width: auto;
@@ -51,6 +51,7 @@ section {
     object-fit: contain; 
     z-index: 1; 
 }
+
 /* ===================
    Components
    =================== */
