@@ -40,16 +40,13 @@ section {
 
 .cover-image {
     position: absolute;
-    top: 100%;
-    left: 30%;
-    opacity: 50%;
-    /* transform: translate(-50%, -50%); */
-    max-width: 80%;
-    max-height: 60vh;
+    bottom: 0; /* Anchor to bottom instead of sizing with vh */
+    right: 0; /* Anchor to corner */
+    max-width: 40%; /* Scale with viewport width */
     width: auto;
     height: auto;
-    object-fit: contain; 
-    z-index: 1; 
+    object-fit: contain;
+    z-index: 0;
 }
 
 /* ===================
