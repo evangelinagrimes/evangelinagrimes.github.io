@@ -19,7 +19,6 @@ Girls Night Generator takes the guesswork out of planning. Whether you're lookin
 - **Quick & Easy**: Simple form-based input to get your plan in seconds
 - **Personalized**: Generate plans based on your specific preferences
 - **Smooth Scrolling**: Navigate seamlessly through the interactive interface
-- **Four Unique Ideas**: Get four different activity suggestions to choose from
 
 ## Technologies Used
 
@@ -33,7 +32,7 @@ No installation needed! Simply visit the GitHub Pages link and start planning yo
 
 ## Feedback
 
-Have suggestions or found a bug? Feel free to open an issue or reach out with your feedback!
+Have suggestions or found a bug? Feel free to reach out with your feedback!
 
 ---
 
