@@ -76,14 +76,12 @@ section {
 }
 /* Scroll Arrow */
 .scroll-arrow {
-    width: 50px; 
+    width: 50px;
     height: auto;
-    position: absolute;
-    bottom: 30px; 
-    left: 50%;
-    transform: translateX(-50%);
+    display: block;
+    margin: 30px auto 0;
     animation: bounce 2s ease-in-out infinite;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 /* ===================
