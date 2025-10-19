@@ -35,6 +35,7 @@ No installation needed! Simply visit the GitHub Pages link and start planning yo
 Have suggestions or found a bug? Feel free to reach out with your feedback!
 
 ## Credits
+[Weekday input code](https://codepen.io/steelwater/pen/BjeZQx)
 ---
 
 **Ready to plan your girls night?** Let's go!!
