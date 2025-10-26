@@ -38,7 +38,7 @@ function generateGirlsNight() {
 function displayResults(results) {
     Object.keys(results).forEach(key => {
         const element = document.getElementById(key);
-        if (element) {
+        if (element) { 
             // Handle objects with .name property, otherwise use value directly
             element.textContent = results[key].name || results[key];
         }
