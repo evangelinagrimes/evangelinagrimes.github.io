@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Girls Night Generator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap"> 
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <!-- Cover Section -->
+     <section id= "cover">
+                <img src="Images\cloud1.png" alt="Decorative image" class="cover-image">
+                <header style="padding:60px 16px">
+                <h1>A NIGHT FOR THE GIRLS</h1>
+                    <div class="description">
+                    <span class="text">Stuck on what to do with your friends? Fear not! Your very own <b>Girls Night Generator</b> 
+                        is here to help. Answer a few quick questions and let our generator create the perfect plan 
+                        for your night out—all with just a button press!</span>
+                    <div style="height: 40px;"></div>
+                    <img src="Images\arrow.png" alt="Scroll down" class="scroll-arrow">
+                    </div>
+                </header>
+     </section>
+
+
+     <!-- Form Section -->
+      <section id="form-section">
+            <h2> Let's personalize your Girl's Night!</h2>
+            <form id="inputForm">
+                <div class="form-group">
+                    <label for="zipcode">ZipCode</label>
+                    <input type="text" id="zipcode" placeholder="Enter something here..." optional>
+                </div>
+                <div class="form-group">
+                    <label for="myDropdown">Choose an option:</label>
+                    <select id="myDropdown" name="myDropdown">
+                    <option value="option1">1 Mile</option>
+                    <option value="option2">5 Miles</option>
+                    <option value="option3">10 Miles</option>
+                    <option value="option4">50 Miles</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="num_people">How many people?</label>
+                    <input type="text" id="num_people" placeholder="E.g. 2, 4, 6..." optional>
+                </div>
+                <div class="weekDays-selector">
+                    <input type="checkbox" id="weekday-mon" class="weekday" />
+                    <label for="weekday-mon">MON</label>
+                    <input type="checkbox" id="weekday-tue" class="weekday" />
+                    <label for="weekday-tue">TUE</label>
+                    <input type="checkbox" id="weekday-wed" class="weekday" />
+                    <label for="weekday-wed">WED</label>
+                    <input type="checkbox" id="weekday-thu" class="weekday" />
+                    <label for="weekday-thu">THR</label>
+                    <input type="checkbox" id="weekday-fri" class="weekday" />
+                    <label for="weekday-fri">FRI</label>
+                    <input type="checkbox" id="weekday-sat" class="weekday" />
+                    <label for="weekday-sat">SAT</label>
+                    <input type="checkbox" id="weekday-sun" class="weekday" />
+                    <label for="weekday-sun">SUN</label>
+                </div>
+            </form>
+            <div class="button-container">
+            <h2>Ready?</h2>
+            <button id="generateBtn">Generate Girl's Night</button>
+        </div>
+      </section>
+
+      <!-- Button Section -->
+      <section id="result-section">
+       
+
+        <div class="w3-padding-32">
+                    <div class="w3-bar w3-border">
+                        <div id="results" class="results-container">
+                            <div class="result-item">
+                                <span class="label">THEME:</span>
+                                <span id="theme" class="value">-</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="label">ITEM:</span>
+                                <span id="item" class="value">-</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="label">ACTIVITY:</span>
+                                <span id="activity" class="value">-</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="label">LOCATION:</span>
+                                <span id="location" class="value">-</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="label">PRICE:</span>
+                                <span id="price" class="value">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      </section>
+        </main>
+    </div>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>
