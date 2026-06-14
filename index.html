@@ -1,42 +1,1057 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Date Night Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="container-md">
-      <div class="row-md">
-        <!-- Generation Button -->
-        <div class="d-grid gap-2 d-md-block">
-          <button type="button" id="generate_btn" class="btn btn-outline-primary">Do the Thing</button>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VDC DRIP — Valorant Draft Circuit Merch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <div class="row-md">
-        <div id="results" class="results-container">
-          <div class="result-item">
-            <span class="label">THEME:</span>
-            <span id="theme" class="value">-</span>
-          </div>
-          <div class="result-item">
-            <span class="label">ACTIVITY:</span>
-            <span id="activity" class="value">-</span>
-          </div>
-          <div class="result-item">
-            <span class="label">LOCATION:</span>
-            <span id="location" class="value">-</span>
-          </div>
-          <div id="places_list"></div>  
+    :root {
+      /* VDC palette — dark navy base, VDC blue accent, VALORANT red pop */
+      --bg:          #0B0D14;
+      --bg-mid:      #0F1220;
+      --surface:     #161929;
+      --border:      #232844;
+      --border-bright: #2E3660;
+      --vdc-blue:    #3B82F6;   /* VDC's signature blue */
+      --vdc-blue-dk: #2563EB;
+      --val-red:     #FF4655;   /* VALORANT red for accents */
+      --gold:        #C8A84B;   /* Limited-drop gold */
+      --text:        #E8ECF5;
+      --muted:       #6B7499;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 58px;
+      background: rgba(11,13,20,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* VDC wordmark badge */
+    .vdc-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .vdc-pill {
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      padding: 3px 10px 1px;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+    }
+
+    .nav-subtitle {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--vdc-blue);
+      color: #fff !important;
+      padding: 5px 14px;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--vdc-blue-dk) !important; color: #fff !important; }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--vdc-blue);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 5px 0;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker-inner span {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      color: #fff;
+      padding: 0 2.5rem;
+    }
+
+    .ticker-inner span.sep {
+      color: rgba(255,255,255,0.35);
+      padding: 0;
+    }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 2rem 110px;
+      overflow: hidden;
+    }
+
+    /* Grid scanline + blue glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(59,130,246,0.15) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,70,85,0.06) 0%, transparent 60%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(59,130,246,0.04) 39px,
+          rgba(59,130,246,0.04) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(59,130,246,0.025) 79px,
+          rgba(59,130,246,0.025) 80px
+        );
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .hero-eyebrow .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--val-red);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 11vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .hero h1 .line-blue { color: var(--vdc-blue); }
+    .hero h1 .line-red  { color: var(--val-red); }
+
+    /* Diagonal slash between words — the signature element */
+    .hero h1 .slash {
+      color: var(--border-bright);
+      font-size: 0.6em;
+      vertical-align: middle;
+      letter-spacing: 0;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.65;
+      margin-bottom: 2.4rem;
+      position: relative;
+    }
+
+    .hero-sub strong { color: var(--text); }
+    .hero-sub .vdc-tag {
+      color: var(--vdc-blue);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 13px 36px 11px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--vdc-blue-dk);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 13px 28px 11px;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--vdc-blue);
+      color: var(--vdc-blue);
+    }
+
+    .drop-meta {
+      margin-top: 1.8rem;
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .meta-item {
+      text-align: center;
+    }
+
+    .meta-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    #countdown { color: var(--gold); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--vdc-blue);
+      transform: rotate(45deg);
+      opacity: 0.6;
+    }
+
+    /* ── SHOP SECTION ── */
+    #shop {
+      padding: 60px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+
+    .section-header h2 span { color: var(--vdc-blue); }
+
+    .section-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+
+    .product-card:hover {
+      border-color: var(--vdc-blue);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(59,130,246,0.12);
+    }
+
+    .product-card.limited::after {
+      content: 'LIMITED';
+      position: absolute;
+      top: 14px;
+      right: 0;
+      background: var(--gold);
+      color: #0B0D14;
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      padding: 4px 10px;
+      clip-path: polygon(7px 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--bg-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    /* Blue corner accent on product image */
+    .product-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--vdc-blue);
+    }
+
+    .product-img svg {
+      width: 78%;
+      height: 78%;
+    }
+
+    .product-info {
+      padding: 1.2rem 1.3rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 0.35rem;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.1rem;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .product-price .currency {
+      font-size: 0.85rem;
+      color: var(--muted);
+      vertical-align: super;
+      font-family: var(--font-body);
+      font-weight: 600;
+    }
+
+    .btn-buy {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--vdc-blue);
+      color: var(--vdc-blue);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 8px 20px 6px;
+      text-decoration: none;
+      cursor: pointer;
+      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn-buy:hover {
+      background: var(--vdc-blue);
+      color: #fff;
+    }
+
+    /* ── ABOUT / HOW IT WORKS ── */
+    #about {
+      padding: 60px 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+
+    .about-text a {
+      color: var(--vdc-blue);
+      text-decoration: none;
+    }
+
+    .about-text a:hover { text-decoration: underline; }
+
+    /* VDC info callout */
+    .vdc-callout {
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--vdc-blue);
+      padding: 1rem 1.2rem;
+    }
+
+    .vdc-callout .callout-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--vdc-blue);
+      margin-bottom: 0.4rem;
+    }
+
+    .vdc-callout p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0 !important;
+      line-height: 1.6;
+    }
+
+    .vdc-callout a {
+      color: var(--vdc-blue);
+      text-decoration: none;
+    }
+
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--vdc-blue);
+      transition: border-color 0.2s;
+    }
+
+    .step:hover { border-color: var(--val-red); }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      line-height: 1;
+      color: var(--vdc-blue);
+      opacity: 0.35;
+      min-width: 1.8rem;
+    }
+
+    .step-body strong {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .step-body span {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── MATCH DAY BANNER ── */
+    .matchday-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 2rem;
+      text-align: center;
+    }
+
+    .matchday-bar p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .matchday-bar strong {
+      color: var(--vdc-blue);
+    }
+
+    .matchday-bar .red { color: var(--val-red); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {}
+
+    .footer-vdc-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-vdc-pill {
+      background: var(--vdc-blue);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      padding: 2px 8px 0;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .footer-wordmark span { color: var(--val-red); }
+
+    .footer-tagline {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: right;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--vdc-blue); }
+
+    .footer-legal {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .stripe-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 1.2rem 80px; }
+      #shop, #about { padding: 40px 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .drop-meta { gap: 1.2rem; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .section-meta { text-align: left; }
+      footer { padding: 1.5rem 1.2rem; }
+      .footer-links { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="vdc-badge">
+      <span class="vdc-pill">VDC</span>
+      <span class="nav-subtitle">Merch Drop</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About VDC</a></li>
+    <li><a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a></li>
+    <li><a href="#shop" class="nav-cta">Buy Now</a></li>
+  </ul>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>VDC SEASON DROP — NOW LIVE</span><span class="sep">◆</span>
+    <span>VALORANT DRAFT CIRCUIT OFFICIAL MERCH</span><span class="sep">◆</span>
+    <span>LIMITED RUN — WHILE STOCK LASTS</span><span class="sep">◆</span>
+    <span>MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
+    <span>SHIPS WITHIN 7 DAYS</span><span class="sep">◆</span>
+    <span>VDC SEASON DROP — NOW LIVE</span><span class="sep">◆</span>
+    <span>VALORANT DRAFT CIRCUIT OFFICIAL MERCH</span><span class="sep">◆</span>
+    <span>LIMITED RUN — WHILE STOCK LASTS</span><span class="sep">◆</span>
+    <span>MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
+    <span>SHIPS WITHIN 7 DAYS</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span class="dot"></span>
+    Valorant Draft Circuit — Season Drop
+    <span class="dot"></span>
+  </div>
+  <h1>
+    <span class="line-blue">VDC</span><br>
+    OFFICIAL<br>
+    <span class="line-red">DRIP.</span>
+  </h1>
+  <p class="hero-sub">
+    Represent your tier. Gear made exclusively for <span class="vdc-tag">Valorant Draft Circuit</span> players and fans. Small-batch, handmade drops — one per season. When it's gone, it's done.
+  </p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn-primary">Shop the Drop</a>
+    <a href="https://vdc.gg" target="_blank" rel="noopener" class="btn-ghost">Visit vdc.gg ↗</a>
+  </div>
+  <div class="drop-meta">
+    <div class="meta-item">
+      <div class="meta-label">Drop Closes In</div>
+      <div class="meta-value" id="countdown">—</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Match Days</div>
+      <div class="meta-value">WED · FRI</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Items This Drop</div>
+      <div class="meta-value">3</div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="shop">
+  <div class="section-header">
+    <h2>THE <span>DROP</span></h2>
+    <div class="section-meta">
+      Valorant Draft Circuit · Season Merch<br>
+      All items made to order
+    </div>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- PRODUCT 1 — TEE -->
+    <div class="product-card limited">
+      <div class="product-img">
+        <svg viewBox="0 0 220 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Tee silhouette -->
+          <path d="M45 35 L10 78 L44 90 L44 145 L176 145 L176 90 L210 78 L175 35 L152 56 C140 22 80 22 68 56 Z"
+                fill="#161929" stroke="#232844" stroke-width="1.5"/>
+          <!-- VDC blue collar trim -->
+          <path d="M68 56 C80 22 140 22 152 56" stroke="#3B82F6" stroke-width="2" fill="none"/>
+          <!-- Chest logo area -->
+          <!-- Geometric VDC mark — two overlapping V shapes -->
+          <polygon points="110,68 96,90 110,84 124,90" fill="none" stroke="#3B82F6" stroke-width="1.8"/>
+          <polygon points="110,76 100,96 110,91 120,96" fill="#3B82F6" opacity="0.3"/>
+          <!-- VDC text -->
+          <text x="110" y="114" text-anchor="middle" fill="#3B82F6" font-family="sans-serif" font-size="13" font-weight="800" letter-spacing="5">VDC</text>
+          <text x="110" y="126" text-anchor="middle" fill="#6B7499" font-family="sans-serif" font-size="6.5" letter-spacing="2.5">DRAFT CIRCUIT</text>
+          <!-- sleeve accent lines -->
+          <line x1="14" y1="83" x2="43" y2="91" stroke="#3B82F6" stroke-width="0.8" opacity="0.4"/>
+          <line x1="177" y1="91" x2="206" y2="83" stroke="#3B82F6" stroke-width="0.8" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-tag">Apparel · Unisex</span>
+        <div class="product-name">VDC Circuit Tee</div>
+        <p class="product-desc">Heavyweight cotton tee. Screen-printed VDC crest on the chest, "Valorant Draft Circuit" wordmark down the left sleeve. Runs true to size. Sizes S–3XL.</p>
+        <div class="product-footer">
+          <div class="product-price"><span class="currency">$</span>32</div>
+          <!-- !! REPLACE WITH YOUR STRIPE PAYMENT LINK !! -->
+          <a href="https://buy.stripe.com/YOUR_LINK_HERE" class="btn-buy" target="_blank" rel="noopener">Buy Now</a>
         </div>
       </div>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- PRODUCT 2 — SNAPBACK -->
+    <div class="product-card">
+      <div class="product-img">
+        <svg viewBox="0 0 220 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cap body -->
+          <path d="M35 112 Q110 55 185 112 L185 128 Q110 75 35 128 Z" fill="#161929" stroke="#232844" stroke-width="1.2"/>
+          <!-- Crown panels -->
+          <path d="M35 112 Q110 55 185 112" fill="none" stroke="#3B82F6" stroke-width="1.5"/>
+          <line x1="110" y1="56" x2="110" y2="128" stroke="#232844" stroke-width="0.8"/>
+          <line x1="72" y1="67" x2="68" y2="128" stroke="#232844" stroke-width="0.8"/>
+          <line x1="148" y1="67" x2="152" y2="128" stroke="#232844" stroke-width="0.8"/>
+          <!-- Brim -->
+          <ellipse cx="110" cy="128" rx="78" ry="9" fill="#0F1220" stroke="#232844" stroke-width="1"/>
+          <!-- Underside brim — VDC blue -->
+          <ellipse cx="110" cy="130" rx="75" ry="6" fill="#3B82F6" opacity="0.15"/>
+          <!-- Snapback -->
+          <rect x="172" y="121" width="30" height="8" rx="2" fill="#161929" stroke="#6B7499" stroke-width="0.8"/>
+          <line x1="178" y1="121" x2="178" y2="129" stroke="#6B7499" stroke-width="0.5"/>
+          <line x1="184" y1="121" x2="184" y2="129" stroke="#6B7499" stroke-width="0.5"/>
+          <!-- Front VDC logo -->
+          <polygon points="110,78 98,96 110,91 122,96" fill="none" stroke="#3B82F6" stroke-width="1.6"/>
+          <text x="110" y="107" text-anchor="middle" fill="#3B82F6" font-family="sans-serif" font-size="7" font-weight="800" letter-spacing="3">VDC</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-tag">Headwear</span>
+        <div class="product-name">Draft Circuit Snapback</div>
+        <p class="product-desc">Structured 6-panel cap with embroidered VDC crest on front, "DRAFT CIRCUIT" embroidered on back. Navy body, VDC blue brim underside. One size fits most.</p>
+        <div class="product-footer">
+          <div class="product-price"><span class="currency">$</span>28</div>
+          <!-- !! REPLACE WITH YOUR STRIPE PAYMENT LINK !! -->
+          <a href="https://buy.stripe.com/YOUR_LINK_HERE" class="btn-buy" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="places_text_search.js"></script>
-  </body>
+    <!-- PRODUCT 3 — STICKER PACK -->
+    <div class="product-card limited">
+      <div class="product-img">
+        <svg viewBox="0 0 220 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sheet background -->
+          <rect x="45" y="20" width="130" height="138" rx="5" fill="#161929" stroke="#3B82F6" stroke-width="1"/>
+          <!-- Sticker 1 — VDC chevron -->
+          <rect x="55" y="30" width="50" height="48" rx="4" fill="#0B0D14" stroke="#3B82F6" stroke-width="0.8"/>
+          <polygon points="80,38 68,56 80,51 92,56" fill="none" stroke="#3B82F6" stroke-width="1.4"/>
+          <text x="80" y="68" text-anchor="middle" fill="#3B82F6" font-family="sans-serif" font-size="7" font-weight="800" letter-spacing="2">VDC</text>
+          <!-- Sticker 2 — VALORANT style X -->
+          <rect x="115" y="30" width="50" height="48" rx="4" fill="#0B0D14" stroke="#FF4655" stroke-width="0.8"/>
+          <line x1="125" y1="40" x2="155" y2="68" stroke="#FF4655" stroke-width="2"/>
+          <line x1="155" y1="40" x2="125" y2="68" stroke="#FF4655" stroke-width="2"/>
+          <!-- Sticker 3 — DRAFT CIRCUIT banner -->
+          <rect x="55" y="87" width="110" height="20" rx="3" fill="#3B82F6"/>
+          <text x="110" y="101" text-anchor="middle" fill="white" font-family="sans-serif" font-size="7.5" font-weight="800" letter-spacing="2.5">DRAFT CIRCUIT</text>
+          <!-- Sticker 4 — Gold tier star -->
+          <rect x="55" y="115" width="50" height="34" rx="4" fill="#0B0D14" stroke="#C8A84B" stroke-width="0.8"/>
+          <polygon points="80,120 83,129 93,129 85,135 88,144 80,138 72,144 75,135 67,129 77,129"
+                   fill="#C8A84B" opacity="0.7"/>
+          <!-- Sticker 5 — GG beer -->
+          <rect x="115" y="115" width="50" height="34" rx="4" fill="#0B0D14" stroke="#6B7499" stroke-width="0.8"/>
+          <text x="140" y="128" text-anchor="middle" fill="#6B7499" font-family="sans-serif" font-size="9" font-weight="700">GG</text>
+          <text x="140" y="141" text-anchor="middle" fill="#6B7499" font-family="sans-serif" font-size="13">🍺</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="product-tag">Accessories · Season Exclusive</span>
+        <div class="product-name">VDC Sticker Pack</div>
+        <p class="product-desc">6 holographic die-cut stickers — VDC crest, Valorant-style X mark, tier star, Draft Circuit banner, and GG/beer designs. Laptop-proof UV coating. Season exclusive.</p>
+        <div class="product-footer">
+          <div class="product-price"><span class="currency">$</span>10</div>
+          <!-- !! REPLACE WITH YOUR STRIPE PAYMENT LINK !! -->
+          <a href="https://buy.stripe.com/YOUR_LINK_HERE" class="btn-buy" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MATCH DAY BANNER -->
+<div class="matchday-bar">
+  <p>
+    VDC match days are <strong>every Wednesday &amp; Friday at 9:00 PM EST</strong> during the season.
+    &nbsp;·&nbsp; <span class="red">Free to play</span> · NA VALORANT league · All ranks welcome
+    &nbsp;·&nbsp; <a href="https://vdc.gg" style="color:var(--vdc-blue);text-decoration:none;" target="_blank">Sign up at vdc.gg ↗</a>
+  </p>
+</div>
+
+<!-- ABOUT + HOW IT WORKS -->
+<div class="divider" style="margin-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="about">
+  <div class="about-grid">
+
+    <div class="about-text">
+      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:0.2rem;">ABOUT <span style="color:var(--vdc-blue);">VDC</span></h2>
+      <p>
+        The <strong>Valorant Draft Circuit</strong> is a free, community-run North American VALORANT league designed around a professional sports draft model. Players join individually, play combines to show their skills, and get drafted onto teams that compete throughout a full season.
+      </p>
+      <p>
+        This merch drop is made by and for VDC players. Every item is produced in small batches per season — no resellers, no restocks. One drop per season, then it's done.
+      </p>
+
+      <div class="vdc-callout">
+        <div class="callout-label">Not in VDC yet?</div>
+        <p>
+          Sign up free at <a href="https://vdc.gg" target="_blank">vdc.gg</a> · Join the Discord at <a href="https://discord.gg/valorantdraftcircuit" target="_blank">discord.gg/valorantdraftcircuit</a> · All ranks, all skill levels welcome.
+        </p>
+      </div>
+
+      <p style="margin-top:1rem;">
+        Questions about orders? Email us at <a href="mailto:yourleague@email.com" style="color:var(--vdc-blue);">yourleague@email.com</a>
+      </p>
+    </div>
+
+    <div>
+      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:1.2rem;">HOW IT <span style="color:var(--vdc-blue);">WORKS</span></h2>
+      <div class="how-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Pick your item</strong>
+            <span>Browse the current drop and click Buy Now on anything you want to cop.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Pay securely via Stripe</strong>
+            <span>You'll land on a secure Stripe checkout page. Cards, Apple Pay, and Google Pay all accepted. No account required.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>We make it</strong>
+            <span>Orders are made to order and ship within 7 business days. You'll get a confirmation email from Stripe immediately.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Rep the Circuit</strong>
+            <span>Show up to Wednesday match day looking like a pro. Flame your opponents. GG.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-vdc-row">
+        <span class="footer-vdc-pill">VDC</span>
+        <span class="footer-wordmark">DRIP<span>.</span></span>
+      </div>
+      <div class="footer-tagline">
+        Official merch for the Valorant Draft Circuit<br>
+        Payments secured by Stripe
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
+      <a href="https://discord.gg/valorantdraftcircuit" target="_blank" rel="noopener">VDC Discord ↗</a>
+      <a href="mailto:yourleague@email.com">Contact</a>
+      <a href="#shop">Shop</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-legal">
+      <span>Not affiliated with or sponsored by Riot Games, Inc. or VALORANT™ Esports.</span>
+      <span class="stripe-text">Payments processed by <strong style="color:var(--text);margin-left:4px;">Stripe</strong></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── COUNTDOWN TIMER ──
+  // Set your drop close date: new Date('YYYY-MM-DDTHH:MM:SS')
+  const DROP_END = new Date('2025-08-01T23:59:59');
+
+  function updateCountdown() {
+    const diff = DROP_END - new Date();
+    if (diff <= 0) {
+      document.getElementById('countdown').textContent = 'CLOSED';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
+    document.getElementById('countdown').textContent =
+      `${d}D ${String(h).padStart(2,'0')}H ${String(m).padStart(2,'0')}M ${String(s).padStart(2,'0')}S`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
 </html>
