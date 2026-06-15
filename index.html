@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>THE DRIP — Light Garden Pop-Up</title>
+  <title>Design Concepts — Light Garden Pop-Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #060D06;
-      --bg-mid:      #0A130A;
-      --surface:     #0E1A0E;
-      --border:      #183018;
+      --bg:            #060D06;
+      --bg-mid:        #0A130A;
+      --surface:       #0E1A0E;
+      --border:        #183018;
       --border-bright: #225022;
-      --vdc-blue:    #5CB83A;
-      --vdc-blue-dk: #3F8A26;
-      --val-red:     #FF4655;
-      --gold:        #C8A84B;
-      --text:        #EEF5EE;
-      --muted:       #587858;
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-body:    'Inter', sans-serif;
+      --lg-green:      #5CB83A;
+      --lg-green-dk:   #3F8A26;
+      --val-red:       #FF4655;
+      --gold:          #C8A84B;
+      --text:          #EEF5EE;
+      --muted:         #587858;
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-body:     'Inter', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -51,8 +51,8 @@
 
     .nav-left { display: flex; align-items: center; gap: 1rem; }
 
-    .vdc-pill {
-      background: var(--vdc-blue);
+    .lg-pill {
+      background: var(--lg-green);
       color: #fff;
       font-family: var(--font-display);
       font-size: 1rem;
@@ -84,41 +84,13 @@
     .nav-links a:hover { color: var(--text); }
 
     .nav-cta {
-      background: var(--vdc-blue) !important;
+      background: var(--lg-green) !important;
       color: #fff !important;
       padding: 5px 14px;
       clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
     }
 
-    .nav-cta:hover { background: var(--vdc-blue-dk) !important; }
-
-    /* ── TICKER ── */
-    .ticker-wrap {
-      background: var(--vdc-blue);
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 5px 0;
-    }
-
-    .ticker-inner {
-      display: inline-block;
-      animation: ticker 28s linear infinite;
-    }
-
-    .ticker-inner span {
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      color: #fff;
-      padding: 0 2.5rem;
-    }
-
-    .ticker-inner span.sep { color: rgba(255,255,255,0.35); padding: 0; }
-
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    .nav-cta:hover { background: var(--lg-green-dk) !important; color: #fff !important; }
 
     /* ── HERO ── */
     .hero {
@@ -128,7 +100,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 90px 2rem 110px;
+      padding: 80px 2rem 90px;
       overflow: hidden;
     }
 
@@ -138,32 +110,26 @@
       inset: 0;
       background:
         radial-gradient(ellipse 70% 55% at 50% 0%, rgba(92,184,58,0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(255,70,85,0.05) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.03) 39px, rgba(92,184,58,0.03) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.02) 79px, rgba(92,184,58,0.02) 80px);
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(92,184,58,0.025) 39px, rgba(92,184,58,0.025) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(92,184,58,0.015) 79px, rgba(92,184,58,0.015) 80px);
       pointer-events: none;
-      z-index: 0;
     }
 
     .hero-logo-bg {
       position: absolute;
-      width: 100%;
-      max-width: 660px;
-      top: 42%;
+      width: 52%;
+      max-width: 520px;
+      top: 44%;
       left: 50%;
-      transform: translate(-50%, -40%);
-      opacity: 0.09;
+      transform: translate(-50%, -44%);
+      opacity: 0.06;
       pointer-events: none;
       user-select: none;
-      z-index: 0;
-      -webkit-mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
-      mask-image: linear-gradient(to bottom, black 25%, rgba(0,0,0,0.6) 60%, transparent 88%);
+      -webkit-mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
+      mask-image: linear-gradient(to bottom, black 20%, rgba(0,0,0,0.5) 60%, transparent 85%);
     }
 
-    .hero > *:not(.hero-logo-bg) {
-      position: relative;
-      z-index: 1;
-    }
+    .hero > *:not(.hero-logo-bg) { position: relative; }
 
     .hero-eyebrow {
       display: inline-flex;
@@ -173,9 +139,8 @@
       font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 1.4rem;
-      position: relative;
+      color: var(--lg-green);
+      margin-bottom: 1.2rem;
     }
 
     .hero-eyebrow .dot {
@@ -192,27 +157,24 @@
 
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(3.8rem, 11vw, 9rem);
+      font-size: clamp(3.2rem, 9vw, 7rem);
       line-height: 0.9;
       letter-spacing: 0.02em;
-      margin-bottom: 1.4rem;
-      position: relative;
+      margin-bottom: 1.2rem;
     }
 
-    .hero h1 .line-blue { color: var(--vdc-blue); }
-    .hero h1 .line-red  { color: var(--val-red); }
+    .line-green { color: var(--lg-green); }
+    .line-red   { color: var(--val-red); }
 
     .hero-sub {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--muted);
-      max-width: 440px;
+      max-width: 460px;
       line-height: 1.65;
-      margin-bottom: 2.4rem;
-      position: relative;
+      margin-bottom: 2rem;
     }
 
     .hero-sub strong { color: var(--text); }
-    .hero-sub .vdc-tag { color: var(--vdc-blue); font-weight: 700; }
 
     .hero-actions {
       display: flex;
@@ -220,23 +182,22 @@
       align-items: center;
       flex-wrap: wrap;
       justify-content: center;
-      position: relative;
     }
 
     .btn-primary {
       display: inline-block;
-      background: var(--vdc-blue);
+      background: var(--lg-green);
       color: #fff;
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 0.12em;
-      padding: 13px 36px 11px;
+      padding: 12px 34px 10px;
       text-decoration: none;
       clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
       transition: background 0.2s, transform 0.15s;
     }
 
-    .btn-primary:hover { background: var(--vdc-blue-dk); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--lg-green-dk); transform: translateY(-2px); }
 
     .btn-ghost {
       display: inline-block;
@@ -244,44 +205,15 @@
       border: 1px solid var(--border-bright);
       color: var(--muted);
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 0.12em;
-      padding: 13px 28px 11px;
+      padding: 12px 26px 10px;
       text-decoration: none;
       clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
       transition: border-color 0.2s, color 0.2s;
     }
 
-    .btn-ghost:hover { border-color: var(--vdc-blue); color: var(--vdc-blue); }
-
-    .drop-meta {
-      margin-top: 1.8rem;
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    .meta-item { text-align: center; }
-
-    .meta-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2px;
-    }
-
-    .meta-value {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      color: var(--text);
-    }
-
-    #countdown { color: var(--gold); }
+    .btn-ghost:hover { border-color: var(--lg-green); color: var(--lg-green); }
 
     /* ── DIVIDER ── */
     .divider {
@@ -294,116 +226,98 @@
     }
 
     .divider-line { flex: 1; height: 1px; background: var(--border); }
-    .divider-diamond { width: 8px; height: 8px; background: var(--vdc-blue); transform: rotate(45deg); opacity: 0.6; }
+    .divider-diamond { width: 8px; height: 8px; background: var(--lg-green); transform: rotate(45deg); opacity: 0.6; }
 
-    /* ── SHOP SECTION ── */
-    #shop {
-      padding: 60px 2rem;
+    /* ── CONCEPTS SECTIONS ── */
+    .concepts-section {
+      padding: 60px 2rem 20px;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 0.8rem;
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.5rem;
     }
 
-    .section-header h2 {
+    .section-label .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--val-red);
+    }
+
+    .section-title {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 2rem;
       letter-spacing: 0.06em;
       line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
-    .section-header h2 span { color: var(--vdc-blue); }
+    .section-title span { color: var(--lg-green); }
 
-    .section-meta {
-      font-size: 0.72rem;
+    .section-desc {
+      font-size: 0.8rem;
       color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: right;
       line-height: 1.6;
+      max-width: 540px;
+      margin-bottom: 2rem;
     }
 
-    /* ── PRODUCT GRID ── */
-    .product-grid {
+    /* ── CONCEPT CARDS ── */
+    .concept-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
     }
 
-    .product-card {
+    .concept-card {
       background: var(--surface);
       border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      position: relative;
-      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-      cursor: pointer;
+      transition: border-color 0.25s, transform 0.2s;
     }
 
-    .product-card:hover {
-      border-color: var(--vdc-blue);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(92,184,58,0.12);
+    .concept-card:hover {
+      border-color: var(--lg-green);
+      transform: translateY(-3px);
     }
 
-    .product-card.limited::after {
-      content: 'LIMITED';
-      position: absolute;
-      top: 14px; right: 0;
-      background: var(--gold);
-      color: #0B0D14;
-      font-size: 0.58rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      padding: 4px 10px;
-      clip-path: polygon(7px 0%, 100% 0%, 100% 100%, 0% 100%);
-    }
-
-    .product-img {
+    .concept-img {
       width: 100%;
       aspect-ratio: 4/3;
       background: var(--bg-mid);
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       border-bottom: 1px solid var(--border);
       position: relative;
+      overflow: hidden;
     }
 
-    .product-img::after {
+    .concept-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .concept-img::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0;
       width: 40px; height: 3px;
-      background: var(--vdc-blue);
+      background: var(--lg-green);
     }
-
-    /* ── PRODUCT CAROUSEL ── */
-    .product-slides { width: 100%; align-self: stretch; position: relative; }
-
-    .product-slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-    }
-
-    .product-slide.active { opacity: 1; pointer-events: auto; }
-
-    .product-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .placeholder-img {
       width: 100%;
@@ -413,226 +327,218 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      background: var(--bg-mid);
     }
 
-    .ph-icon { font-size: 1.8rem; opacity: 0.2; line-height: 1; }
-    .ph-label { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.1em; color: var(--muted); }
-    .ph-variant { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vdc-blue); opacity: 0.7; }
+    .ph-icon { font-size: 1.6rem; opacity: 0.18; }
 
-    .slide-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.75);
-      font-size: 1.4rem;
-      line-height: 1;
-      width: 26px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 3;
-      transition: background 0.15s, color 0.15s;
-      padding: 0;
-    }
-
-    .slide-btn:hover { background: rgba(0,0,0,0.8); color: #fff; }
-    .slide-prev { left: 0; }
-    .slide-next { right: 0; }
-
-    .slide-dots {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      z-index: 3;
-    }
-
-    .slide-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: none; cursor: pointer; padding: 0;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .slide-dot.active { background: var(--vdc-blue); transform: scale(1.35); }
-
-    .product-info {
-      padding: 1.2rem 1.3rem 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-tag {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 0.35rem;
-    }
-
-    .product-name {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
-
-    .product-desc {
-      font-size: 0.77rem;
-      color: var(--muted);
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    .product-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 1.1rem;
-    }
-
-    .product-price {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--text);
-    }
-
-    .product-price .currency {
-      font-size: 0.85rem;
-      color: var(--muted);
-      vertical-align: super;
-      font-family: var(--font-body);
-      font-weight: 600;
-    }
-
-    .btn-order {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid var(--vdc-blue);
-      color: var(--vdc-blue);
+    .ph-label {
       font-family: var(--font-display);
       font-size: 0.95rem;
       letter-spacing: 0.1em;
-      padding: 8px 20px 6px;
-      text-decoration: none;
-      cursor: pointer;
-      clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-      transition: background 0.18s, color 0.18s;
-    }
-
-    .btn-order:hover { background: var(--vdc-blue); color: #fff; }
-
-    /* ── HOW TO ORDER CALLOUT ── */
-    .order-callout {
-      margin: 0 auto 0;
-      max-width: 1100px;
-      padding: 0 2rem;
-    }
-
-    .order-callout-inner {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--vdc-blue);
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-    }
-
-    .callout-icon {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    .callout-text strong {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
-    .callout-text span {
-      font-size: 0.76rem;
       color: var(--muted);
-      line-height: 1.5;
     }
 
-    /* ── ORDER FORM SECTION ── */
-    #order {
-      padding: 60px 2rem;
+    .ph-sub {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      opacity: 0.6;
+    }
+
+    .concept-info {
+      padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .concept-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.3rem;
+    }
+
+    .concept-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .concept-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── ABOUT THE ARTIST ── */
+    #about {
+      padding: 60px 2rem 20px;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .order-layout {
+    .about-layout {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
       gap: 3rem;
       align-items: start;
+      margin-top: 2rem;
     }
 
-    .order-info h2 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      letter-spacing: 0.06em;
-      line-height: 1;
-      margin-bottom: 1rem;
+    .about-photo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 0.5rem;
     }
 
-    .order-info h2 span { color: var(--vdc-blue); }
-
-    .order-steps {
+    .about-photo {
+      background: var(--surface);
+      border: 2px solid var(--border-bright);
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--lg-green);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .about-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+
+    .about-body h3 span { color: var(--lg-green); }
+
+    .about-body p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .about-body p strong { color: var(--text); }
+
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--lg-green);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .about-stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      #about { padding: 40px 1.2rem 10px; }
+      .about-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+      .about-photo { width: 200px; height: 200px; }
+    }
+
+    /* ── INTEREST FORM ── */
+    #form {
+      padding: 60px 2rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .form-info h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .form-info h2 span { color: var(--lg-green); }
+
+    .form-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-info p strong { color: var(--text); }
+
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--lg-green);
+      padding: 1rem 1.2rem;
       margin-top: 1.5rem;
     }
 
-    .order-step {
-      display: flex;
-      gap: 0.9rem;
-      align-items: flex-start;
-    }
-
-    .order-step-num {
-      width: 26px;
-      height: 26px;
-      background: var(--vdc-blue);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
-    }
-
-    .order-step-body strong {
-      display: block;
-      font-size: 0.82rem;
+    .callout-label {
+      font-size: 0.6rem;
       font-weight: 700;
-      margin-bottom: 2px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lg-green);
+      margin-bottom: 0.3rem;
     }
 
-    .order-step-body span {
-      font-size: 0.74rem;
+    .callout p {
+      font-size: 0.76rem;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.55;
+      margin-bottom: 0;
     }
 
-    /* ── FORM WRAPPER ── */
     .form-wrapper {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -645,11 +551,11 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: var(--vdc-blue);
+      background: var(--lg-green);
     }
 
     .form-header {
-      padding: 1.1rem 1.4rem 0.8rem;
+      padding: 1rem 1.3rem 0.8rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -660,155 +566,56 @@
       font-family: var(--font-display);
       font-size: 1rem;
       letter-spacing: 0.1em;
-      color: var(--text);
     }
 
     .form-header-badge {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--vdc-blue);
+      color: var(--lg-green);
       background: rgba(92,184,58,0.1);
       border: 1px solid rgba(92,184,58,0.25);
       padding: 3px 8px;
       border-radius: 2px;
     }
 
-    /* The iframe itself */
     .form-wrapper iframe {
       width: 100%;
-      min-height: 720px;
+      min-height: 680px;
       border: none;
       display: block;
-      /* invert the Google Form to match dark theme */
       filter: invert(1) hue-rotate(180deg);
     }
 
     .form-note {
-      padding: 0.8rem 1.4rem;
+      padding: 0.75rem 1.3rem;
       border-top: 1px solid var(--border);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--muted);
       line-height: 1.5;
     }
 
-    /* ── MATCH DAY BANNER ── */
-    .matchday-bar {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 2rem;
-      text-align: center;
-    }
-
-    .matchday-bar p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-
-    .matchday-bar strong { color: var(--vdc-blue); }
-    .matchday-bar .red  { color: var(--val-red); }
-
-    /* ── ABOUT ── */
-    #about {
-      padding: 60px 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 0.88rem;
-      margin-top: 1rem;
-    }
-
-    .about-text a { color: var(--vdc-blue); text-decoration: none; }
-    .about-text a:hover { text-decoration: underline; }
-
-    .vdc-callout {
-      margin-top: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--vdc-blue);
-      padding: 1rem 1.2rem;
-    }
-
-    .vdc-callout .callout-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--vdc-blue);
-      margin-bottom: 0.4rem;
-    }
-
-    .vdc-callout p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .vdc-callout a { color: var(--vdc-blue); text-decoration: none; }
-
-    .how-steps { display: flex; flex-direction: column; gap: 1.1rem; }
-
-    .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1rem 1.1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--vdc-blue);
-    }
-
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      line-height: 1;
-      color: var(--vdc-blue);
-      opacity: 0.35;
-      min-width: 1.8rem;
-    }
-
-    .step-body strong { display: block; font-size: 0.84rem; font-weight: 700; margin-bottom: 3px; }
-    .step-body span   { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
-
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 2rem;
+      padding: 1.8rem 2rem;
     }
 
     .footer-inner {
       max-width: 1100px;
       margin: 0 auto;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
-    .footer-vdc-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.5rem;
-    }
+    .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
 
-    .footer-vdc-pill {
-      background: var(--vdc-blue);
+    .footer-pill {
+      background: var(--lg-green);
       color: #fff;
       font-family: var(--font-display);
       font-size: 0.85rem;
@@ -819,25 +626,13 @@
 
     .footer-wordmark {
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 0.08em;
     }
 
     .footer-wordmark span { color: var(--val-red); }
 
-    .footer-tagline {
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      line-height: 1.6;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      text-align: right;
-    }
+    .footer-links { display: flex; gap: 1.5rem; }
 
     .footer-links a {
       font-size: 0.72rem;
@@ -847,17 +642,16 @@
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--vdc-blue); }
+    .footer-links a:hover { color: var(--lg-green); }
 
     .footer-legal {
       width: 100%;
       border-top: 1px solid var(--border);
-      margin-top: 1.2rem;
-      padding-top: 1rem;
-      font-size: 0.68rem;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      font-size: 0.66rem;
       color: var(--muted);
       display: flex;
-      align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 0.5rem;
@@ -867,16 +661,12 @@
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
       .nav-links { display: none; }
-      .hero { padding: 60px 1.2rem 80px; }
-      #shop, #about, #order { padding: 40px 1.2rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .order-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .drop-meta { gap: 1.2rem; }
-      .section-header { flex-direction: column; align-items: flex-start; }
-      .section-meta { text-align: left; }
+      .hero { padding: 55px 1.2rem 70px; }
+      .concepts-section { padding: 40px 1.2rem 10px; }
+      #form { padding: 40px 1.2rem 60px; }
+      .form-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .concept-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
       footer { padding: 1.5rem 1.2rem; }
-      .footer-links { text-align: left; }
-      .order-callout { padding: 0 1.2rem; }
     }
   </style>
 </head>
@@ -885,237 +675,299 @@
 <!-- NAV -->
 <nav>
   <div class="nav-left">
-    <span class="vdc-pill">LG</span>
-    <span class="nav-subtitle">Light Garden</span>
+    <span class="lg-pill">LG</span>
+    <span class="nav-subtitle">Design Concepts</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#shop">Shop</a></li>
-    <li><a href="#order">Order</a></li>
+    <li><a href="./index.html">← Back to Shop</a></li>
+    <li><a href="#concepts">Concepts</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="./interest.html">Design Input ↗</a></li>
-    <li><a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a></li>
-    <li><a href="#order" class="nav-cta">Order Now</a></li>
+    <li><a href="#form">Interest Form</a></li>
+    <li><a href="#form" class="nav-cta">Give Input</a></li>
   </ul>
 </nav>
-
-<!-- TICKER -->
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker-inner">
-    <span>LIGHT GARDEN POP-UP — NOW LIVE</span><span class="sep">◆</span>
-    <span>LG-THEMED VDC MERCH · WHILE SUPPLIES LAST</span><span class="sep">◆</span>
-    <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
-    <span>VDC MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
-    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
-    <span>LIGHT GARDEN POP-UP — NOW LIVE</span><span class="sep">◆</span>
-    <span>LG-THEMED VDC MERCH · WHILE SUPPLIES LAST</span><span class="sep">◆</span>
-    <span>LIMITED RUN — ONE DROP PER SEASON</span><span class="sep">◆</span>
-    <span>VDC MATCH DAYS: WED &amp; FRI</span><span class="sep">◆</span>
-    <span>PLACE YOUR ORDER BELOW</span><span class="sep">◆</span>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero">
   <img src="./assets/LG_LOGO.png" class="hero-logo-bg" alt="" aria-hidden="true">
   <div class="hero-eyebrow">
     <span class="dot"></span>
-    Light Garden · VDC Season Drop
+    Light Garden · Community Input
     <span class="dot"></span>
   </div>
   <h1>
-    <span class="line-blue">LIGHT</span><br>
-   <span class="line-blue"> GARDEN </span><br>
-    MERCH
+    <span class="line-green">HELP 
+    DESIGN<br></span>
+    THE DROP.
   </h1>
   <p class="hero-sub">
-    <strong>Light Garden's</strong> community pop-up. Calling all past and present LG members! 
+    These are our working concepts. <strong>Your input shapes the final designs</strong> — vote on what you want to see, and drop your info so I can keep you posted.
   </p>
   <div class="hero-actions">
-    <a href="#shop" class="btn-primary">Browse the Drop</a>
-    <a href="#order" class="btn-ghost">Place an Order</a>
-  </div>
-  <div class="drop-meta">
-    <div class="meta-item">
-      <div class="meta-label">Drop Closes In</div>
-      <div class="meta-value" id="countdown">—</div>
-    </div>
-    <div class="meta-item">
-      <div class="meta-label">Match Days</div>
-      <div class="meta-value">WED · FRI</div>
-    </div>
-    <div class="meta-item">
-      <div class="meta-label">Items This Drop</div>
-      <div class="meta-value">4</div>
-    </div>
+    <a href="#concepts" class="btn-primary">See the Concepts</a>
+    <a href="#form" class="btn-ghost">Submit Interest</a>
   </div>
 </section>
 
-<!-- SHOP -->
 <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-<section id="shop">
-  <div class="section-header">
-    <h2>THE <span>DROP</span></h2>
-    <div class="section-meta">
-      Valorant Draft Circuit · Season Merch<br>
-      Fill out the order form below to purchase
+<!-- CONCEPTS -->
+<div id="concepts">
+
+  <!-- STICKER PACK -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Sticker Pack</div>
+    <h2 class="section-title">STICKER <span>DESIGNS</span></h2>
+    <p class="section-desc">Holographic die-cut vinyl stickers, UV coated and waterproof. I'm considering a few design directions — which set speaks to you?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept A</span>
+            <span class="ph-sub">LG Crest · Clean</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 1</div>
+          <div class="concept-name">Clean Crest Set</div>
+          <p class="concept-desc">Minimal LG logo, team name wordmark, and a solid color accent sticker. Clean and versatile.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept B</span>
+            <span class="ph-sub">Botanical Theme</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 2</div>
+          <div class="concept-name">Botanical Set</div>
+          <p class="concept-desc">LG crest surrounded by garden/leaf motifs. Plays on the "Light Garden" name with illustrated botanicals.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Concept C</span>
+            <span class="ph-sub">Valorant-Themed</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Direction 3</div>
+          <div class="concept-name">VDC Edition</div>
+          <p class="concept-desc">VDC-style design language — angular shapes, spike icon, tier star, and the LG crest in game-accurate style.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="product-grid">
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-    <!-- STICKER PACK -->
-    <div class="product-card" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
-      <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Design A</span>
-              <span class="ph-variant">5-pack · Holographic</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Design B</span>
-              <span class="ph-variant">5-pack · Holographic</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Bundle</span>
-              <span class="ph-variant">Both sheets · 10-pack</span>
-            </div>
+  <!-- ENAMEL PIN -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Enamel Pin</div>
+    <h2 class="section-title">PIN <span>CONCEPTS</span></h2>
+    <p class="section-desc">Hard enamel, ~1.25" tall, rubber clutch backing. I'm deciding on shape and colorway — which do you prefer?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Shield Shape</span>
+            <span class="ph-sub">Gold plating</span>
           </div>
         </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active"></button>
-          <button class="slide-dot"></button>
-          <button class="slide-dot"></button>
+        <div class="concept-info">
+          <div class="concept-tag">Shape A · Gold</div>
+          <div class="concept-name">Shield — Gold</div>
+          <p class="concept-desc">Classic shield silhouette with LG crest. Gold metal plating with green enamel fill.</p>
         </div>
       </div>
-      <div class="product-info">
-        <span class="product-tag">Accessories</span>
-        <div class="product-name">LG Sticker Pack</div>
-        <p class="product-desc">5 holographic die-cut stickers — LG crest, Valorant X mark, tier star, Light Garden banner, and GG design. UV coated and waterproof.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>10</div>
-          <span class="btn-order">Order Below ↓</span>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Shield Shape</span>
+            <span class="ph-sub">Silver plating</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Shape A · Silver</div>
+          <div class="concept-name">Shield — Silver</div>
+          <p class="concept-desc">Same shield silhouette, silver metal plating. Cleaner look with high contrast against the green enamel.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Diamond Shape</span>
+            <span class="ph-sub">Black / Gold</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Shape B · Black</div>
+          <div class="concept-name">Diamond — Black</div>
+          <p class="concept-desc">Diamond-shaped pin echoing the LG logo silhouette. Black enamel background with gold plating.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ENAMEL PIN -->
-    <div class="product-card limited" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
-      <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Gold Edition</span>
-              <span class="ph-variant">Gold plating · Hard enamel</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Silver Edition</span>
-              <span class="ph-variant">Silver plating · Hard enamel</span>
-            </div>
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+  <!-- KEY CHAIN -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Key Chain</div>
+    <h2 class="section-title">KEY CHAIN <span>OPTIONS</span></h2>
+    <p class="section-desc">Double-sided acrylic charm, ~2", stainless steel split ring. Which material and design works best?</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Clear Acrylic</span>
+            <span class="ph-sub">LG Crest Print</span>
           </div>
         </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active"></button>
-          <button class="slide-dot"></button>
+        <div class="concept-info">
+          <div class="concept-tag">Material A</div>
+          <div class="concept-name">Clear Acrylic</div>
+          <p class="concept-desc">Transparent base with full-color LG crest printed on the front. Clean and modern.</p>
         </div>
       </div>
-      <div class="product-info">
-        <span class="product-tag">Accessories · Limited</span>
-        <div class="product-name">LG Enamel Pin</div>
-        <p class="product-desc">Hard enamel shield-shaped pin with LG crest. Gold metal plating, rubber clutch backing. ~1.25" tall. Season exclusive.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>15</div>
-          <span class="btn-order">Order Below ↓</span>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Frosted Acrylic</span>
+            <span class="ph-sub">LG Crest Print</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Material B</div>
+          <div class="concept-name">Frosted Acrylic</div>
+          <p class="concept-desc">Matte frosted finish that softens the background. Gives the print a premium, diffused look.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- KEY CHAIN -->
-    <div class="product-card" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
-      <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Clear Acrylic</span>
-              <span class="ph-variant">Double-sided · ~2" charm</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Frosted Acrylic</span>
-              <span class="ph-variant">Double-sided · ~2" charm</span>
-            </div>
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+  <!-- MOUSEPAD -->
+  <div class="concepts-section">
+    <div class="section-label"><span class="dot"></span> Mousepad</div>
+    <h2 class="section-title">MOUSEPAD <span>DESIGNS</span></h2>
+    <p class="section-desc">Extended desk mat, 3mm thick, non-slip rubber base, micro-weave surface. Sizing and layout options below.</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Centered Logo</span>
+            <span class="ph-sub">Standard · 900×400</span>
           </div>
         </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active"></button>
-          <button class="slide-dot"></button>
+        <div class="concept-info">
+          <div class="concept-tag">Layout A · Standard</div>
+          <div class="concept-name">Centered — 900×400</div>
+          <p class="concept-desc">Large LG crest centered on a dark field. Minimal and clean. Standard desk mat size.</p>
         </div>
       </div>
-      <div class="product-info">
-        <span class="product-tag">Accessories</span>
-        <div class="product-name">LG Key Chain</div>
-        <p class="product-desc">Double-sided acrylic key chain with LG crest on front, "Light Garden" on the back. ~2" charm with stainless steel split ring.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>12</div>
-          <span class="btn-order">Order Below ↓</span>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Full Illustration</span>
+            <span class="ph-sub">Standard · 900×400</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Layout B · Standard</div>
+          <div class="concept-name">Full Print — 900×400</div>
+          <p class="concept-desc">Edge-to-edge botanical or abstract design with the LG crest as the focal point. More visual impact.</p>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-img">
+          <div class="placeholder-img">
+            <div class="ph-icon">🖼</div>
+            <span class="ph-label">Centered Logo</span>
+            <span class="ph-sub">XL · 1200×600</span>
+          </div>
+        </div>
+        <div class="concept-info">
+          <div class="concept-tag">Layout A · XL</div>
+          <div class="concept-name">Centered — 1200×600</div>
+          <p class="concept-desc">Same centered logo layout in the larger XL size — covers keyboard and mouse area of most desk setups.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- MOUSEPAD -->
-    <div class="product-card limited" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
-      <div class="product-img">
-        <div class="product-slides">
-          <div class="product-slide active">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">Standard</span>
-              <span class="ph-variant">900 × 400 mm</span>
-            </div>
-          </div>
-          <div class="product-slide">
-            <div class="placeholder-img">
-              <div class="ph-icon">🖼</div>
-              <span class="ph-label">XL</span>
-              <span class="ph-variant">1200 × 600 mm</span>
-            </div>
-          </div>
-        </div>
-        <button class="slide-btn slide-prev" aria-label="Previous">&#8249;</button>
-        <button class="slide-btn slide-next" aria-label="Next">&#8250;</button>
-        <div class="slide-dots">
-          <button class="slide-dot active"></button>
-          <button class="slide-dot"></button>
-        </div>
+</div><!-- /concepts -->
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<!-- ABOUT THE ARTIST -->
+<section id="about">
+  <div class="section-label"><span class="dot"></span> The Artist</div>
+  <h2 class="section-title">ABOUT <span>THE ARTIST</span></h2>
+  <p class="section-desc">The person behind the designs — and the team.</p>
+
+  <div class="about-layout">
+
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <img src="./assets/disc_pfp.webp" alt="Bobert" />
       </div>
-      <div class="product-info">
-        <span class="product-tag">Accessories · Limited</span>
-        <div class="product-name">LG Mousepad</div>
-        <p class="product-desc">Extended desk mousepad with LG crest design. 900×400mm, 3mm thick, non-slip rubber base, smooth micro-weave surface. Season exclusive.</p>
-        <div class="product-footer">
-          <div class="product-price"><span class="currency">$</span>25</div>
-          <span class="btn-order">Order Below ↓</span>
+    </div>
+
+    <div class="about-body">
+      <h3><span>Bobert</span></h3>
+
+      <!--
+        Replace the paragraph text below with your own words.
+        Suggested topics: how you found VDC / Light Garden, your role on the team,
+        what drives you to make merch for the community, your art background, etc.
+      -->
+      <p>
+        [Write a few sentences about yourself here — how you got into the Valorant Draft Circuit,
+        what your role with Light Garden has been, and what drew you to creating merch for the team.]
+      </p>
+      <p>
+        [Add a second paragraph about your background as an artist or designer —
+        what kind of work you do, what your style is, and what you want this merch to mean to the community.]
+      </p>
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-value">—</div>
+          <div class="about-stat-label">Seasons in VDC</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">—</div>
+          <div class="about-stat-label">Role / Position</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-value">—</div>
+          <div class="about-stat-label">Years Designing</div>
         </div>
       </div>
     </div>
@@ -1123,230 +975,74 @@
   </div>
 </section>
 
-<!-- HOW TO ORDER CALLOUT -->
-<div class="order-callout">
-  <div class="order-callout-inner">
-    <div class="callout-icon">📋</div>
-    <div class="callout-text">
-      <strong>How ordering works</strong>
-      <span>Fill out the order form below → we'll email you within 24 hours to confirm your order and arrange payment. No card details required upfront.</span>
-    </div>
-  </div>
-</div>
+<div class="divider" style="margin-bottom:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-<!-- ORDER FORM -->
-<div class="divider" style="margin-top:2.5rem;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+<!-- INTEREST FORM -->
+<section id="form">
+  <div class="form-layout">
 
-<section id="order">
-  <div class="order-layout">
-
-    <div class="order-info">
-      <h2>PLACE YOUR <span>ORDER</span></h2>
-      <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-top:0.8rem;">
-        Fill out the form and we'll reach out within 24 hours to confirm your items and sort out payment — Venmo or PayPal.
+    <div class="form-info">
+      <h2>TELL ME WHAT <span>YOU WANT</span></h2>
+      <p>
+        Fill out the interest form to let me know which products and designs you're most excited about. <strong>No commitment required</strong> — this just helps me decide what to actually make.
       </p>
-
-      <div class="order-steps">
-        <div class="order-step">
-          <div class="order-step-num">1</div>
-          <div class="order-step-body">
-            <strong>Submit the form</strong>
-            <span>Tell us what you want, your size, and the best way to reach you.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">2</div>
-          <div class="order-step-body">
-            <strong>We confirm your order</strong>
-            <span>Expect an email or Discord DM within 24 hours to confirm availability and total.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">3</div>
-          <div class="order-step-body">
-            <strong>Sort payment</strong>
-            <span>Venmo or PayPal.</span>
-          </div>
-        </div>
-        <div class="order-step">
-          <div class="order-step-num">4</div>
-          <div class="order-step-body">
-            <strong>We make &amp; ship it</strong>
-            <span>Once payment is confirmed, your order ships within 7 business days.</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:1.5rem;padding:1rem;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);">
-        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">Drop deadline</div>
-        <div style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.06em;" id="countdown2">—</div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem;">Orders submitted after the drop closes won't be fulfilled until next season.</div>
+      <p>
+        I'll use the responses to finalize the product lineup and design direction before opening the real order window.
+      </p>
+      <div class="callout">
+        <div class="callout-label">What happens next?</div>
+        <p>Once I have enough interest, I'll finalize designs, share previews, and open the actual merch drop on the shop page. Drop responders get first look.</p>
       </div>
     </div>
 
-    <!-- GOOGLE FORM EMBED -->
     <div class="form-wrapper">
       <div class="form-header">
-        <span class="form-header-title">LG MERCH — ORDER FORM</span>
-        <span class="form-header-badge">LG Season Drop</span>
+        <span class="form-header-title">LG — INTEREST FORM</span>
+        <span class="form-header-badge">Design Input</span>
       </div>
 
       <!--
-        REPLACE THE src BELOW with your Google Form embed URL.
-        To get it:
-          1. Open your Google Form
-          2. Click Send → < > (Embed icon)
-          3. Copy the URL from inside src="..." in the iframe code
-          It will look like:
-          https://docs.google.com/forms/d/e/XXXXXXXXXXXXX/viewform?embedded=true
-      
-          <iframe src="" width="640" height="744" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-      
-          -->
+        REPLACE src BELOW with your Google Form embed URL.
+        In Google Forms: Send → Embed (< >) → copy the URL inside src="..."
+        It will look like:
+
+        https://docs.google.com/forms/d/e/XXXXXXXXXXXXX/viewform?embedded=true
+      -->
       <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSdWOW7SfJxhbOQu26ZFDTLhMW8eKWqc8n6qO__BzcNpb8snRQ/viewform?embedded=true"
-        title="LG Merch Order Form"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSegdoxNO8LeBpTzMb1CQyIf8BLtPWtMP-Wy2yBaS44pMzh8vw/viewform?embedded=true"
+        title="Light Garden Interest Form"
         loading="lazy">
-        Loading order form…
+        Loading form…
       </iframe>
 
       <div class="form-note">
-        🔒 Your info is only used to fulfill your order. We won't spam you or share your details.
+        🔒 Your info is only used to plan the drop. I won't spam you or share your details.
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ABOUT -->
-<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-<section id="about">
-  <div class="about-grid">
-    <div class="about-text">
-      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:0.2rem;">ABOUT <span style="color:var(--vdc-blue);">LIGHT GARDEN</span></h2>
-      <p><strong>Light Garden</strong> is a VDC franchise team. This is our community pop-up — seasonal drops of LG-branded gear made by the team and fans of the <strong>Valorant Draft Circuit</strong>, a free community-run NA VALORANT league.</p>
-      <p>Not affiliated with VDC or Riot Games. Small batches, one drop per season. When it's gone, it's done.</p>
-      <div class="vdc-callout">
-        <div class="callout-label">Not in VDC yet?</div>
-        <p>Sign up free at <a href="https://vdc.gg" target="_blank">vdc.gg</a> · Join Discord at <a href="https://discord.gg/valorantdraftcircuit" target="_blank">discord.gg/valorantdraftcircuit</a> · All ranks welcome.</p>
-      </div>
-      <p style="margin-top:1rem;">Questions? Email <a href="mailto:evangelinagrimes@gmail.com">evangelinagrimes@gmail.com</a> or DM us on Discord.</p>
-    </div>
-
-    <div>
-      <h2 style="font-family:var(--font-display);font-size:2rem;letter-spacing:0.06em;margin-bottom:1.2rem;">PRICING <span style="color:var(--vdc-blue);">SUMMARY</span></h2>
-      <div class="how-steps">
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$10</div>
-          <div class="step-body">
-            <strong>LG Sticker Pack</strong>
-            <span>5 holographic die-cuts · UV coated · Waterproof</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$15</div>
-          <div class="step-body">
-            <strong>LG Enamel Pin</strong>
-            <span>Hard enamel · Gold plating · ~1.25" · LIMITED RUN</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$12</div>
-          <div class="step-body">
-            <strong>LG Key Chain</strong>
-            <span>Double-sided acrylic · ~2" charm · Steel split ring</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num" style="font-size:1.2rem;opacity:1;color:var(--text);">$25</div>
-          <div class="step-body">
-            <strong>LG Mousepad</strong>
-            <span>900×400mm · Non-slip base · Micro-weave surface · LIMITED RUN</span>
-          </div>
-        </div>
-        <div class="step" style="border-left-color:var(--gold);">
-          <div class="step-num" style="font-size:1rem;opacity:1;color:var(--gold);">📦</div>
-          <div class="step-body">
-            <strong>Shipping</strong>
-            <span>Calculated per order based on your location. Confirmed when we reach out after your form submission.</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <div class="footer-vdc-row">
-        <span class="footer-vdc-pill">LG</span>
-        <span class="footer-wordmark">DRIP<span>.</span></span>
-      </div>
-      <div class="footer-tagline">
-        Light Garden · VDC community pop-up<br>
-        LG-branded seasonal drops
-      </div>
+    <div class="footer-brand">
+      <span class="footer-pill">LG</span>
+      <span class="footer-wordmark">DRIP<span>.</span></span>
     </div>
     <div class="footer-links">
-      <a href="https://vdc.gg" target="_blank">vdc.gg ↗</a>
-      <a href="https://discord.gg/valorantdraftcircuit" target="_blank">VDC Discord ↗</a>
-      <a href="#order">Place an Order</a>
-      <a href="mailto:evangelinagrimes@gmail.com">Contact</a>
+      <a href="./index.html">← Main Shop</a>
+      <a href="https://vdc.gg" target="_blank" rel="noopener">vdc.gg ↗</a>
+      <a href="https://discord.gg/valorantdraftcircuit" target="_blank" rel="noopener">VDC Discord ↗</a>
     </div>
   </div>
   <div class="footer-inner">
     <div class="footer-legal">
       <span>Not affiliated with or sponsored by the Valorant Draft Circuit, Riot Games, Inc., or VALORANT™ Esports.</span>
+      <span>© LG Drip · All rights reserved</span>
     </div>
   </div>
 </footer>
-
-<script>
-  // ── COUNTDOWN (synced to both instances) ──
-  // Set your drop close date here
-  const DROP_END = new Date('2025-08-01T23:59:59');
-
-  function fmt(diff) {
-    if (diff <= 0) return 'DROP CLOSED';
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000)  / 60000);
-    const s = Math.floor((diff % 60000)    / 1000);
-    return `${d}D ${String(h).padStart(2,'0')}H ${String(m).padStart(2,'0')}M ${String(s).padStart(2,'0')}S`;
-  }
-
-  function updateCountdowns() {
-    const val = fmt(DROP_END - new Date());
-    document.getElementById('countdown').textContent  = val;
-    document.getElementById('countdown2').textContent = val;
-  }
-
-  updateCountdowns();
-  setInterval(updateCountdowns, 1000);
-
-  // ── PRODUCT CAROUSELS ──
-  document.querySelectorAll('.product-card').forEach(card => {
-    const slides = card.querySelectorAll('.product-slide');
-    const dots   = card.querySelectorAll('.slide-dot');
-    if (slides.length < 2) return;
-    let cur = 0;
-
-    function goTo(n) {
-      slides[cur].classList.remove('active');
-      dots[cur].classList.remove('active');
-      cur = (n + slides.length) % slides.length;
-      slides[cur].classList.add('active');
-      dots[cur].classList.add('active');
-    }
-
-    card.querySelector('.slide-prev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
-    card.querySelector('.slide-next').addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
-    dots.forEach((d, i) => d.addEventListener('click', e => { e.stopPropagation(); goTo(i); }));
-  });
-</script>
 
 </body>
 </html>
