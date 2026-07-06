@@ -1,0 +1,897 @@
+/* ─────────────────────────────────────────────────────────────
+   style.css — Personal Portfolio
+
+   Table of contents:
+     1.  Design tokens
+     2.  Reset & base
+     3.  Typography helpers
+     4.  Nav & footer
+     5.  Hero           (slow-breathing radial glow)
+     6.  Region base    (shared section styles)
+     7.  Coding section (deep navy grid-drift background)
+     8.  Artistic section (warm slate radial-pulse background)
+     9.  Project explorer split-pane (coding section)
+     10. Project card grid (artistic section)
+     11. About & mirror panel
+     12. Scroll-reveal animations
+     13. Responsive
+     14. Reduced-motion overrides
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── 1. Design Tokens ──────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:          #0A0E17;   /* page base / hero */
+  --bg-coding:   #0B1220;   /* deep navy for coding section */
+  --bg-artistic: #120E18;   /* dark warm slate for artistic section */
+  --bg-card:     #131929;   /* card & panel surfaces */
+  --bg-surface:  #0F1726;   /* slightly lighter surface */
+
+  /* Text */
+  --text:        #EDEEF2;
+  --text-sub:    #8891A4;
+  --text-muted:  #3D4560;
+
+  /* Accents */
+  --accent-coding:   #4FC3E8;   /* cool cyan  */
+  --accent-artistic: #E8A857;   /* warm gold  */
+  --accent-hero-a:   #3FE0C5;   /* teal  */
+  --accent-hero-b:   #6C5CE7;   /* violet */
+
+  /* Borders */
+  --border:       rgba(255, 255, 255, 0.055);
+  --border-strong: rgba(255, 255, 255, 0.10);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Layout */
+  --section-v:  clamp(5rem, 10vw, 9rem);
+  --content-h:  clamp(1.25rem, 5vw, 3rem);
+  --max-w:      1200px;
+  --nav-h:      60px;
+
+  /* Easing */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ── 2. Reset & Base ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-hero-a);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+
+/* ── 3. Typography Helpers ─────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.85rem;
+}
+
+.region--coding   .eyebrow { color: var(--accent-coding); }
+.region--artistic .eyebrow { color: var(--accent-artistic); }
+
+
+/* ── 4. Nav & Footer ───────────────────────────────────────── */
+#site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--content-h);
+  background: rgba(10, 14, 23, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  transform: translateY(-100%);
+  transition: transform 0.45s var(--ease-out);
+}
+
+#site-nav.nav--visible {
+  transform: translateY(0);
+}
+
+.nav-name {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  letter-spacing: 0.06em;
+}
+
+.nav-links { display: flex; gap: 2rem; }
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem var(--content-h);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.footer-links { display: flex; gap: 1.75rem; }
+.footer-links a { transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+
+
+/* ── 5. Hero ───────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slow-breathing radial glow behind hero content */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 50% at 50% 40%, rgba(63, 224, 197, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 70% 65%, rgba(108, 92, 231, 0.07) 0%, transparent 65%);
+  animation: hero-breathe 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hero-breathe {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1.0; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem var(--content-h);
+  max-width: 700px;
+}
+
+.hero-name {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--accent-hero-a) 0%, var(--accent-hero-b) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.82rem, 2vw, 1rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 4rem;
+}
+
+.scroll-cue {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  animation: bob 2.5s ease-in-out infinite;
+}
+
+.scroll-cue:hover { color: var(--text-sub); }
+.scroll-cue-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; }
+.scroll-cue-arrow { font-size: 1.1rem; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(10px); }
+}
+
+
+/* ── 6. Region Base ────────────────────────────────────────── */
+/* Shared by both content sections — each adds its own background */
+.region {
+  position: relative;
+  overflow: hidden;
+  padding: var(--section-v) var(--content-h);
+  max-width: 100%;
+  border-top: 1px solid var(--border);
+}
+
+/* Inner content wrapper caps width and centers horizontally */
+.region-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.region-header {
+  max-width: var(--max-w);
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+}
+
+.region-header h2 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  margin-bottom: 0.85rem;
+}
+
+.region--coding   .region-header h2 { color: var(--accent-coding); }
+.region--artistic .region-header h2 { color: var(--accent-artistic); }
+
+/* Short decorative line before the eyebrow */
+.region--coding   .eyebrow::before,
+.region--artistic .eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  vertical-align: middle;
+  margin-right: 0.6rem;
+  opacity: 0.7;
+}
+
+.region--coding   .eyebrow::before { background: var(--accent-coding); }
+.region--artistic .eyebrow::before { background: var(--accent-artistic); }
+
+.region-sub {
+  font-size: 0.92rem;
+  color: var(--text-sub);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+
+/* ── 7. Coding Section Background ──────────────────────────── */
+/* Deep navy with a drifting fine-grid overlay — technical/systematic feel */
+.region--coding {
+  background-color: var(--bg-coding);
+}
+
+.region--coding::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Faint grid: two repeating gradients, one horizontal one vertical */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(79, 195, 232, 0.04) 39px,
+      rgba(79, 195, 232, 0.04) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(79, 195, 232, 0.03) 39px,
+      rgba(79, 195, 232, 0.03) 40px
+    );
+  background-size: 40px 40px;
+  /* Animating backgroundPosition makes the grid appear to drift */
+  animation: grid-drift 18s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
+}
+
+/* Content sits above the animated pseudo-element */
+.region--coding > * { position: relative; z-index: 1; }
+
+
+/* ── 8. Artistic Section Background ────────────────────────── */
+/* Dark warm slate with a slowly pulsing radial glow — organic/creative feel */
+.region--artistic {
+  background-color: var(--bg-artistic);
+}
+
+.region--artistic::before {
+  content: '';
+  position: absolute;
+  /* Oversized so the scale animation doesn't clip */
+  inset: -30%;
+  background: radial-gradient(
+    ellipse 60% 55% at 55% 45%,
+    rgba(232, 168, 87, 0.07) 0%,
+    rgba(180, 80, 120, 0.04) 45%,
+    transparent 70%
+  );
+  animation: art-pulse 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes art-pulse {
+  0%, 100% { transform: scale(1)   rotate(0deg);  opacity: 0.6; }
+  33%       { transform: scale(1.2) rotate(4deg);  opacity: 1.0; }
+  66%       { transform: scale(0.9) rotate(-3deg); opacity: 0.7; }
+}
+
+.region--artistic > * { position: relative; z-index: 1; }
+
+
+/* ── 9. Project Explorer (Coding Split-Pane) ───────────────── */
+.project-explorer {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  border: 1px solid var(--border);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  min-height: 540px;
+  /* Clip the corners of both child panels */
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* LEFT: sidebar project list */
+.explorer-sidebar {
+  background: rgba(10, 14, 23, 0.6);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  overflow-y: auto;
+}
+
+.explorer-tab {
+  all: unset;   /* wipe browser button defaults */
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: color 0.18s, background 0.18s, border-color 0.18s;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.explorer-tab:hover {
+  color: var(--text-sub);
+  background: rgba(79, 195, 232, 0.05);
+}
+
+.explorer-tab.active {
+  color: var(--accent-coding);
+  border-left-color: var(--accent-coding);
+  background: rgba(79, 195, 232, 0.08);
+}
+
+/* Small category label under the project name in the tab */
+.explorer-tab-category {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+.explorer-tab.active .explorer-tab-category {
+  opacity: 1;
+}
+
+/* RIGHT: detail panel */
+.explorer-panel {
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Preview zone: iframe or image */
+.explorer-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #090E1B;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.explorer-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.explorer-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder for projects without an image or iframe */
+.explorer-preview-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.explorer-preview-placeholder-icon {
+  font-size: 2rem;
+  opacity: 0.15;
+}
+
+.explorer-preview-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+/* Info area below the preview */
+.explorer-info {
+  padding: 1.6rem 2rem 1.8rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.explorer-info-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-coding);
+  margin-bottom: 0.5rem;
+}
+
+.explorer-info h3 {
+  font-size: 1.4rem;
+  font-family: var(--font-display);
+  margin-bottom: 0.65rem;
+}
+
+.explorer-info-desc {
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+/* Tag chips */
+.explorer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.explorer-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(79, 195, 232, 0.07);
+  border: 1px solid rgba(79, 195, 232, 0.15);
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+
+/* Links row */
+.explorer-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.explorer-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border: 1px solid var(--accent-coding);
+  color: var(--accent-coding);
+  transition: background 0.18s, color 0.18s;
+  border-radius: 2px;
+}
+
+.explorer-link:hover {
+  background: var(--accent-coding);
+  color: var(--bg-coding);
+}
+
+.explorer-link.secondary {
+  border-color: var(--border-strong);
+  color: var(--text-sub);
+}
+
+.explorer-link.secondary:hover {
+  border-color: var(--text-sub);
+  color: var(--text);
+  background: transparent;
+}
+
+/* Transition for panel content swaps */
+.explorer-panel.swapping {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.explorer-panel.swapping-in {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+
+/* ── 10. Project Card Grid (Artistic) ──────────────────────── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    border-color 0.25s,
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s;
+}
+
+.project-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 36px rgba(232, 168, 87, 0.10);
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #100C18;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.card-img-placeholder-icon  { font-size: 1.6rem; opacity: 0.15; }
+.card-img-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+
+.card-body {
+  padding: 1.2rem 1.4rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-category {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-artistic);
+  margin-bottom: 0.45rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.83rem;
+  color: var(--text-sub);
+  line-height: 1.68;
+  flex: 1;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.card-link:hover { color: var(--accent-artistic); }
+
+.card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.card-status::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+
+
+/* ── 11. About & Mirror Panel ──────────────────────────────── */
+.region--about {
+  background-color: var(--bg);
+  max-width: 100%;
+  padding-left: var(--content-h);
+  padding-right: var(--content-h);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.about-text h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin: 0.75rem 0 1.4rem;
+}
+
+.about-text p {
+  font-size: 0.92rem;
+  color: var(--text-sub);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+.about-text em { font-style: italic; color: var(--text); }
+
+.contact-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--accent-hero-a);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.contact-link:hover { border-bottom-color: var(--accent-hero-a); }
+
+.mirror-wrap {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: inset 0 0 80px rgba(63, 224, 197, 0.03);
+  cursor: crosshair;
+}
+
+#mirror-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ── 12. Scroll-Reveal ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card.reveal:nth-child(2) { transition-delay: 0.07s; }
+.project-card.reveal:nth-child(3) { transition-delay: 0.14s; }
+.project-card.reveal:nth-child(4) { transition-delay: 0.21s; }
+.project-card.reveal:nth-child(5) { transition-delay: 0.28s; }
+.project-card.reveal:nth-child(6) { transition-delay: 0.35s; }
+
+
+/* ── 13. Responsive ────────────────────────────────────────── */
+
+/* Explorer: collapse to stacked layout at medium width */
+@media (max-width: 860px) {
+  .project-explorer {
+    grid-template-columns: 1fr;
+  }
+
+  /* Sidebar becomes a horizontal scrolling tab strip at the top */
+  .explorer-sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+  }
+
+  .explorer-tab {
+    flex-shrink: 0;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+
+  .explorer-tab.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent-coding);
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .mirror-wrap { max-width: 360px; }
+}
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .project-grid { grid-template-columns: 1fr; }
+  .explorer-info { padding: 1.2rem 1.2rem 1.5rem; }
+
+  .site-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
+
+
+/* ── 14. Reduced-Motion ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  /* Pause all CSS keyframe animations */
+  .hero::before,
+  .region--coding::before,
+  .region--artistic::before {
+    animation-play-state: paused;
+  }
+
+  .scroll-cue { animation: none; }
+
+  /* Show reveal elements instantly */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Suppress hover transitions */
+  .project-card,
+  .explorer-tab,
+  .explorer-link,
+  .nav-links a,
+  .contact-link,
+  .footer-links a {
+    transition: none;
+  }
+}
