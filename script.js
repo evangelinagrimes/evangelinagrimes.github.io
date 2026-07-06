@@ -22,11 +22,16 @@
      title    — shown in the sidebar and as the panel heading
      category — short label in the accent color
      desc     — 1–2 sentences shown in the detail panel
-     images   — array of image paths for the preview gallery;
-                use `null` entries as placeholders until real
-                screenshots exist. Multiple entries render arrows
-                and dots so the gallery can be scrolled through,
-                and every image opens the expanded lightbox view.
+     images   — array of image paths for the preview gallery.
+                Each coding project has a matching folder under
+                assets/coding/<project-slug>/ — drop numbered files
+                (1.jpg, 2.jpg, …) in there and they show up here
+                automatically. Until a file exists at that path, the
+                gallery falls back to a placeholder slide, so it's
+                safe to list paths before the images exist. Multiple
+                entries render arrows and dots so the gallery can be
+                scrolled through, and every image opens the expanded
+                lightbox view.
      tags     — array of tech/skill chips shown below the description
      link     — primary call-to-action URL, or null
      linkLabel — button text (defaults to "View project →" if omitted)
@@ -42,7 +47,12 @@ const PROJECTS = {
       title:     'LG Merch Site',
       category:  'Web Development',
       desc:      'End-to-end merch site for Light Garden — a Valorant beer league franchise. Built with plain HTML/CSS/JS and Shopify Buy Button integration, featuring a live ticker, product cards with variant selection, and a countdown to the next drop.',
-      images:    [null, null, null, null],
+      images:    [
+        'assets/coding/lg-merch-site/1.jpg',
+        'assets/coding/lg-merch-site/2.jpg',
+        'assets/coding/lg-merch-site/3.jpg',
+        'assets/coding/lg-merch-site/4.jpg',
+      ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify'],
       link:      'https://evangelinagrimes.github.io/merch/',
       linkLabel: 'Live site →',
@@ -52,7 +62,11 @@ const PROJECTS = {
       title:     'Drone Research Platform',
       category:  'Research / Hardware',
       desc:      'Custom multi-rotor platform for academic drone research. Sensor fusion, flight logging, and ROS2 integration across onboard and ground-station nodes.',
-      images:    [null, null, null],
+      images:    [
+        'assets/coding/drone-research-platform/1.jpg',
+        'assets/coding/drone-research-platform/2.jpg',
+        'assets/coding/drone-research-platform/3.jpg',
+      ],
       tags:      ['ROS2', 'Python', 'Hardware', 'Sensor Fusion'],
       link:      null,
       linkLabel: null,
@@ -62,7 +76,10 @@ const PROJECTS = {
       title:     'ROS2 Node Architecture',
       category:  'ROS2 / Python',
       desc:      'Modular ROS2 node graph for autonomous flight tasks. Custom message types, service interfaces, and a ground-truth data logger that writes to bag files for post-flight analysis.',
-      images:    [null, null],
+      images:    [
+        'assets/coding/ros2-node-architecture/1.jpg',
+        'assets/coding/ros2-node-architecture/2.jpg',
+      ],
       tags:      ['ROS2', 'Python', 'Pub/Sub', 'Data Logging'],
       link:      null,
       linkLabel: null,
@@ -72,7 +89,10 @@ const PROJECTS = {
       title:     'Drone Network Protocol',
       category:  'Networking / Raspberry Pi',
       desc:      'Low-latency communication protocol for drone swarm coordination over a Raspberry Pi mesh network. Targets sub-20 ms round-trip for telemetry and command channels.',
-      images:    [null, null],
+      images:    [
+        'assets/coding/drone-network-protocol/1.jpg',
+        'assets/coding/drone-network-protocol/2.jpg',
+      ],
       tags:      ['Networking', 'Raspberry Pi', 'Python', 'UDP'],
       link:      null,
       linkLabel: null,
@@ -82,7 +102,11 @@ const PROJECTS = {
       title:     'Broadcast Production',
       category:  'Live Graphics / OBS',
       desc:      'Lower thirds, scorebug, transition animations, and post-match graphics for Light Garden\'s VDC match broadcasts. Produced in OBS with custom scene collections and CSS overlays.',
-      images:    [null, null, null],
+      images:    [
+        'assets/coding/broadcast-production/1.jpg',
+        'assets/coding/broadcast-production/2.jpg',
+        'assets/coding/broadcast-production/3.jpg',
+      ],
       tags:      ['OBS', 'CSS', 'Motion Design', 'Broadcast'],
       link:      null,
       linkLabel: null,
@@ -150,19 +174,29 @@ const Lightbox = (() => {
   let images = [];
   let index = 0;
   let titleText = '';
+  let loadToken = 0;
+
+  // Falls back to the placeholder slide — used both for projects with
+  // no image yet and for images whose file doesn't exist at that path.
+  function showPlaceholder() {
+    imageEl.hidden = true;
+    placeholderEl.hidden = false;
+    placeholderLabelEl.textContent = `Image ${index + 1} of ${images.length}`;
+  }
 
   function render() {
+    loadToken++;
+    const token = loadToken;
     const src = images[index];
 
     if (src) {
-      imageEl.src    = src;
-      imageEl.alt    = `${titleText} — image ${index + 1} of ${images.length}`;
       imageEl.hidden = false;
       placeholderEl.hidden = true;
+      imageEl.alt = `${titleText} — image ${index + 1} of ${images.length}`;
+      imageEl.dataset.loadToken = String(token);
+      imageEl.src = src;
     } else {
-      imageEl.hidden = true;
-      placeholderEl.hidden = false;
-      placeholderLabelEl.textContent = `Image ${index + 1} of ${images.length}`;
+      showPlaceholder();
     }
 
     counterEl.textContent = `${index + 1} / ${images.length}`;
@@ -216,6 +250,13 @@ const Lightbox = (() => {
     nextBtn.addEventListener('click', () => go(1));
     closeBtn.addEventListener('click', close);
 
+    // If the file at this path doesn't exist yet, fall back to the
+    // placeholder instead of showing a broken-image icon. Guarded by
+    // loadToken so a stale request can't clobber a slide navigated to since.
+    imageEl.addEventListener('error', () => {
+      if (imageEl.dataset.loadToken === String(loadToken)) showPlaceholder();
+    });
+
     // Click on the dimmed backdrop (not the image/controls) closes the viewer
     overlayEl.addEventListener('click', e => {
       if (e.target === overlayEl) close();
@@ -248,15 +289,33 @@ function buildGallery(images, title) {
   const dotsWrap = document.createElement('div');
   dotsWrap.className = 'gallery-dots';
 
+  function renderPlaceholder() {
+    slide.innerHTML = `
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">◻</div>
+        <div class="gallery-placeholder-label">Image ${index + 1} of ${images.length}</div>
+      </div>`;
+  }
+
   function renderSlide() {
     const src = images[index];
-    slide.innerHTML = src
-      ? `<img src="${src}" alt="${title} — image ${index + 1} of ${images.length}" loading="lazy" />`
-      : `
-        <div class="gallery-placeholder">
-          <div class="gallery-placeholder-icon">◻</div>
-          <div class="gallery-placeholder-label">Image ${index + 1} of ${images.length}</div>
-        </div>`;
+
+    if (!src) {
+      renderPlaceholder();
+    } else {
+      const img = document.createElement('img');
+      img.alt     = `${title} — image ${index + 1} of ${images.length}`;
+      img.loading = 'lazy';
+      // If the file at this path doesn't exist yet, fall back to the
+      // placeholder instead of showing a broken-image icon. The `contains`
+      // check guards against a stale load finishing after the user has
+      // already navigated to a different slide.
+      img.addEventListener('error', () => {
+        if (slide.contains(img)) renderPlaceholder();
+      });
+      img.src = src;
+      slide.replaceChildren(img);
+    }
 
     dotsWrap.querySelectorAll('.gallery-dot').forEach((dot, i) => {
       dot.classList.toggle('active', i === index);
