@@ -121,6 +121,24 @@
     </div>
   </footer>
 
+  <!-- ── LIGHTBOX ─────────────────────────────────────────────────
+       Full-screen expanded image viewer, shared by every gallery
+       on the page. Hidden by default; script.js's Lightbox module
+       populates and toggles it. -->
+  <div id="lightbox" class="lightbox" hidden aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close expanded image">×</button>
+    <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
+    <div class="lightbox-stage">
+      <img id="lightbox-img" alt="" />
+      <div id="lightbox-placeholder" class="lightbox-placeholder">
+        <div class="lightbox-placeholder-icon">◻</div>
+        <div id="lightbox-placeholder-label" class="lightbox-placeholder-label">Image placeholder</div>
+      </div>
+    </div>
+    <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>
+    <div id="lightbox-counter" class="lightbox-counter"></div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

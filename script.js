@@ -2,13 +2,14 @@
    script.js — Portfolio interactivity
 
    Sections (Ctrl+F to jump):
-     A. PROJECT DATA      — edit here to add/change your work
-     B. EXPLORER RENDERER — coding split-pane (sidebar + detail panel)
-     C. CARD RENDERER     — artistic card grid
-     D. MIRROR PANEL      — reactive canvas in the About section
-     E. SCROLL LOGIC      — nav reveal + section tracking
-     F. REVEAL            — fade-in-on-scroll for cards and headers
-     G. INIT              — wires everything together on page load
+     A. PROJECT DATA       — edit here to add/change your work
+     B. GALLERY & LIGHTBOX — multi-image preview + expanded viewer
+     C. EXPLORER RENDERER  — coding split-pane (sidebar + detail panel)
+     D. CARD RENDERER      — artistic card grid
+     E. MIRROR PANEL       — reactive canvas in the About section
+     F. SCROLL LOGIC       — nav reveal + section tracking
+     G. REVEAL             — fade-in-on-scroll for cards and headers
+     H. INIT               — wires everything together on page load
    ───────────────────────────────────────────────────────────── */
 
 
@@ -21,8 +22,11 @@
      title    — shown in the sidebar and as the panel heading
      category — short label in the accent color
      desc     — 1–2 sentences shown in the detail panel
-     iframe   — relative URL to embed as a live preview, or null
-     img      — fallback image path if no iframe, or null
+     images   — array of image paths for the preview gallery;
+                use `null` entries as placeholders until real
+                screenshots exist. Multiple entries render arrows
+                and dots so the gallery can be scrolled through,
+                and every image opens the expanded lightbox view.
      tags     — array of tech/skill chips shown below the description
      link     — primary call-to-action URL, or null
      linkLabel — button text (defaults to "View project →" if omitted)
@@ -38,8 +42,7 @@ const PROJECTS = {
       title:     'LG Merch Site',
       category:  'Web Development',
       desc:      'End-to-end merch site for Light Garden — a Valorant beer league franchise. Built with plain HTML/CSS/JS and Shopify Buy Button integration, featuring a live ticker, product cards with variant selection, and a countdown to the next drop.',
-      iframe:    'merch/index.html',
-      img:       null,
+      images:    [null, null, null, null],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify'],
       link:      'https://evangelinagrimes.github.io/merch/',
       linkLabel: 'Live site →',
@@ -49,8 +52,7 @@ const PROJECTS = {
       title:     'Drone Research Platform',
       category:  'Research / Hardware',
       desc:      'Custom multi-rotor platform for academic drone research. Sensor fusion, flight logging, and ROS2 integration across onboard and ground-station nodes.',
-      iframe:    null,
-      img:       null,
+      images:    [null, null, null],
       tags:      ['ROS2', 'Python', 'Hardware', 'Sensor Fusion'],
       link:      null,
       linkLabel: null,
@@ -60,8 +62,7 @@ const PROJECTS = {
       title:     'ROS2 Node Architecture',
       category:  'ROS2 / Python',
       desc:      'Modular ROS2 node graph for autonomous flight tasks. Custom message types, service interfaces, and a ground-truth data logger that writes to bag files for post-flight analysis.',
-      iframe:    null,
-      img:       null,
+      images:    [null, null],
       tags:      ['ROS2', 'Python', 'Pub/Sub', 'Data Logging'],
       link:      null,
       linkLabel: null,
@@ -71,8 +72,7 @@ const PROJECTS = {
       title:     'Drone Network Protocol',
       category:  'Networking / Raspberry Pi',
       desc:      'Low-latency communication protocol for drone swarm coordination over a Raspberry Pi mesh network. Targets sub-20 ms round-trip for telemetry and command channels.',
-      iframe:    null,
-      img:       null,
+      images:    [null, null],
       tags:      ['Networking', 'Raspberry Pi', 'Python', 'UDP'],
       link:      null,
       linkLabel: null,
@@ -82,8 +82,7 @@ const PROJECTS = {
       title:     'Broadcast Production',
       category:  'Live Graphics / OBS',
       desc:      'Lower thirds, scorebug, transition animations, and post-match graphics for Light Garden\'s VDC match broadcasts. Produced in OBS with custom scene collections and CSS overlays.',
-      iframe:    null,
-      img:       null,
+      images:    [null, null, null],
       tags:      ['OBS', 'CSS', 'Motion Design', 'Broadcast'],
       link:      null,
       linkLabel: null,
@@ -130,47 +129,213 @@ const PROJECTS = {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   B. EXPLORER RENDERER
+   B. GALLERY & LIGHTBOX
+   ─────────────────────────────────────────────────────────────
+   Reusable multi-image preview + expanded viewer, used by the
+   coding section's explorer panel (and available to any other
+   section that wants the same "gallery of images that expand
+   into a full-screen viewer with arrow navigation" behavior).
+
+     buildGallery() — one image at a time, with prev/next arrows
+                      and dot indicators once there's more than
+                      one image. Clicking the image opens Lightbox.
+     Lightbox       — full-screen overlay with its own prev/next
+                       arrows, keyboard support, and click-outside
+                       or Escape to close.
+   ═══════════════════════════════════════════════════════════════ */
+
+const Lightbox = (() => {
+  let overlayEl, imageEl, placeholderEl, placeholderLabelEl, counterEl;
+  let prevBtn, nextBtn, closeBtn;
+  let images = [];
+  let index = 0;
+  let titleText = '';
+
+  function render() {
+    const src = images[index];
+
+    if (src) {
+      imageEl.src    = src;
+      imageEl.alt    = `${titleText} — image ${index + 1} of ${images.length}`;
+      imageEl.hidden = false;
+      placeholderEl.hidden = true;
+    } else {
+      imageEl.hidden = true;
+      placeholderEl.hidden = false;
+      placeholderLabelEl.textContent = `Image ${index + 1} of ${images.length}`;
+    }
+
+    counterEl.textContent = `${index + 1} / ${images.length}`;
+
+    const multiple = images.length > 1;
+    prevBtn.hidden = !multiple;
+    nextBtn.hidden = !multiple;
+  }
+
+  function go(delta) {
+    index = (index + delta + images.length) % images.length;
+    render();
+  }
+
+  function open(imageList, startIndex, title) {
+    images    = imageList;
+    index     = startIndex || 0;
+    titleText = title || '';
+
+    render();
+    overlayEl.hidden = false;
+    overlayEl.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    overlayEl.hidden = true;
+    overlayEl.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+  }
+
+  function handleKeydown(e) {
+    if (overlayEl.hidden) return;
+    if (e.key === 'Escape')    close();
+    if (e.key === 'ArrowLeft')  go(-1);
+    if (e.key === 'ArrowRight') go(1);
+  }
+
+  function setup() {
+    overlayEl          = document.getElementById('lightbox');
+    imageEl            = document.getElementById('lightbox-img');
+    placeholderEl       = document.getElementById('lightbox-placeholder');
+    placeholderLabelEl = document.getElementById('lightbox-placeholder-label');
+    counterEl          = document.getElementById('lightbox-counter');
+    prevBtn            = overlayEl.querySelector('.lightbox-arrow--prev');
+    nextBtn            = overlayEl.querySelector('.lightbox-arrow--next');
+    closeBtn           = overlayEl.querySelector('.lightbox-close');
+
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(1));
+    closeBtn.addEventListener('click', close);
+
+    // Click on the dimmed backdrop (not the image/controls) closes the viewer
+    overlayEl.addEventListener('click', e => {
+      if (e.target === overlayEl) close();
+    });
+
+    document.addEventListener('keydown', handleKeydown);
+  }
+
+  return { setup, open, close };
+})(); // end Lightbox IIFE
+
+/**
+ * Build the preview gallery for a project: one image (or placeholder)
+ * at a time, with prev/next arrows and dot indicators once there's
+ * more than one image. Clicking the current image opens it in Lightbox.
+ * Returns a DOM element ready to insert into .explorer-preview.
+ */
+function buildGallery(images, title) {
+  const wrap = document.createElement('div');
+  wrap.className = 'gallery';
+
+  let index = 0;
+
+  const slide = document.createElement('div');
+  slide.className = 'gallery-slide';
+  slide.setAttribute('role', 'button');
+  slide.setAttribute('tabindex', '0');
+  slide.setAttribute('aria-label', `Expand image — ${title}`);
+
+  const dotsWrap = document.createElement('div');
+  dotsWrap.className = 'gallery-dots';
+
+  function renderSlide() {
+    const src = images[index];
+    slide.innerHTML = src
+      ? `<img src="${src}" alt="${title} — image ${index + 1} of ${images.length}" loading="lazy" />`
+      : `
+        <div class="gallery-placeholder">
+          <div class="gallery-placeholder-icon">◻</div>
+          <div class="gallery-placeholder-label">Image ${index + 1} of ${images.length}</div>
+        </div>`;
+
+    dotsWrap.querySelectorAll('.gallery-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  function go(delta) {
+    index = (index + delta + images.length) % images.length;
+    renderSlide();
+  }
+
+  slide.addEventListener('click', () => Lightbox.open(images, index, title));
+  slide.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      Lightbox.open(images, index, title);
+    }
+  });
+
+  wrap.appendChild(slide);
+
+  if (images.length > 1) {
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'gallery-arrow gallery-arrow--prev';
+    prevBtn.setAttribute('aria-label', 'Previous image');
+    prevBtn.innerHTML = '‹';
+    prevBtn.addEventListener('click', e => { e.stopPropagation(); go(-1); });
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'gallery-arrow gallery-arrow--next';
+    nextBtn.setAttribute('aria-label', 'Next image');
+    nextBtn.innerHTML = '›';
+    nextBtn.addEventListener('click', e => { e.stopPropagation(); go(1); });
+
+    wrap.append(prevBtn, nextBtn);
+
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = `gallery-dot${i === 0 ? ' active' : ''}`;
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+      dot.addEventListener('click', e => {
+        e.stopPropagation();
+        index = i;
+        renderSlide();
+      });
+      dotsWrap.appendChild(dot);
+    });
+
+    wrap.appendChild(dotsWrap);
+  }
+
+  renderSlide();
+  return wrap;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   C. EXPLORER RENDERER
    ─────────────────────────────────────────────────────────────
    Builds the split-pane explorer for the Coding section:
    left = sidebar list of project tabs
-   right = detail panel (iframe/image preview + info)
+   right = detail panel (image gallery + info)
 
    You shouldn't need to edit this — add/change entries in PROJECTS.
    ═══════════════════════════════════════════════════════════════ */
 
 /**
- * Build the HTML string for the right-hand detail panel of a project.
- * Returns an HTML string that gets injected into .explorer-panel.
+ * Build the DOM for the right-hand detail panel of a project.
+ * Returns a fragment ready to drop into .explorer-panel.
  */
 function buildExplorerPanel(project) {
-  // ── Preview zone (top) ──
-  let previewHTML;
+  const panel = document.createDocumentFragment();
 
-  if (project.iframe) {
-    previewHTML = `
-      <div class="explorer-preview">
-        <iframe
-          src="${project.iframe}"
-          title="${project.title} live preview"
-          loading="lazy"
-          sandbox="allow-scripts allow-same-origin allow-forms"
-        ></iframe>
-      </div>`;
-  } else if (project.img) {
-    previewHTML = `
-      <div class="explorer-preview">
-        <img src="${project.img}" alt="${project.title}" loading="lazy" />
-      </div>`;
-  } else {
-    previewHTML = `
-      <div class="explorer-preview">
-        <div class="explorer-preview-placeholder">
-          <div class="explorer-preview-placeholder-icon">◻</div>
-          <div class="explorer-preview-placeholder-label">Preview coming</div>
-        </div>
-      </div>`;
-  }
+  // ── Preview zone (top): image gallery ──
+  const previewWrap = document.createElement('div');
+  previewWrap.className = 'explorer-preview';
+  previewWrap.appendChild(buildGallery(project.images, project.title));
+  panel.appendChild(previewWrap);
 
   // ── Tag chips ──
   const tagsHTML = project.tags && project.tags.length
@@ -199,16 +364,19 @@ function buildExplorerPanel(project) {
     ? `<div class="card-status">${project.status}</div>`
     : '';
 
-  return `
-    ${previewHTML}
-    <div class="explorer-info">
-      <div class="explorer-info-category">${project.category}</div>
-      <h3>${project.title}</h3>
-      <p class="explorer-info-desc">${project.desc}</p>
-      ${tagsHTML}
-      ${linksHTML}
-      ${statusHTML}
-    </div>`;
+  const info = document.createElement('div');
+  info.className = 'explorer-info';
+  info.innerHTML = `
+    <div class="explorer-info-category">${project.category}</div>
+    <h3>${project.title}</h3>
+    <p class="explorer-info-desc">${project.desc}</p>
+    ${tagsHTML}
+    ${linksHTML}
+    ${statusHTML}
+  `;
+  panel.appendChild(info);
+
+  return panel;
 }
 
 /**
@@ -234,7 +402,7 @@ function buildExplorer(projects, sidebarEl, panelEl) {
       // Fade out, swap content, fade in
       panelEl.classList.add('swapping');
       setTimeout(() => {
-        panelEl.innerHTML = buildExplorerPanel(project);
+        panelEl.replaceChildren(buildExplorerPanel(project));
         panelEl.classList.remove('swapping');
         panelEl.classList.add('swapping-in');
         setTimeout(() => panelEl.classList.remove('swapping-in'), 220);
@@ -245,12 +413,12 @@ function buildExplorer(projects, sidebarEl, panelEl) {
   });
 
   // Render first project's detail panel immediately
-  panelEl.innerHTML = buildExplorerPanel(projects[0]);
+  panelEl.replaceChildren(buildExplorerPanel(projects[0]));
 }
 
 
 /* ═══════════════════════════════════════════════════════════════
-   C. CARD RENDERER
+   D. CARD RENDERER
    ─────────────────────────────────────────────────────────────
    Builds the card grid for the Artistic section.
    You shouldn't need to edit this.
@@ -344,7 +512,7 @@ function renderProjects() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   D. MIRROR PANEL
+   E. MIRROR PANEL
    ─────────────────────────────────────────────────────────────
    A 2D canvas in the About section. Simulates a fluid surface
    using a height-field wave algorithm — each pixel's displacement
@@ -480,7 +648,7 @@ const MirrorPanel = (() => {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   E. SCROLL LOGIC
+   F. SCROLL LOGIC
    ─────────────────────────────────────────────────────────────
    Shows/hides the nav after the hero scrolls out of view.
    ═══════════════════════════════════════════════════════════════ */
@@ -500,7 +668,7 @@ function setupScrollLogic() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   F. SCROLL REVEAL
+   G. SCROLL REVEAL
    ─────────────────────────────────────────────────────────────
    IntersectionObserver adds .revealed to .reveal elements when
    they enter the viewport. CSS handles the fade-in animation.
@@ -523,26 +691,29 @@ function setupReveal() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   G. INIT
+   H. INIT
    ─────────────────────────────────────────────────────────────
    Runs once the HTML is fully parsed.
    Cards/tabs must be in the DOM before setupReveal() observes them.
    ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Build the coding explorer and artistic card grid
+  // 1. Wire up the lightbox overlay (used by galleries built in step 2)
+  Lightbox.setup();
+
+  // 2. Build the coding explorer and artistic card grid
   renderProjects();
 
-  // 2. Check for reduced-motion preference once, up front
+  // 3. Check for reduced-motion preference once, up front
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 3. Scroll-driven nav reveal
+  // 4. Scroll-driven nav reveal
   setupScrollLogic();
 
-  // 4. Scroll reveal for headers and cards
+  // 5. Scroll reveal for headers and cards
   setupReveal();
 
-  // 5. Mirror panel (skip for reduced-motion users)
+  // 6. Mirror panel (skip for reduced-motion users)
   if (!reduceMotion) {
     requestAnimationFrame(() => {
       const mc = document.getElementById('mirror-canvas');
@@ -550,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Footer year — fills in automatically
+  // 7. Footer year — fills in automatically
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
