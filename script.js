@@ -35,8 +35,9 @@
                 scrolled through; images (not videos — see below)
                 open the expanded lightbox view.
      tags     — array of tech/skill chips shown below the description
-     link     — primary call-to-action URL, or null
-     linkLabel — button text (defaults to "View project →" if omitted)
+     links    — array of call-to-action buttons: { url, label }.
+                Renders one button per entry, in order. Omit or use
+                an empty array for a project with no links.
      status   — optional badge text, or null
 
    Artistic projects (appear in the card grid):
@@ -46,21 +47,40 @@ const PROJECTS = {
 
   coding: [
     {
-      title:     'Franchise Merch Site',
+      title:     'Flexible Drones Research',
+      category:  'Research / Hardware',
+      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pihawk systems. On my team of four, I implemented heterogeneous drone control with ROS2 (Kilted) action-based feedback for the Pihawks (Pixhawk 2.4.8 flight controller mounted on a raspberry pi) communicating commands via a telemetry module using the MAVLink protocol. The drones are flown in a netted drone cage using an Optitrack sensor system to track postition data. I configured the raspberry pi\'s on the Pihawks to take in the position data and fuse it with the flight controller via a direct UART connection.',
+      media:     [
+        'assets/coding/drone-research-platform/capwic_poster.jpg',
+        'assets/coding/drone-research-platform/drones-2.jpg',
+        'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
+        'assets/coding/drone-research-platform/First3Sails_Web.mp4',
+        'assets/coding/drone-research-platform/DSC_5330.JPG',
+      ],
+      tags:      ['ROS2', 'Python', 'Pihawk', 'Crazyflie', 'Optitrack'],
+      links:     [
+        { url: 'https://github.com/CNURobotics/flexible_drones', label: '-> Official GitHub Release <-' },
+        { url: 'https://ieeexplore.ieee.org/document/11476332', label: '-> IEEE paper <-' },
+      ],
+      status:    'Ongoing',
+    },
+    {
+      title:     'Franchise Merch Webpage',
       category:  'Web Development',
-      desc:      'I created this webpage as a platform to sell stickers and various other franchise related merchandise. Valorant Draft Circuit (VDC) is a For-Fun Valorant League and Light Garden (LG) is the franchise I am representing. It is a static website built with HTML, CSS, and JavaScript. I used Shopify to handle the e-commerce functionality.',
+      desc:      'I created this webpage as a platform to sell stickers and various other franchise related merchandise. Valorant Draft Circuit (VDC) is a For-Fun Valorant League and Light Garden (LG) is the franchise I am representing. It is a static website built with HTML, CSS, and JavaScript. I used Shopify to handle the e-commerce functionality. This is an ongoing project and I will be adding more merchandise to the site in the future.  ',
       media:     [
         'assets/coding/lg-merch-site/Merch_Landing_Page.png',
         'assets/coding/lg-merch-site/Merch_Product_Page.png',
         'assets/coding/lg-merch-site/Merch_Order_Page.png',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
-      link:      'https://bobert-merch.github.io/',
-      linkLabel: '-> Live site <-',
+      links:     [
+        { url: 'https://bobert-merch.github.io/', label: '-> Visit Live site <-' },
+      ],
       status:    null,
     },
     {
-      title:     'Cafe Canna',
+      title:     'Cafe Canna Webpage',
       category:  'Web Development',
       desc:      'Website for Cafe Canna, an in-the-works dispensary × cafe concept. Designed and built end-to-end with Claude Code.',
       media:     [
@@ -69,65 +89,37 @@ const PROJECTS = {
         'assets/coding/cafe-canna/Cafe_Product_Page.png',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
-      link:      'https://cafe-canna.github.io/cafecannallc/',
-      linkLabel: '-> Live site <-',
+      links:     [
+        { url: 'https://cafe-canna.github.io/cafecannallc/', label: '-> Visit Live site <-' },
+      ],
       status:    null,
     },
     {
-      title:     'Drone Research Platform',
-      category:  'Research / Hardware',
-      desc:      'Custom multi-rotor platform for academic drone research. Sensor fusion, flight logging, and ROS2 integration across onboard and ground-station nodes.',
+      title:     'Day Out Generator',
+      category:  'Application Development',
+      desc:      'With the use of the Google Places API, this application generates a day out with various activities — a restaurant, an activity, then dessert.',
       media:     [
-        'assets/coding/drone-research-platform/drones-2.jpg',
-        'assets/coding/drone-research-platform/capwic_poster.jpg',
-        'assets/coding/drone-research-platform/DSC_5330.JPG',
-        'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
-        'assets/coding/drone-research-platform/First3Sails_Web.mp4',
-        'assets/coding/drone-research-platform/Ocs_3Sails_Takeoff_Web.mp4',
+        'assets/coding/day-out-generator/Egrimes_Demo_Web.mp4',
       ],
-      tags:      ['ROS2', 'Python', 'Hardware', 'Sensor Fusion'],
-      link:      'https://github.com/CNURobotics/flexible_drones',
-      linkLabel: 'GitHub repo →',
-      status:    'Ongoing',
-    },
-    {
-      title:     'ROS2 Node Architecture',
-      category:  'ROS2 / Python',
-      desc:      'Modular ROS2 node graph for autonomous flight tasks. Custom message types, service interfaces, and a ground-truth data logger that writes to bag files for post-flight analysis.',
-      media:     [
-        'assets/coding/ros2-node-architecture/1.jpg',
-        'assets/coding/ros2-node-architecture/2.jpg',
+      tags:      ['Python', 'Google Places API'],
+      links:     [
+        { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: '-> GitHub repo <-' },
       ],
-      tags:      ['ROS2', 'Python', 'Pub/Sub', 'Data Logging'],
-      link:      null,
-      linkLabel: null,
       status:    null,
     },
     {
-      title:     'Drone Network Protocol',
-      category:  'Networking / Raspberry Pi',
-      desc:      'Low-latency communication protocol for drone swarm coordination over a Raspberry Pi mesh network. Targets sub-20 ms round-trip for telemetry and command channels.',
+      title:     'UAS Competition Webpage',
+      category:  'Web Development',
+      desc:      'I initiated and led the development of the Unmanned Aerial System (UAS) Club\'s website to help the team meet the qualification requirements for the international SUAS competition. This was the first website the four of us had ever created, so while it is far from perfect, it was an excellent learning opportunity. We held weekly meetings during the semester to review our progress, discuss challenges, and set goals for the upcoming week.',
       media:     [
-        'assets/coding/drone-network-protocol/1.jpg',
-        'assets/coding/drone-network-protocol/2.jpg',
+        'assets/coding/uas-competition-webpage/UAS_About.png',
+        'assets/coding/uas-competition-webpage/UAS_Team.png',
       ],
-      tags:      ['Networking', 'Raspberry Pi', 'Python', 'UDP'],
-      link:      null,
-      linkLabel: null,
-      status:    'Research pending',
-    },
-    {
-      title:     'Broadcast Production',
-      category:  'Live Graphics / OBS',
-      desc:      'Lower thirds, scorebug, transition animations, and post-match graphics for Light Garden\'s VDC match broadcasts. Produced in OBS with custom scene collections and CSS overlays.',
-      media:     [
-        'assets/coding/broadcast-production/1.jpg',
-        'assets/coding/broadcast-production/2.jpg',
-        'assets/coding/broadcast-production/3.jpg',
+      tags:      ['HTML', 'CSS', 'JavaScript'],
+      links:     [
+        { url: 'https://cnuuas.github.io/', label: '-> Visit Live site <-' },
+        { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: '-> GitHub repo <-' },
       ],
-      tags:      ['OBS', 'CSS', 'Motion Design', 'Broadcast'],
-      link:      null,
-      linkLabel: null,
       status:    null,
     },
   ],
@@ -541,19 +533,17 @@ function buildExplorerPanel(project) {
     : '';
 
   // ── Links ──
-  let linksHTML = '';
-  if (project.link) {
-    const label = project.linkLabel || 'View project →';
-    linksHTML = `
-      <div class="explorer-links">
-        <a
-          href="${project.link}"
-          class="explorer-link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >${label}</a>
-      </div>`;
-  }
+  const linksHTML = project.links && project.links.length
+    ? `<div class="explorer-links">
+         ${project.links.map(({ url, label }) => `
+           <a
+             href="${url}"
+             class="explorer-link"
+             target="_blank"
+             rel="noopener noreferrer"
+           >${label}</a>`).join('')}
+       </div>`
+    : '';
 
   // ── Status badge ──
   const statusHTML = project.status
