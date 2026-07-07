@@ -6,10 +6,9 @@
      B. GALLERY & LIGHTBOX — multi-image preview + expanded viewer
      C. EXPLORER RENDERER  — coding split-pane (sidebar + detail panel)
      D. CARD RENDERER      — artistic card grid
-     E. MIRROR PANEL       — reactive canvas in the About section
-     F. SCROLL LOGIC       — nav reveal + section tracking
-     G. REVEAL             — fade-in-on-scroll for cards and headers
-     H. INIT               — wires everything together on page load
+     E. SCROLL LOGIC       — nav reveal + section tracking
+     F. REVEAL             — fade-in-on-scroll for cards and headers
+     G. INIT               — wires everything together on page load
    ───────────────────────────────────────────────────────────── */
 
 
@@ -77,7 +76,7 @@ const PROJECTS = {
       links:     [
         { url: 'https://bobert-merch.github.io/', label: '-> Visit Live site <-' },
       ],
-      status:    null,
+      status:    'Ongoing',
     },
     {
       title:     'Cafe Canna Webpage',
@@ -92,7 +91,7 @@ const PROJECTS = {
       links:     [
         { url: 'https://cafe-canna.github.io/cafecannallc/', label: '-> Visit Live site <-' },
       ],
-      status:    null,
+      status:    'template',
     },
     {
       title:     'Team Scouting Spreadsheet',
@@ -751,143 +750,7 @@ function renderProjects() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   E. MIRROR PANEL
-   ─────────────────────────────────────────────────────────────
-   A 2D canvas in the About section. Simulates a fluid surface
-   using a height-field wave algorithm — each pixel's displacement
-   propagates to its neighbors each frame, like ripples on water.
-   Moving your cursor over the panel disturbs the surface.
-   ═══════════════════════════════════════════════════════════════ */
-const MirrorPanel = (() => {
-
-  let ctx, w, h, rafId;
-
-  /* Two height-field buffers — ping-pong to avoid allocating each frame */
-  let buf0, buf1;
-
-  let mouseX = -1, mouseY = -1;
-  let isHovering = false;
-
-  function allocBuffers() {
-    buf0 = new Float32Array(w * h);
-    buf1 = new Float32Array(w * h);
-  }
-
-  function idx(x, y) { return y * w + x; }
-
-  function disturb(px, py, amount) {
-    const cx = Math.round(px);
-    const cy = Math.round(py);
-    const r  = 4;
-    for (let dy = -r; dy <= r; dy++) {
-      for (let dx = -r; dx <= r; dx++) {
-        if (dx*dx + dy*dy > r*r) continue;
-        const nx = cx + dx, ny = cy + dy;
-        if (nx > 0 && nx < w - 1 && ny > 0 && ny < h - 1) {
-          buf0[idx(nx, ny)] = amount;
-        }
-      }
-    }
-  }
-
-  /* Discrete wave equation: new = (neighbors_sum / 2) − old, damped */
-  function simulate() {
-    for (let y = 1; y < h - 1; y++) {
-      for (let x = 1; x < w - 1; x++) {
-        buf1[idx(x, y)] =
-          (buf0[idx(x-1, y)] +
-           buf0[idx(x+1, y)] +
-           buf0[idx(x, y-1)] +
-           buf0[idx(x, y+1)]) * 0.5
-          - buf1[idx(x, y)];
-
-        buf1[idx(x, y)] *= 0.97;
-      }
-    }
-    [buf0, buf1] = [buf1, buf0];
-  }
-
-  function draw() {
-    const imgData = ctx.createImageData(w, h);
-    const px      = imgData.data;
-
-    const bR = 12, bG = 16, bB = 30;
-
-    for (let y = 1; y < h - 1; y++) {
-      for (let x = 1; x < w - 1; x++) {
-        const gx = buf0[idx(x+1, y)] - buf0[idx(x-1, y)];
-        const gy = buf0[idx(x, y+1)] - buf0[idx(x, y-1)];
-
-        const sx = Math.max(0, Math.min(w-1, Math.round(x + gx)));
-        const sy = Math.max(0, Math.min(h-1, Math.round(y + gy)));
-
-        const spec  = Math.max(0, -buf0[idx(sx, sy)]) * 1.8;
-        const light = Math.min(255, spec * 3.5);
-
-        const i = (y * w + x) * 4;
-        px[i]   = Math.min(255, bR + light);
-        px[i+1] = Math.min(255, bG + light);
-        px[i+2] = Math.min(255, bB + Math.floor(light * 1.15));
-        px[i+3] = 255;
-      }
-    }
-
-    ctx.putImageData(imgData, 0, 0);
-  }
-
-  function loop() {
-    rafId = requestAnimationFrame(loop);
-    if (isHovering && mouseX >= 0) disturb(mouseX, mouseY, 35);
-    simulate();
-    draw();
-  }
-
-  function setup(canvas) {
-    ctx = canvas.getContext('2d');
-
-    const scale = 0.5;
-    w = Math.max(1, Math.floor(canvas.offsetWidth  * scale)) || 200;
-    h = Math.max(1, Math.floor(canvas.offsetHeight * scale)) || 200;
-    canvas.width  = w;
-    canvas.height = h;
-
-    allocBuffers();
-    disturb(w * 0.5, h * 0.5, 80);
-
-    const wrap = document.getElementById('mirror-wrap');
-    if (wrap) {
-      wrap.addEventListener('mousemove', e => {
-        const r  = canvas.getBoundingClientRect();
-        mouseX = (e.clientX - r.left)  / r.width  * w;
-        mouseY = (e.clientY - r.top)   / r.height * h;
-        disturb(mouseX, mouseY, 110);
-        isHovering = true;
-      });
-
-      wrap.addEventListener('mouseleave', () => { isHovering = false; });
-
-      wrap.addEventListener('touchmove', e => {
-        e.preventDefault();
-        const r     = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        disturb(
-          (touch.clientX - r.left) / r.width  * w,
-          (touch.clientY - r.top)  / r.height * h,
-          110
-        );
-      }, { passive: false });
-    }
-
-    loop();
-  }
-
-  return { setup };
-
-})();  // end MirrorPanel IIFE
-
-
-/* ═══════════════════════════════════════════════════════════════
-   F. SCROLL LOGIC
+   E. SCROLL LOGIC
    ─────────────────────────────────────────────────────────────
    Shows/hides the nav after the hero scrolls out of view.
    ═══════════════════════════════════════════════════════════════ */
@@ -907,7 +770,7 @@ function setupScrollLogic() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   G. SCROLL REVEAL
+   F. SCROLL REVEAL
    ─────────────────────────────────────────────────────────────
    IntersectionObserver adds .revealed to .reveal elements when
    they enter the viewport. CSS handles the fade-in animation.
@@ -930,7 +793,7 @@ function setupReveal() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   H. INIT
+   G. INIT
    ─────────────────────────────────────────────────────────────
    Runs once the HTML is fully parsed.
    Cards/tabs must be in the DOM before setupReveal() observes them.
@@ -943,24 +806,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Build the coding explorer and artistic card grid
   renderProjects();
 
-  // 3. Check for reduced-motion preference once, up front
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // 4. Scroll-driven nav reveal
+  // 3. Scroll-driven nav reveal
   setupScrollLogic();
 
-  // 5. Scroll reveal for headers and cards
+  // 4. Scroll reveal for headers and cards
   setupReveal();
 
-  // 6. Mirror panel (skip for reduced-motion users)
-  if (!reduceMotion) {
-    requestAnimationFrame(() => {
-      const mc = document.getElementById('mirror-canvas');
-      if (mc) MirrorPanel.setup(mc);
-    });
-  }
-
-  // 7. Footer year — fills in automatically
+  // 5. Footer year — fills in automatically
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 

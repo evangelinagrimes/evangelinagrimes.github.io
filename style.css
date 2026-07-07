@@ -12,7 +12,7 @@
      8.  Artistic section (warm slate radial-pulse background)
      9.  Project explorer split-pane (coding section)
      10. Project card grid (artistic section)
-     11. About & mirror panel
+     11. About & headshot
      12. Scroll-reveal animations
      13. Responsive
      14. Reduced-motion overrides
@@ -387,7 +387,9 @@ h1, h2, h3 {
 /* ── 9. Project Explorer (Coding Split-Pane) ───────────────── */
 .project-explorer {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  /* Sidebar column sizes to the widest tab label (no wrap/scroll needed);
+     minmax floors it at 220px so a short project list doesn't look cramped. */
+  grid-template-columns: minmax(220px, max-content) 1fr;
   border: 1px solid var(--border);
   max-width: var(--max-w);
   margin: 0 auto;
@@ -405,6 +407,11 @@ h1, h2, h3 {
   flex-direction: column;
   padding: 0.5rem 0;
   overflow-y: auto;
+  /* Setting only overflow-y computes overflow-x as auto too (per spec),
+     which can surface a stray horizontal scrollbar from sub-pixel
+     overflow. The column is now sized to fit its content, so this
+     should never be needed — but state it explicitly to be sure. */
+  overflow-x: hidden;
 }
 
 /* Mobile-only project picker — see Responsive. Same options as the
@@ -417,7 +424,10 @@ h1, h2, h3 {
 .explorer-tab {
   all: unset;   /* wipe browser button defaults */
   display: block;
-  width: 100%;
+  /* No explicit width: the sidebar's flex `align-items: stretch`
+     default already fills the cross axis. An explicit width: 100%
+     here conflicts with the grid column's max-content sizing pass
+     above and causes a few px of horizontal overflow. */
   padding: 0.85rem 1.2rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -822,7 +832,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 11. About & Mirror Panel ──────────────────────────────── */
+/* ── 11. About & Headshot ───────────────────────────────────── */
 .region--about {
   background-color: var(--bg);
   max-width: 100%;
@@ -866,19 +876,19 @@ h1, h2, h3 {
 
 .contact-link:hover { border-bottom-color: var(--accent-hero-a); }
 
-.mirror-wrap {
+.headshot-wrap {
   aspect-ratio: 1 / 1;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
   box-shadow: inset 0 0 80px rgba(63, 224, 197, 0.03);
-  cursor: crosshair;
 }
 
-#mirror-canvas {
+.headshot-wrap img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 
@@ -947,7 +957,7 @@ h1, h2, h3 {
     gap: 2.5rem;
   }
 
-  .mirror-wrap { max-width: 360px; }
+  .headshot-wrap { max-width: 360px; }
 }
 
 @media (max-width: 640px) {
