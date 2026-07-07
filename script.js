@@ -184,33 +184,59 @@ const PROJECTS = {
 /**
  * Adds left/right swipe detection to an element for touch devices.
  * Calls onSwipeLeft() when the user drags left past the threshold
- * (next), onSwipeRight() when they drag right (prev). Gestures that
- * are more vertical than horizontal are ignored so page scrolling
- * still works normally.
+ * (next), onSwipeRight() when they drag right (prev).
+ *
+ * Once a drag reads as clearly more horizontal than vertical, it
+ * calls preventDefault() on the rest of that gesture so the page
+ * doesn't scroll/rubber-band underneath the swipe — without that,
+ * the browser's native scroll runs concurrently and the swipe reads
+ * as janky. A gesture that stays more vertical than horizontal is
+ * left alone so normal page scrolling still works.
  */
 function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
   const THRESHOLD = 40;
-  let startX = 0, startY = 0, tracking = false;
+  const INTENT_DEADZONE = 10;
+  let startX = 0, startY = 0, tracking = false, horizontalIntent = false;
+
+  function reset() { tracking = false; horizontalIntent = false; }
 
   el.addEventListener('touchstart', e => {
+    if (e.touches.length > 1) { reset(); return; }
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
     tracking = true;
+    horizontalIntent = false;
   }, { passive: true });
 
-  el.addEventListener('touchend', e => {
-    if (!tracking) return;
-    tracking = false;
-
-    const t  = e.changedTouches[0];
+  el.addEventListener('touchmove', e => {
+    if (!tracking || e.touches.length > 1) return;
+    const t  = e.touches[0];
     const dx = t.clientX - startX;
     const dy = t.clientY - startY;
 
-    if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+    if (!horizontalIntent && Math.abs(dx) > INTENT_DEADZONE && Math.abs(dx) > Math.abs(dy)) {
+      horizontalIntent = true;
+    }
+    // Claim the gesture once it's clearly a horizontal swipe, so the
+    // page can't scroll out from under it for the rest of the drag.
+    if (horizontalIntent) e.preventDefault();
+  }, { passive: false });
+
+  el.addEventListener('touchend', e => {
+    if (!tracking) return;
+    const wasHorizontal = horizontalIntent;
+    reset();
+    if (!wasHorizontal) return;
+
+    const t  = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    if (Math.abs(dx) < THRESHOLD) return;
     if (dx < 0) onSwipeLeft  && onSwipeLeft();
     else        onSwipeRight && onSwipeRight();
   }, { passive: true });
+
+  el.addEventListener('touchcancel', reset, { passive: true });
 }
 
 const Lightbox = (() => {

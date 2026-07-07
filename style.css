@@ -545,6 +545,15 @@ h1, h2, h3 {
   opacity: 1;
 }
 
+/* Touch devices have no :hover state to reveal the arrows on, so
+   show them plainly there — swipe is available too, but shouldn't
+   be the only visible way to move between images. */
+@media (hover: none) {
+  .gallery-arrow {
+    opacity: 1;
+  }
+}
+
 .gallery-arrow:hover  { background: rgba(10, 14, 23, 0.85); }
 .gallery-arrow--prev  { left: 0.7rem; }
 .gallery-arrow--next  { right: 0.7rem; }
