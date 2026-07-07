@@ -95,6 +95,39 @@ const PROJECTS = {
       status:    null,
     },
     {
+      title:     'Team Scouting Spreadsheet',
+      category:  'Spreadsheet / Automation',
+      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them. Additionally, there is a team planner aspect that uses pivot tables and a lookup feature.',
+      media:     [
+        'assets/coding/team-scouting-spreadsheet/VDC_Raw.png',
+        'assets/coding/team-scouting-spreadsheet/VDC_Master.png',
+        'assets/coding/team-scouting-spreadsheet/VDC_Details.png',
+        'assets/coding/team-scouting-spreadsheet/VDC_Pivot.png',
+        'assets/coding/team-scouting-spreadsheet/VDC_Teams.png',
+      ],
+      tags:      ['Google Sheets', 'Pivot Tables', 'Data Automation'],
+      links:     [
+        { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: '-> View Template <-' },
+      ],
+      status:    null,
+    },
+    {
+      title:     'Senior Resident Assistant Duty Schedule',
+      category:  'Spreadsheet / Automation',
+      desc:      'As a Senior Resident Assistant (SRA) I was responsible for scheduling duty for my staff of Resident Assistants (RAs). I created this spreadsheet to act as a landing page for them so they had a visual reference of when they worked. This page also served as a swapping hub, where RAs could note what shifts they wanted to swap, wanted to keep, etc. The Master_Duty_Schedule tab serves as the primary data tab which both visual sheets refer to. In addition to the spreadsheet, I created an appscript that automatically created calendar events detailing who was working, the shift type, and the length of the shift.',
+      media:     [
+        'assets/coding/sra-duty-schedule/SRA_Main.png',
+        'assets/coding/sra-duty-schedule/SRA_Swap.png',
+        'assets/coding/sra-duty-schedule/SRA_Master.png',
+        'assets/coding/sra-duty-schedule/SRA_Calendar.png',
+      ],
+      tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
+      links:     [
+        { url: 'https://docs.google.com/spreadsheets/d/1bC61uJsBbzzgJt6sBgBHMXJ60ZfcMeZZpcyo5NiNbQU/edit?usp=sharing', label: '-> View Spreadsheet <-' },
+      ],
+      status:    null,
+    },
+    {
       title:     'Day Out Generator',
       category:  'Application Development',
       desc:      'With the use of the Google Places API, this application generates a day out with various activities — a restaurant, an activity, then dessert.',
@@ -122,6 +155,7 @@ const PROJECTS = {
       ],
       status:    null,
     },
+    
   ],
 
   artistic: [
