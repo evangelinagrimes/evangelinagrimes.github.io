@@ -96,7 +96,7 @@ const PROJECTS = {
     {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
-      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them. Additionally, there is a team planner aspect that uses pivot tables and a lookup feature.',
+      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them after any MMR udpates. The primary data tabs are "RAW", "CONSTANTS", and "MASTER_PLAYERS." Everything else is a visual representation of the data in those three tabs. The "DETAILS" tab displays all the players in the given tier and any notes that were made on them. The "PIVOT" tab is a pivot table that filters players by role, tier, and franchise status. The "TEAMS" tab is a team planner that uses the pivot table to display the best possible team based on the selected filters and preferences.  ',
       media:     [
         'assets/coding/team-scouting-spreadsheet/VDC_Raw.png',
         'assets/coding/team-scouting-spreadsheet/VDC_Master.png',
