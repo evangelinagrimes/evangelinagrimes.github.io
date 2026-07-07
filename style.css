@@ -933,18 +933,41 @@ h1, h2, h3 {
     display: none;
   }
 
+  /* Styled to read as an obviously-tappable control: accent border,
+     a visible chevron (native selects render one inconsistently,
+     especially on mobile), a raised shadow, and a couple of brief
+     pulses on load to draw the eye to it the first time. */
   .explorer-mobile-nav {
     display: block;
     width: 100%;
-    padding: 0.7rem 0.9rem;
+    padding: 0.85rem 2.5rem 0.85rem 1rem;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    font-weight: 500;
     letter-spacing: 0.05em;
     color: var(--text);
-    background: rgba(10, 14, 23, 0.6);
-    border: 1px solid var(--border-strong);
-    border-radius: 4px;
+    background-color: rgba(79, 195, 232, 0.1);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234FC3E8' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1.5px solid var(--accent-coding);
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(79, 195, 232, 0.18);
     cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    animation: dropdown-attention 1.6s ease-in-out 0.4s 2;
+  }
+
+  .explorer-mobile-nav:hover {
+    background-color: rgba(79, 195, 232, 0.16);
+    box-shadow: 0 3px 16px rgba(79, 195, 232, 0.28);
+  }
+
+  .explorer-mobile-nav:active {
+    transform: scale(0.98);
   }
 
   .explorer-mobile-nav:focus-visible {
@@ -952,12 +975,29 @@ h1, h2, h3 {
     outline-offset: 2px;
   }
 
+  @keyframes dropdown-attention {
+    0%, 100% {
+      box-shadow: 0 2px 12px rgba(79, 195, 232, 0.18);
+      border-color: var(--accent-coding);
+    }
+    50% {
+      box-shadow: 0 2px 22px rgba(79, 195, 232, 0.5);
+      border-color: var(--accent-hero-a);
+    }
+  }
+
   .about-layout {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 
-  .headshot-wrap { max-width: 360px; }
+  /* Photo before bio on mobile — a visual-only reorder (DOM/reading
+     order is unchanged, so screen readers still hit the bio first). */
+  .headshot-wrap {
+    order: -1;
+    max-width: 360px;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 640px) {
@@ -985,6 +1025,7 @@ h1, h2, h3 {
   }
 
   .scroll-cue { animation: none; }
+  .explorer-mobile-nav { animation: none; }
 
   /* Show reveal elements instantly */
   .reveal {
