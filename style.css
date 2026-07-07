@@ -407,6 +407,13 @@ h1, h2, h3 {
   overflow-y: auto;
 }
 
+/* Mobile-only project picker — see Responsive. Same options as the
+   tab list below, swapped in below the breakpoint since a horizontal
+   list of tabs doesn't fit small screens well. */
+.explorer-mobile-nav {
+  display: none;
+}
+
 .explorer-tab {
   all: unset;   /* wipe browser button defaults */
   display: block;
@@ -881,26 +888,35 @@ h1, h2, h3 {
     grid-template-columns: 1fr;
   }
 
-  /* Sidebar becomes a horizontal scrolling tab strip at the top */
+  /* Sidebar becomes a dropdown project picker at the top; the tab
+     list doesn't fit small screens well, so it's hidden here. */
   .explorer-sidebar {
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 0;
+    padding: 0.75rem;
   }
 
   .explorer-tab {
-    flex-shrink: 0;
-    border-left: none;
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
+    display: none;
   }
 
-  .explorer-tab.active {
-    border-left-color: transparent;
-    border-bottom-color: var(--accent-coding);
+  .explorer-mobile-nav {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    background: rgba(10, 14, 23, 0.6);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .explorer-mobile-nav:focus-visible {
+    outline: 2px solid var(--accent-coding);
+    outline-offset: 2px;
   }
 
   .about-layout {

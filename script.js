@@ -44,17 +44,17 @@ const PROJECTS = {
 
   coding: [
     {
-      title:     'LG Merch Site',
+      title:     'Franchise Merch Site',
       category:  'Web Development',
-      desc:      'End-to-end merch site for Light Garden — a Valorant beer league franchise. Built with plain HTML/CSS/JS and Shopify Buy Button integration, featuring a live ticker, product cards with variant selection, and a countdown to the next drop.',
+      desc:      'I created this webpage as a platform to sell stickers and various other franchise related merchandise. Valorant Draft Circuit (VDC) is a For-Fun Valorant League and Light Garden (LG) is the franchise I am representing. It is a static website built with HTML, CSS, and JavaScript. I used Shopify to handle the e-commerce functionality.',
       images:    [
         'assets/coding/lg-merch-site/Merch_Landing_Page.png',
         'assets/coding/lg-merch-site/Merch_Product_Page.png',
         'assets/coding/lg-merch-site/Merch_Order_Page.png',
       ],
-      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify'],
+      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
       link:      'https://bobert-merch.github.io/',
-      linkLabel: 'Live site →',
+      linkLabel: '-> Live site <-',
       status:    null,
     },
     {
@@ -68,7 +68,7 @@ const PROJECTS = {
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
       link:      'https://cafe-canna.github.io/cafecannallc/',
-      linkLabel: 'Live site →',
+      linkLabel: '-> Live site <-',
       status:    null,
     },
     {
@@ -181,6 +181,38 @@ const PROJECTS = {
                        or Escape to close.
    ═══════════════════════════════════════════════════════════════ */
 
+/**
+ * Adds left/right swipe detection to an element for touch devices.
+ * Calls onSwipeLeft() when the user drags left past the threshold
+ * (next), onSwipeRight() when they drag right (prev). Gestures that
+ * are more vertical than horizontal are ignored so page scrolling
+ * still works normally.
+ */
+function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
+  const THRESHOLD = 40;
+  let startX = 0, startY = 0, tracking = false;
+
+  el.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+  }, { passive: true });
+
+  el.addEventListener('touchend', e => {
+    if (!tracking) return;
+    tracking = false;
+
+    const t  = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) onSwipeLeft  && onSwipeLeft();
+    else        onSwipeRight && onSwipeRight();
+  }, { passive: true });
+}
+
 const Lightbox = (() => {
   let overlayEl, imageEl, placeholderEl, placeholderLabelEl, counterEl;
   let prevBtn, nextBtn, closeBtn;
@@ -276,6 +308,12 @@ const Lightbox = (() => {
     });
 
     document.addEventListener('keydown', handleKeydown);
+
+    // Touch devices can swipe left/right instead of tapping the arrows
+    attachSwipe(overlayEl, {
+      onSwipeLeft:  () => go(1),
+      onSwipeRight: () => go(-1),
+    });
   }
 
   return { setup, open, close };
@@ -379,6 +417,12 @@ function buildGallery(images, title) {
     });
 
     wrap.appendChild(dotsWrap);
+
+    // Touch devices can swipe left/right instead of tapping the arrows
+    attachSwipe(wrap, {
+      onSwipeLeft:  () => go(1),
+      onSwipeRight: () => go(-1),
+    });
   }
 
   renderSlide();
@@ -453,34 +497,53 @@ function buildExplorerPanel(project) {
 
 /**
  * Populate the coding section's split-pane explorer.
- * Renders sidebar tabs and the initial detail panel for the first project.
+ * Renders sidebar tabs (desktop/tablet), a select dropdown covering
+ * the same projects (mobile — see Responsive in style.css), and the
+ * initial detail panel for the first project.
  */
 function buildExplorer(projects, sidebarEl, panelEl) {
   if (!projects.length || !sidebarEl || !panelEl) return;
 
-  // Build sidebar tabs
+  const tabs = [];
+
+  function showProject(i) {
+    tabs.forEach((t, ti) => t.classList.toggle('active', ti === i));
+    select.value = String(i);
+
+    // Fade out, swap content, fade in
+    panelEl.classList.add('swapping');
+    setTimeout(() => {
+      panelEl.replaceChildren(buildExplorerPanel(projects[i]));
+      panelEl.classList.remove('swapping');
+      panelEl.classList.add('swapping-in');
+      setTimeout(() => panelEl.classList.remove('swapping-in'), 220);
+    }, 150);
+  }
+
+  // Mobile dropdown — same projects as the tab list, shown instead of
+  // it below the Responsive breakpoint in style.css
+  const select = document.createElement('select');
+  select.className = 'explorer-mobile-nav';
+  select.setAttribute('aria-label', 'Select a project');
+  projects.forEach((project, i) => {
+    const opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = project.title;
+    select.appendChild(opt);
+  });
+  select.addEventListener('change', () => showProject(Number(select.value)));
+  sidebarEl.appendChild(select);
+
+  // Desktop/tablet tab buttons
   projects.forEach((project, i) => {
     const btn = document.createElement('button');
     btn.className = `explorer-tab${i === 0 ? ' active' : ''}`;
     btn.dataset.idx = String(i);
     btn.setAttribute('aria-label', project.title);
     btn.innerHTML = `${project.title}<span class="explorer-tab-category">${project.category}</span>`;
+    btn.addEventListener('click', () => showProject(i));
 
-    btn.addEventListener('click', () => {
-      // Deactivate all tabs
-      sidebarEl.querySelectorAll('.explorer-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-
-      // Fade out, swap content, fade in
-      panelEl.classList.add('swapping');
-      setTimeout(() => {
-        panelEl.replaceChildren(buildExplorerPanel(project));
-        panelEl.classList.remove('swapping');
-        panelEl.classList.add('swapping-in');
-        setTimeout(() => panelEl.classList.remove('swapping-in'), 220);
-      }, 150);
-    });
-
+    tabs.push(btn);
     sidebarEl.appendChild(btn);
   });
 
