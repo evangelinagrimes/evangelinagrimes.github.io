@@ -62,9 +62,9 @@ const PROJECTS = {
       category:  'Web Development',
       desc:      'Website for Cafe Canna, an in-the-works dispensary × cafe concept. Designed and built end-to-end with Claude Code.',
       images:    [
-        'assets/coding/cafe-canna/1.jpg',
-        'assets/coding/cafe-canna/2.jpg',
-        'assets/coding/cafe-canna/3.jpg',
+        'assets/coding/cafe-canna/Cafe_Landing_Page.png',
+        'assets/coding/cafe-canna/Cafe_About_Page.png',
+        'assets/coding/cafe-canna/Cafe_Product_Page.png',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
       link:      'https://cafe-canna.github.io/cafecannallc/',
