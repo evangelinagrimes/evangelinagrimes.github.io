@@ -22,16 +22,18 @@
      title    — shown in the sidebar and as the panel heading
      category — short label in the accent color
      desc     — 1–2 sentences shown in the detail panel
-     images   — array of image paths for the preview gallery.
+     media    — array of image/video paths for the preview gallery.
+                Video files (.mp4/.webm/.mov/.m4v/.ogv) render as a
+                native <video controls> player instead of an image.
                 Each coding project has a matching folder under
                 assets/coding/<project-slug>/ — drop numbered files
                 (1.jpg, 2.jpg, …) in there and they show up here
                 automatically. Until a file exists at that path, the
                 gallery falls back to a placeholder slide, so it's
-                safe to list paths before the images exist. Multiple
+                safe to list paths before the files exist. Multiple
                 entries render arrows and dots so the gallery can be
-                scrolled through, and every image opens the expanded
-                lightbox view.
+                scrolled through; images (not videos — see below)
+                open the expanded lightbox view.
      tags     — array of tech/skill chips shown below the description
      link     — primary call-to-action URL, or null
      linkLabel — button text (defaults to "View project →" if omitted)
@@ -47,7 +49,7 @@ const PROJECTS = {
       title:     'Franchise Merch Site',
       category:  'Web Development',
       desc:      'I created this webpage as a platform to sell stickers and various other franchise related merchandise. Valorant Draft Circuit (VDC) is a For-Fun Valorant League and Light Garden (LG) is the franchise I am representing. It is a static website built with HTML, CSS, and JavaScript. I used Shopify to handle the e-commerce functionality.',
-      images:    [
+      media:     [
         'assets/coding/lg-merch-site/Merch_Landing_Page.png',
         'assets/coding/lg-merch-site/Merch_Product_Page.png',
         'assets/coding/lg-merch-site/Merch_Order_Page.png',
@@ -61,7 +63,7 @@ const PROJECTS = {
       title:     'Cafe Canna',
       category:  'Web Development',
       desc:      'Website for Cafe Canna, an in-the-works dispensary × cafe concept. Designed and built end-to-end with Claude Code.',
-      images:    [
+      media:     [
         'assets/coding/cafe-canna/Cafe_Landing_Page.png',
         'assets/coding/cafe-canna/Cafe_About_Page.png',
         'assets/coding/cafe-canna/Cafe_Product_Page.png',
@@ -75,21 +77,24 @@ const PROJECTS = {
       title:     'Drone Research Platform',
       category:  'Research / Hardware',
       desc:      'Custom multi-rotor platform for academic drone research. Sensor fusion, flight logging, and ROS2 integration across onboard and ground-station nodes.',
-      images:    [
-        'assets/coding/drone-research-platform/1.jpg',
-        'assets/coding/drone-research-platform/2.jpg',
-        'assets/coding/drone-research-platform/3.jpg',
+      media:     [
+        'assets/coding/drone-research-platform/drones-2.jpg',
+        'assets/coding/drone-research-platform/capwic_poster.jpg',
+        'assets/coding/drone-research-platform/DSC_5330.JPG',
+        'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
+        'assets/coding/drone-research-platform/First3Sails_Web.mp4',
+        'assets/coding/drone-research-platform/Ocs_3Sails_Takeoff_Web.mp4',
       ],
       tags:      ['ROS2', 'Python', 'Hardware', 'Sensor Fusion'],
-      link:      null,
-      linkLabel: null,
+      link:      'https://github.com/CNURobotics/flexible_drones',
+      linkLabel: 'GitHub repo →',
       status:    'Ongoing',
     },
     {
       title:     'ROS2 Node Architecture',
       category:  'ROS2 / Python',
       desc:      'Modular ROS2 node graph for autonomous flight tasks. Custom message types, service interfaces, and a ground-truth data logger that writes to bag files for post-flight analysis.',
-      images:    [
+      media:     [
         'assets/coding/ros2-node-architecture/1.jpg',
         'assets/coding/ros2-node-architecture/2.jpg',
       ],
@@ -102,7 +107,7 @@ const PROJECTS = {
       title:     'Drone Network Protocol',
       category:  'Networking / Raspberry Pi',
       desc:      'Low-latency communication protocol for drone swarm coordination over a Raspberry Pi mesh network. Targets sub-20 ms round-trip for telemetry and command channels.',
-      images:    [
+      media:     [
         'assets/coding/drone-network-protocol/1.jpg',
         'assets/coding/drone-network-protocol/2.jpg',
       ],
@@ -115,7 +120,7 @@ const PROJECTS = {
       title:     'Broadcast Production',
       category:  'Live Graphics / OBS',
       desc:      'Lower thirds, scorebug, transition animations, and post-match graphics for Light Garden\'s VDC match broadcasts. Produced in OBS with custom scene collections and CSS overlays.',
-      images:    [
+      media:     [
         'assets/coding/broadcast-production/1.jpg',
         'assets/coding/broadcast-production/2.jpg',
         'assets/coding/broadcast-production/3.jpg',
@@ -181,6 +186,14 @@ const PROJECTS = {
                        or Escape to close.
    ═══════════════════════════════════════════════════════════════ */
 
+const VIDEO_EXTENSIONS = ['mp4', 'webm', 'mov', 'm4v', 'ogv'];
+
+/** True if the path's extension is a video format the gallery/lightbox play natively. */
+function isVideoPath(path) {
+  const ext = (path.split('.').pop() || '').toLowerCase();
+  return VIDEO_EXTENSIONS.includes(ext);
+}
+
 /**
  * Adds left/right swipe detection to an element for touch devices.
  * Calls onSwipeLeft() when the user drags left past the threshold
@@ -201,7 +214,9 @@ function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
   function reset() { tracking = false; horizontalIntent = false; }
 
   el.addEventListener('touchstart', e => {
-    if (e.touches.length > 1) { reset(); return; }
+    // Let native video controls (scrubbing, tapping play) handle their
+    // own touches instead of being hijacked as a slide-change gesture.
+    if (e.touches.length > 1 || e.target.closest('video')) { reset(); return; }
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
@@ -240,50 +255,62 @@ function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
 }
 
 const Lightbox = (() => {
-  let overlayEl, imageEl, placeholderEl, placeholderLabelEl, counterEl;
+  let overlayEl, imageEl, videoEl, placeholderEl, placeholderLabelEl, counterEl;
   let prevBtn, nextBtn, closeBtn;
-  let images = [];
+  let media = [];
   let index = 0;
   let titleText = '';
   let loadToken = 0;
 
   // Falls back to the placeholder slide — used both for projects with
-  // no image yet and for images whose file doesn't exist at that path.
+  // no image/video yet and for files that don't exist at that path.
   function showPlaceholder() {
     imageEl.hidden = true;
+    videoEl.hidden = true;
     placeholderEl.hidden = false;
-    placeholderLabelEl.textContent = `Image ${index + 1} of ${images.length}`;
+    placeholderLabelEl.textContent = `Item ${index + 1} of ${media.length}`;
   }
 
   function render() {
     loadToken++;
     const token = loadToken;
-    const src = images[index];
+    const src = media[index];
 
-    if (src) {
-      imageEl.hidden = false;
+    // Stop any playback before swapping slides.
+    videoEl.pause();
+
+    if (src && isVideoPath(src)) {
+      imageEl.hidden = true;
+      videoEl.hidden = false;
       placeholderEl.hidden = true;
-      imageEl.alt = `${titleText} — image ${index + 1} of ${images.length}`;
+      videoEl.setAttribute('aria-label', `${titleText} — video ${index + 1} of ${media.length}`);
+      videoEl.dataset.loadToken = String(token);
+      videoEl.src = src;
+    } else if (src) {
+      imageEl.hidden = false;
+      videoEl.hidden = true;
+      placeholderEl.hidden = true;
+      imageEl.alt = `${titleText} — image ${index + 1} of ${media.length}`;
       imageEl.dataset.loadToken = String(token);
       imageEl.src = src;
     } else {
       showPlaceholder();
     }
 
-    counterEl.textContent = `${index + 1} / ${images.length}`;
+    counterEl.textContent = `${index + 1} / ${media.length}`;
 
-    const multiple = images.length > 1;
+    const multiple = media.length > 1;
     prevBtn.hidden = !multiple;
     nextBtn.hidden = !multiple;
   }
 
   function go(delta) {
-    index = (index + delta + images.length) % images.length;
+    index = (index + delta + media.length) % media.length;
     render();
   }
 
-  function open(imageList, startIndex, title) {
-    images    = imageList;
+  function open(mediaList, startIndex, title) {
+    media     = mediaList;
     index     = startIndex || 0;
     titleText = title || '';
 
@@ -295,6 +322,7 @@ const Lightbox = (() => {
   }
 
   function close() {
+    videoEl.pause();
     overlayEl.hidden = true;
     overlayEl.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');
@@ -310,6 +338,7 @@ const Lightbox = (() => {
   function setup() {
     overlayEl          = document.getElementById('lightbox');
     imageEl            = document.getElementById('lightbox-img');
+    videoEl            = document.getElementById('lightbox-video');
     placeholderEl       = document.getElementById('lightbox-placeholder');
     placeholderLabelEl = document.getElementById('lightbox-placeholder-label');
     counterEl          = document.getElementById('lightbox-counter');
@@ -322,10 +351,13 @@ const Lightbox = (() => {
     closeBtn.addEventListener('click', close);
 
     // If the file at this path doesn't exist yet, fall back to the
-    // placeholder instead of showing a broken-image icon. Guarded by
-    // loadToken so a stale request can't clobber a slide navigated to since.
+    // placeholder instead of a broken image/player. Guarded by loadToken
+    // so a stale request can't clobber a slide navigated to since.
     imageEl.addEventListener('error', () => {
       if (imageEl.dataset.loadToken === String(loadToken)) showPlaceholder();
+    });
+    videoEl.addEventListener('error', () => {
+      if (videoEl.dataset.loadToken === String(loadToken)) showPlaceholder();
     });
 
     // Click on the dimmed backdrop (not the image/controls) closes the viewer
@@ -346,12 +378,14 @@ const Lightbox = (() => {
 })(); // end Lightbox IIFE
 
 /**
- * Build the preview gallery for a project: one image (or placeholder)
- * at a time, with prev/next arrows and dot indicators once there's
- * more than one image. Clicking the current image opens it in Lightbox.
+ * Build the preview gallery for a project: one image/video (or
+ * placeholder) at a time, with prev/next arrows and dot indicators
+ * once there's more than one item. Clicking the current image opens
+ * it in Lightbox; videos play inline via their own native controls
+ * instead (so a tap on the play button doesn't also pop the lightbox).
  * Returns a DOM element ready to insert into .explorer-preview.
  */
-function buildGallery(images, title) {
+function buildGallery(media, title) {
   const wrap = document.createElement('div');
   wrap.className = 'gallery';
 
@@ -370,23 +404,35 @@ function buildGallery(images, title) {
     slide.innerHTML = `
       <div class="gallery-placeholder">
         <div class="gallery-placeholder-icon">◻</div>
-        <div class="gallery-placeholder-label">Image ${index + 1} of ${images.length}</div>
+        <div class="gallery-placeholder-label">Item ${index + 1} of ${media.length}</div>
       </div>`;
   }
 
   function renderSlide() {
-    const src = images[index];
+    const src = media[index];
 
     if (!src) {
       renderPlaceholder();
+    } else if (isVideoPath(src)) {
+      const video = document.createElement('video');
+      video.controls    = true;
+      video.playsInline = true;
+      video.preload     = 'metadata';
+      video.setAttribute('aria-label', `${title} — video ${index + 1} of ${media.length}`);
+      // If the file at this path doesn't exist yet, fall back to the
+      // placeholder instead of a broken player. The `contains` check
+      // guards against a stale load finishing after the user has
+      // already navigated to a different slide.
+      video.addEventListener('error', () => {
+        if (slide.contains(video)) renderPlaceholder();
+      });
+      video.src = src;
+      slide.replaceChildren(video);
     } else {
       const img = document.createElement('img');
-      img.alt     = `${title} — image ${index + 1} of ${images.length}`;
+      img.alt     = `${title} — image ${index + 1} of ${media.length}`;
       img.loading = 'lazy';
-      // If the file at this path doesn't exist yet, fall back to the
-      // placeholder instead of showing a broken-image icon. The `contains`
-      // check guards against a stale load finishing after the user has
-      // already navigated to a different slide.
+      // Same fallback as above, for images.
       img.addEventListener('error', () => {
         if (slide.contains(img)) renderPlaceholder();
       });
@@ -400,40 +446,48 @@ function buildGallery(images, title) {
   }
 
   function go(delta) {
-    index = (index + delta + images.length) % images.length;
+    index = (index + delta + media.length) % media.length;
     renderSlide();
   }
 
-  slide.addEventListener('click', () => Lightbox.open(images, index, title));
+  // Videos have their own native play/seek/fullscreen controls, so
+  // tapping one shouldn't also pop the lightbox open.
+  function openLightboxIfImage() {
+    const src = media[index];
+    if (src && isVideoPath(src)) return;
+    Lightbox.open(media, index, title);
+  }
+
+  slide.addEventListener('click', openLightboxIfImage);
   slide.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      Lightbox.open(images, index, title);
+      openLightboxIfImage();
     }
   });
 
   wrap.appendChild(slide);
 
-  if (images.length > 1) {
+  if (media.length > 1) {
     const prevBtn = document.createElement('button');
     prevBtn.className = 'gallery-arrow gallery-arrow--prev';
-    prevBtn.setAttribute('aria-label', 'Previous image');
+    prevBtn.setAttribute('aria-label', 'Previous item');
     prevBtn.innerHTML = '‹';
     prevBtn.addEventListener('click', e => { e.stopPropagation(); go(-1); });
 
     const nextBtn = document.createElement('button');
     nextBtn.className = 'gallery-arrow gallery-arrow--next';
-    nextBtn.setAttribute('aria-label', 'Next image');
+    nextBtn.setAttribute('aria-label', 'Next item');
     nextBtn.innerHTML = '›';
     nextBtn.addEventListener('click', e => { e.stopPropagation(); go(1); });
 
     wrap.append(prevBtn, nextBtn);
 
-    images.forEach((_, i) => {
+    media.forEach((_, i) => {
       const dot = document.createElement('span');
       dot.className = `gallery-dot${i === 0 ? ' active' : ''}`;
       dot.setAttribute('role', 'button');
-      dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+      dot.setAttribute('aria-label', `Go to item ${i + 1}`);
       dot.addEventListener('click', e => {
         e.stopPropagation();
         index = i;
@@ -473,10 +527,10 @@ function buildGallery(images, title) {
 function buildExplorerPanel(project) {
   const panel = document.createDocumentFragment();
 
-  // ── Preview zone (top): image gallery ──
+  // ── Preview zone (top): image/video gallery ──
   const previewWrap = document.createElement('div');
   previewWrap.className = 'explorer-preview';
-  previewWrap.appendChild(buildGallery(project.images, project.title));
+  previewWrap.appendChild(buildGallery(project.media, project.title));
   panel.appendChild(previewWrap);
 
   // ── Tag chips ──

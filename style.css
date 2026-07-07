@@ -489,11 +489,25 @@ h1, h2, h3 {
   cursor: zoom-in;
 }
 
+/* Videos play inline via their own controls rather than expanding
+   into the lightbox, so the zoom-in cursor doesn't apply to them. */
+.gallery-slide:has(video) {
+  cursor: default;
+}
+
 .gallery-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.gallery-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
 }
 
 .gallery-placeholder {
@@ -1032,6 +1046,21 @@ body.lightbox-open {
    restated here or the image never actually disappears behind the
    placeholder for projects without a real image at this slide. */
 .lightbox-stage img[hidden] {
+  display: none;
+}
+
+.lightbox-stage video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Same [hidden]-vs-author-display issue as the other lightbox pieces. */
+.lightbox-stage video[hidden] {
   display: none;
 }
 
