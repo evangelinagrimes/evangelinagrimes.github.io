@@ -83,6 +83,10 @@ body {
   font-size: 1rem;
   line-height: 1.65;
   overflow-x: hidden;
+  /* Disables double-tap-to-zoom (some mobile browsers still allow it
+     via this gesture even with the viewport meta tag's
+     user-scalable=no) without blocking normal scrolling. */
+  touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
