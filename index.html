@@ -129,12 +129,18 @@
   <div id="lightbox" class="lightbox" hidden aria-hidden="true">
     <button class="lightbox-close" aria-label="Close expanded image">×</button>
     <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
-    <div class="lightbox-stage">
-      <img id="lightbox-img" alt="" />
-      <video id="lightbox-video" controls playsinline hidden></video>
-      <div id="lightbox-placeholder" class="lightbox-placeholder">
-        <div class="lightbox-placeholder-icon">◻</div>
-        <div id="lightbox-placeholder-label" class="lightbox-placeholder-label">Image placeholder</div>
+    <div class="lightbox-content">
+      <div class="lightbox-stage">
+        <img id="lightbox-img" alt="" />
+        <video id="lightbox-video" controls playsinline hidden></video>
+        <div id="lightbox-placeholder" class="lightbox-placeholder">
+          <div class="lightbox-placeholder-icon">◻</div>
+          <div id="lightbox-placeholder-label" class="lightbox-placeholder-label">Image placeholder</div>
+        </div>
+      </div>
+      <div class="lightbox-caption">
+        <h3 id="lightbox-title" class="lightbox-title"></h3>
+        <p id="lightbox-desc" class="lightbox-desc"></p>
       </div>
     </div>
     <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>

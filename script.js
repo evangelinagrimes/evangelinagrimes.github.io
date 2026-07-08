@@ -172,8 +172,6 @@ const PROJECTS = {
       desc:      'I created a simple "aim trainer" that takes the position of the player\'s crosshair and compares it with the distance from the opponent\'s head. Opposing players are identified by a custom trained YOLO model. After analyzing the video, a summary of the player\'s analysis and a general plan moving forward is created in a text file. To train the yolo model, I created my own annotated dataset of enemy outlines pulled from screenshots within the game.',
       media:     [
         'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
-        'assets/coding/valorant-aim-trainer/2.jpg',
-        'assets/coding/valorant-aim-trainer/3.jpg',
       ],
       tags:      ['Python', 'YOLO', 'Computer Vision'],
       links:     [
@@ -185,36 +183,83 @@ const PROJECTS = {
 
   creative: [
     {
-      organization: 'School',
+      organization: 'University',
       pieces: [
         {
-          title:    'Coursework',
-          category: 'Academic Design',
-          desc:     'Design work from coursework at Christopher Newport University.',
+          title:    'University Media',
+          category: 'Poster Design',
+          desc:     'Design work from coursework and clubs at Christopher Newport University, including event promo art and logo work for a campus gaming club.',
           media:    [
-            'assets/creative/school/1.jpg',
-            'assets/creative/school/2.jpg',
-            'assets/creative/school/3.jpg',
+            'assets/creative/university/schoolar_work.jpg',
+            'assets/creative/university/Horror_Game_Night.jpg',
+            'assets/creative/university/CNU-logo.png',
           ],
           links:    [],
-          status:   'Coming soon',
+          status:   null,
         },
       ],
     },
     {
-      organization: 'Valorant Sticker Business',
+      organization: 'Valorant Franchise Content',
       pieces: [
         {
-          title:    'Sticker & Brand Design',
+          title:    'Franchise Logo Design',
           category: 'Brand Identity',
-          desc:     'Logo design, sticker art, and brand assets for a Valorant beer league sticker business.',
+          desc:     'Logo design and color/style variants for Light Garden, a Valorant beer league franchise.',
           media:    [
-            'assets/creative/valorant-sticker-business/1.jpg',
-            'assets/creative/valorant-sticker-business/2.jpg',
-            'assets/creative/valorant-sticker-business/3.jpg',
+            'assets/creative/valorant-franchise-content/swirly_logo.png',
+            'assets/creative/valorant-franchise-content/swirly_dark_logo.png',
+            'assets/creative/valorant-franchise-content/swirly_green_logo.png',
+            'assets/creative/valorant-franchise-content/swirly_simple_green_logo.png',
+            'assets/creative/valorant-franchise-content/swirly_white.png',
+            'assets/creative/valorant-franchise-content/clover_logo.png',
           ],
           links:    [],
-          status:   'Coming soon',
+          status:   null,
+        },
+        {
+          title:    'Sticker Designs',
+          category: 'Sticker Design',
+          desc:     'Player-nickname sticker designs sold for Light Garden, a Valorant beer league franchise.',
+          media:    [
+            'assets/creative/valorant-franchise-content/Poster_1.png',
+            'assets/creative/valorant-franchise-content/Poster_2.png',
+            'assets/creative/valorant-franchise-content/Poster_3.png',
+            'assets/creative/valorant-franchise-content/Poster_4.png',
+            'assets/creative/valorant-franchise-content/Poster_5.png',
+          ],
+          links:    [],
+          status:   null,
+        },
+      ],
+    },
+    {
+      organization: 'Video Game Content',
+      pieces: [
+        {
+          title:    'Player Banner Art',
+          category: 'Character Art',
+          desc:     'Player character illustrations and broadcast banner art for the Light Garden roster, a Valorant beer league franchise.',
+          media:    [
+            'assets/creative/video-game-content/CheeseBanner.jpg',
+            'assets/creative/video-game-content/GhostBanner4.jpg',
+            'assets/creative/video-game-content/UcklarBanner.jpg',
+            'assets/creative/video-game-content/ZuuBanner3.jpg',
+            'assets/creative/video-game-content/KayowBird.jpg',
+          ],
+          links:    [],
+          status:   null,
+        },
+        {
+          title:    'Fan Art',
+          category: 'Illustration',
+          desc:     'Video game fan art.',
+          media:    [
+            'assets/creative/video-game-content/Wheatley.jpg',
+            'assets/creative/video-game-content/LifeIsStrangeArt.jpg',
+          ],
+          links:    [],
+          status:   null,
         },
       ],
     },
@@ -226,12 +271,13 @@ const PROJECTS = {
           category: 'Brand Identity',
           desc:     'Logo and brand identity work for a pickleball business.',
           media:    [
-            'assets/creative/pickleball-business/1.jpg',
-            'assets/creative/pickleball-business/2.jpg',
-            'assets/creative/pickleball-business/3.jpg',
+            'assets/creative/pickleball-business/Pickle_and_Brew_Logo.jpg',
+            'assets/creative/pickleball-business/PicklePeakArtboard_2.jpg',
+            'assets/creative/pickleball-business/PicklePeakArtboard_21.jpg',
+            'assets/creative/pickleball-business/PicklePeakArtboard_3.png',
           ],
           links:    [],
-          status:   'Coming soon',
+          status:   null,
         },
       ],
     },
@@ -243,17 +289,19 @@ const PROJECTS = {
 /* ═══════════════════════════════════════════════════════════════
    B. GALLERY & LIGHTBOX
    ─────────────────────────────────────────────────────────────
-   Reusable multi-image preview + expanded viewer, used by the
-   coding section's explorer panel (and available to any other
-   section that wants the same "gallery of images that expand
-   into a full-screen viewer with arrow navigation" behavior).
+   Two preview layouts, both handed off to the same Lightbox for the
+   expanded view — see galleryStyle in buildExplorerPanel() (Section C).
 
-     buildGallery() — one image at a time, with prev/next arrows
-                      and dot indicators once there's more than
-                      one image. Clicking the image opens Lightbox.
-     Lightbox       — full-screen overlay with its own prev/next
-                       arrows, keyboard support, and click-outside
-                       or Escape to close.
+     buildGallerySlide() — Coding: one image/video at a time, with
+                           prev/next arrows and dot indicators once
+                           there's more than one item. Clicking the
+                           image opens Lightbox.
+     buildGalleryGrid()  — Creative: every item shown as a thumbnail
+                           at once. Clicking an image thumbnail opens
+                           Lightbox.
+     Lightbox            — full-screen overlay with its own prev/next
+                           arrows, keyboard support, and click-outside
+                           or Escape to close.
    ═══════════════════════════════════════════════════════════════ */
 
 const VIDEO_EXTENSIONS = ['mp4', 'webm', 'mov', 'm4v', 'ogv'];
@@ -326,7 +374,7 @@ function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
 
 const Lightbox = (() => {
   let overlayEl, imageEl, videoEl, placeholderEl, placeholderLabelEl, counterEl;
-  let prevBtn, nextBtn, closeBtn;
+  let titleEl, descEl, prevBtn, nextBtn, closeBtn;
   let media = [];
   let index = 0;
   let titleText = '';
@@ -379,10 +427,16 @@ const Lightbox = (() => {
     render();
   }
 
-  function open(mediaList, startIndex, title) {
+  function open(mediaList, startIndex, title, desc) {
     media     = mediaList;
     index     = startIndex || 0;
     titleText = title || '';
+
+    // Title/description are the same for every image in this set, so
+    // they're only set here — render() just handles the per-image bits.
+    titleEl.textContent = titleText;
+    descEl.textContent  = desc || '';
+    descEl.hidden       = !desc;
 
     render();
     overlayEl.hidden = false;
@@ -412,6 +466,8 @@ const Lightbox = (() => {
     placeholderEl       = document.getElementById('lightbox-placeholder');
     placeholderLabelEl = document.getElementById('lightbox-placeholder-label');
     counterEl          = document.getElementById('lightbox-counter');
+    titleEl            = document.getElementById('lightbox-title');
+    descEl             = document.getElementById('lightbox-desc');
     prevBtn            = overlayEl.querySelector('.lightbox-arrow--prev');
     nextBtn            = overlayEl.querySelector('.lightbox-arrow--next');
     closeBtn           = overlayEl.querySelector('.lightbox-close');
@@ -448,14 +504,90 @@ const Lightbox = (() => {
 })(); // end Lightbox IIFE
 
 /**
- * Build the preview gallery for a project: one image/video (or
- * placeholder) at a time, with prev/next arrows and dot indicators
- * once there's more than one item. Clicking the current image opens
- * it in Lightbox; videos play inline via their own native controls
- * instead (so a tap on the play button doesn't also pop the lightbox).
+ * Build the preview gallery for a project (Creative section): a grid
+ * of thumbnails, one per image/video (or placeholder). Clicking an
+ * image thumbnail opens it in the full-screen Lightbox, which has its
+ * own left/right arrows to navigate the rest of the set. Videos play
+ * inline via their own native controls instead of opening the
+ * lightbox (so a tap on the play button doesn't also pop it open).
  * Returns a DOM element ready to insert into .explorer-preview.
  */
-function buildGallery(media, title) {
+function buildGalleryGrid(media, title, desc) {
+  const grid = document.createElement('div');
+  grid.className = 'gallery-grid';
+
+  function renderPlaceholderCell(cell, i) {
+    cell.classList.remove('gallery-cell--clickable');
+    cell.innerHTML = `
+      <div class="gallery-placeholder">
+        <div class="gallery-placeholder-icon">◻</div>
+        <div class="gallery-placeholder-label">Item ${i + 1} of ${media.length}</div>
+      </div>`;
+  }
+
+  media.forEach((src, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'gallery-cell';
+
+    if (!src) {
+      renderPlaceholderCell(cell, i);
+    } else if (isVideoPath(src)) {
+      const video = document.createElement('video');
+      video.controls    = true;
+      video.playsInline = true;
+      video.preload     = 'metadata';
+      video.setAttribute('aria-label', `${title} — video ${i + 1} of ${media.length}`);
+      // If the file at this path doesn't exist yet, fall back to the
+      // placeholder instead of a broken player.
+      video.addEventListener('error', () => {
+        if (cell.contains(video)) renderPlaceholderCell(cell, i);
+      });
+      video.src = src;
+      cell.appendChild(video);
+    } else {
+      const img = document.createElement('img');
+      img.alt     = `${title} — image ${i + 1} of ${media.length}`;
+      img.loading = 'lazy';
+      // Same fallback as above, for images.
+      img.addEventListener('error', () => {
+        if (cell.contains(img)) renderPlaceholderCell(cell, i);
+      });
+      // Only make the cell clickable once the image actually loads —
+      // otherwise a broken path would stay clickable into an empty
+      // lightbox even after falling back to the placeholder above.
+      img.addEventListener('load', () => {
+        cell.classList.add('gallery-cell--clickable');
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('tabindex', '0');
+        cell.setAttribute('aria-label', `Expand image ${i + 1} of ${media.length} — ${title}`);
+        cell.addEventListener('click', () => Lightbox.open(media, i, title, desc));
+        cell.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            Lightbox.open(media, i, title, desc);
+          }
+        });
+      }, { once: true });
+      img.src = src;
+      cell.appendChild(img);
+    }
+
+    grid.appendChild(cell);
+  });
+
+  return grid;
+}
+
+/**
+ * Build the preview gallery for a project (Coding section): one
+ * image/video (or placeholder) at a time, with prev/next arrows and
+ * dot indicators once there's more than one item. Clicking the
+ * current image opens it in Lightbox; videos play inline via their
+ * own native controls instead (so a tap on the play button doesn't
+ * also pop the lightbox open).
+ * Returns a DOM element ready to insert into .explorer-preview.
+ */
+function buildGallerySlide(media, title, desc) {
   const wrap = document.createElement('div');
   wrap.className = 'gallery';
 
@@ -525,7 +657,7 @@ function buildGallery(media, title) {
   function openLightboxIfImage() {
     const src = media[index];
     if (src && isVideoPath(src)) return;
-    Lightbox.open(media, index, title);
+    Lightbox.open(media, index, title, desc);
   }
 
   slide.addEventListener('click', openLightboxIfImage);
@@ -601,15 +733,19 @@ function flattenByOrganization(organizations) {
 
 /**
  * Build the DOM for the right-hand detail panel of a project.
+ * galleryStyle picks the preview layout: 'slide' (one item at a time
+ * with prev/next arrows — Coding) or 'grid' (all thumbnails at once,
+ * click to expand — Creative).
  * Returns a fragment ready to drop into .explorer-panel.
  */
-function buildExplorerPanel(project) {
+function buildExplorerPanel(project, galleryStyle) {
   const panel = document.createDocumentFragment();
 
   // ── Preview zone (top): image/video gallery ──
   const previewWrap = document.createElement('div');
-  previewWrap.className = 'explorer-preview';
-  previewWrap.appendChild(buildGallery(project.media, project.title));
+  previewWrap.className = galleryStyle === 'grid' ? 'explorer-preview explorer-preview--grid' : 'explorer-preview';
+  const buildPreview = galleryStyle === 'grid' ? buildGalleryGrid : buildGallerySlide;
+  previewWrap.appendChild(buildPreview(project.media, project.title, project.desc));
   panel.appendChild(previewWrap);
 
   // ── Tag chips ──
@@ -656,9 +792,11 @@ function buildExplorerPanel(project) {
  * Populate a split-pane explorer: sidebar tabs (desktop/tablet), a
  * select dropdown covering the same projects (mobile — see Responsive
  * in style.css), and the initial detail panel for the first project.
- * Used for both the Coding and Creative sections.
+ * Used for both the Coding and Creative sections — galleryStyle
+ * ('slide' or 'grid') picks each one's detail-panel preview layout;
+ * see buildExplorerPanel().
  */
-function buildExplorer(projects, sidebarEl, panelEl) {
+function buildExplorer(projects, sidebarEl, panelEl, galleryStyle) {
   if (!projects.length || !sidebarEl || !panelEl) return;
 
   const tabs = [];
@@ -670,7 +808,7 @@ function buildExplorer(projects, sidebarEl, panelEl) {
     // Fade out, swap content, fade in
     panelEl.classList.add('swapping');
     setTimeout(() => {
-      panelEl.replaceChildren(buildExplorerPanel(projects[i]));
+      panelEl.replaceChildren(buildExplorerPanel(projects[i], galleryStyle));
       panelEl.classList.remove('swapping');
       panelEl.classList.add('swapping-in');
       setTimeout(() => panelEl.classList.remove('swapping-in'), 220);
@@ -705,22 +843,24 @@ function buildExplorer(projects, sidebarEl, panelEl) {
   });
 
   // Render first project's detail panel immediately
-  panelEl.replaceChildren(buildExplorerPanel(projects[0]));
+  panelEl.replaceChildren(buildExplorerPanel(projects[0], galleryStyle));
 }
 
 
-/** Wire up both sections from PROJECTS data — same explorer, different data. */
+/** Wire up both sections from PROJECTS data — same explorer, different gallery layout. */
 function renderProjects() {
   buildExplorer(
     PROJECTS.coding,
     document.getElementById('coding-sidebar'),
-    document.getElementById('coding-panel')
+    document.getElementById('coding-panel'),
+    'slide'
   );
 
   buildExplorer(
     flattenByOrganization(PROJECTS.creative),
     document.getElementById('creative-sidebar'),
-    document.getElementById('creative-panel')
+    document.getElementById('creative-panel'),
+    'grid'
   );
 }
 
