@@ -154,7 +154,21 @@ const PROJECTS = {
       ],
       status:    null,
     },
-    
+    {
+      title:     'Valorant Aim Trainer',
+      category:  'AI Development',
+      desc:      'I created a simple "aim trainer" that takes the position of the player\'s crosshair and compares it with the distance from the opponent\'s head. Opposing players are identified by a custom trained YOLO model. After analyzing the video, a summary of the player\'s analysis and a general plan moving forward is created in a text file. To train the yolo model, I created my own annotated dataset of enemy outlines pulled from screenshots within the game.',
+      media:     [
+        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
+        'assets/coding/valorant-aim-trainer/2.jpg',
+        'assets/coding/valorant-aim-trainer/3.jpg',
+      ],
+      tags:      ['Python', 'YOLO', 'Computer Vision'],
+      links:     [
+        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: '-> Roboflow Dataset <-' }
+      ],
+      status:    null,
+    },
   ],
 
   artistic: [
