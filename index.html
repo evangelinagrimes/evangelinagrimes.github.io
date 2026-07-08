@@ -129,10 +129,15 @@
        populates and toggles it. -->
   <div id="lightbox" class="lightbox" hidden aria-hidden="true">
     <button class="lightbox-close" aria-label="Close expanded image">×</button>
+    <!-- Arrows/counter live outside .lightbox-content, in the gutter
+         beside it, so they never sit on top of the image itself. Their
+         vertical position is pinned to .lightbox-stage's actual rendered
+         box by script.js (Lightbox.positionControls) since the caption's
+         dynamic height means it can't be a static CSS percentage. -->
+    <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
+    <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>
+    <div id="lightbox-counter" class="lightbox-counter"></div>
     <div class="lightbox-content">
-      <!-- Arrows/counter live inside the stage (not the overlay) so they
-           stay centered on the image itself regardless of the caption's
-           height below it — see style.css .lightbox-stage. -->
       <div class="lightbox-stage">
         <img id="lightbox-img" alt="" />
         <video id="lightbox-video" controls playsinline hidden></video>
@@ -140,9 +145,6 @@
           <div class="lightbox-placeholder-icon">◻</div>
           <div id="lightbox-placeholder-label" class="lightbox-placeholder-label">Image placeholder</div>
         </div>
-        <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
-        <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>
-        <div id="lightbox-counter" class="lightbox-counter"></div>
       </div>
       <div class="lightbox-caption">
         <h3 id="lightbox-title" class="lightbox-title"></h3>

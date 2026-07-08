@@ -1200,10 +1200,15 @@ body.lightbox-open {
   line-height: 1;
 }
 
-/* Positioned relative to .lightbox-stage (its nearest `position`d
-   ancestor — see index.html), not the full overlay, so they stay
-   centered on the image itself regardless of the caption's height
-   below it, and can never overlap the caption. */
+/* Positioned relative to the full overlay (.lightbox is the nearest
+   `position`d ancestor — see index.html), in the gutter beside
+   .lightbox-content, so they sit outside the image instead of on top
+   of it. `top` here is just a pre-JS fallback: script.js
+   (Lightbox.positionControls) overwrites it with the actual vertical
+   center of .lightbox-stage once the overlay is visible and
+   measurable, since a caption of unknown height below the stage means
+   that center can't be expressed as a static CSS percentage of the
+   overlay. */
 .lightbox-arrow {
   top: 50%;
   transform: translateY(-50%);
@@ -1216,11 +1221,14 @@ body.lightbox-open {
 .lightbox-arrow--prev { left: clamp(0.75rem, 4vw, 3rem); }
 .lightbox-arrow--next { right: clamp(0.75rem, 4vw, 3rem); }
 
+/* Same top-position handoff to script.js as .lightbox-arrow above,
+   pinned just above .lightbox-stage's bottom edge instead of its
+   center. */
 .lightbox-counter {
   position: absolute;
-  bottom: 0.7rem;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;

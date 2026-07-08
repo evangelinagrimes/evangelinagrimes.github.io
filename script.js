@@ -205,7 +205,7 @@ const PROJECTS = {
         {
           title:    'Franchise Logo Design',
           category: 'Brand Identity',
-          desc:     'Logo design and color/style variants for Light Garden, a Valorant beer league franchise.',
+          desc:     'Logo design and color/style variants for Light Garden, a Valorant for-fun franchise. I created these designs as stickers to sell to fans of the franchise. It is the beginning of my small business.',
           media:    [
             'assets/creative/valorant-franchise-content/swirly_logo.png',
             'assets/creative/valorant-franchise-content/swirly_dark_logo.png',
@@ -239,7 +239,7 @@ const PROJECTS = {
         {
           title:    'Player Banner Art',
           category: 'Character Art',
-          desc:     'Player character illustrations and broadcast banner art for the Light Garden roster, a Valorant beer league franchise.',
+          desc:     'Player character illustrations and broadcast banner art for the Light Garden roster, a Valorant for-fun league franchise.',
           media:    [
             'assets/creative/video-game-content/CheeseBanner.jpg',
             'assets/creative/video-game-content/GhostBanner4.jpg',
@@ -373,7 +373,7 @@ function attachSwipe(el, { onSwipeLeft, onSwipeRight }) {
 }
 
 const Lightbox = (() => {
-  let overlayEl, imageEl, videoEl, placeholderEl, placeholderLabelEl, counterEl;
+  let overlayEl, stageEl, imageEl, videoEl, placeholderEl, placeholderLabelEl, counterEl;
   let titleEl, descEl, prevBtn, nextBtn, closeBtn;
   let media = [];
   let index = 0;
@@ -427,6 +427,33 @@ const Lightbox = (() => {
     render();
   }
 
+  // Arrows/counter sit in the gutter beside .lightbox-content (see
+  // style.css) so they never overlap the image itself, but that means
+  // their vertical position can't be a static CSS percentage of the
+  // overlay — the caption below the stage has a dynamic height, which
+  // shifts the stage (and the image inside it) up by a variable amount.
+  // This measures the stage's actual rendered box and pins the controls
+  // to its center/bottom instead.
+  function positionControls() {
+    if (overlayEl.hidden) return;
+    const rect = stageEl.getBoundingClientRect();
+    const centerY = `${rect.top + rect.height / 2}px`;
+    prevBtn.style.top = centerY;
+    nextBtn.style.top = centerY;
+    counterEl.style.top = `${rect.bottom - 20}px`;
+
+    // Also override the CSS clamp()'d left/right (a fallback for before
+    // this runs): that static offset assumes a minimum gutter width
+    // that isn't always there — on narrower viewports .lightbox-content
+    // can grow wide enough that the static offset still lands back on
+    // top of the image. This instead measures the actual gutter and
+    // guarantees the arrow sits just outside the stage's edge.
+    const size = prevBtn.offsetWidth;
+    const gap = 12;
+    prevBtn.style.left  = `${Math.max(4, rect.left - size - gap)}px`;
+    nextBtn.style.right = `${Math.max(4, window.innerWidth - rect.right - size - gap)}px`;
+  }
+
   function open(mediaList, startIndex, title, desc) {
     media     = mediaList;
     index     = startIndex || 0;
@@ -442,6 +469,7 @@ const Lightbox = (() => {
     overlayEl.hidden = false;
     overlayEl.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lightbox-open');
+    positionControls();
     closeBtn.focus();
   }
 
@@ -461,6 +489,7 @@ const Lightbox = (() => {
 
   function setup() {
     overlayEl          = document.getElementById('lightbox');
+    stageEl            = document.querySelector('.lightbox-stage');
     imageEl            = document.getElementById('lightbox-img');
     videoEl            = document.getElementById('lightbox-video');
     placeholderEl       = document.getElementById('lightbox-placeholder');
@@ -492,6 +521,10 @@ const Lightbox = (() => {
     });
 
     document.addEventListener('keydown', handleKeydown);
+
+    // Keep the controls pinned to the stage if the viewport is resized
+    // (or rotated) while the lightbox is open.
+    window.addEventListener('resize', positionControls);
 
     // Touch devices can swipe left/right instead of tapping the arrows
     attachSwipe(overlayEl, {
