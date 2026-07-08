@@ -52,7 +52,7 @@
          ═══════════════════════════════════════════════════════════ -->
     <section id="coding" class="region region--coding">
       <div class="region-header reveal">
-        <span class="eyebrow">01 — Software Development</span>
+        <span class="eyebrow">01 — Technical</span>
         <h2>Recent Projects</h2>
         <!-- ▶ Edit this description -->
         <p class="region-sub">Drone systems, robotics software, network protocols, and the web projects that hold it all together.</p>
@@ -76,9 +76,10 @@
     <section id="creative" class="region region--creative">
       <div class="region-header reveal">
         <span class="eyebrow">02 — Creative</span>
-        <h2>Visual Work</h2>
+        <h2>Visual Work [Work in Progress]</h2>
         <!-- ▶ Edit this description -->
-        <p class="region-sub">Logo design, stickers, and brand work — grouped by who it was made for.</p>
+        <p class="region-sub" style="margin-bottom: 30px;">In addition to coding projects, I like to dabble in different artistic mediums. Currently, I only have various digital media projects I have worked on over the past couple of years available. </p>
+        <p class="region-sub">I am currently working on adding more of my creative work to this section and updating the descriptions, so please check back later for updates!</p>
       </div>
 
       <!-- The explorer is built by script.js → buildExplorer() -->
@@ -128,8 +129,10 @@
        populates and toggles it. -->
   <div id="lightbox" class="lightbox" hidden aria-hidden="true">
     <button class="lightbox-close" aria-label="Close expanded image">×</button>
-    <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
     <div class="lightbox-content">
+      <!-- Arrows/counter live inside the stage (not the overlay) so they
+           stay centered on the image itself regardless of the caption's
+           height below it — see style.css .lightbox-stage. -->
       <div class="lightbox-stage">
         <img id="lightbox-img" alt="" />
         <video id="lightbox-video" controls playsinline hidden></video>
@@ -137,14 +140,15 @@
           <div class="lightbox-placeholder-icon">◻</div>
           <div id="lightbox-placeholder-label" class="lightbox-placeholder-label">Image placeholder</div>
         </div>
+        <button class="lightbox-arrow lightbox-arrow--prev" aria-label="Previous image">‹</button>
+        <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>
+        <div id="lightbox-counter" class="lightbox-counter"></div>
       </div>
       <div class="lightbox-caption">
         <h3 id="lightbox-title" class="lightbox-title"></h3>
         <p id="lightbox-desc" class="lightbox-desc"></p>
       </div>
     </div>
-    <button class="lightbox-arrow lightbox-arrow--next" aria-label="Next image">›</button>
-    <div id="lightbox-counter" class="lightbox-counter"></div>
   </div>
 
   <script src="script.js"></script>

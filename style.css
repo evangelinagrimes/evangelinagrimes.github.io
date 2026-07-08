@@ -1044,9 +1044,17 @@ body.lightbox-open {
 .lightbox-stage {
   position: relative;
   width: 100%;
-  flex: 1 1 auto;
+  /* Explicit flex-basis rather than `auto`: img/video/placeholder are
+     all `position: absolute` (see below) and so contribute nothing to
+     content-based sizing — with `auto`, the stage would have no size
+     to grow/shrink from and collapse to 0 height. This basis is also
+     what the flex algorithm shrinks below its max-height for a tall
+     caption, and what the absolutely-positioned children then fill
+     exactly via `inset: 0`. */
+  flex: 1 1 min(70vh, 640px);
   min-height: 0;
   max-height: min(70vh, 640px);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1077,11 +1085,19 @@ body.lightbox-open {
   margin-top: 0.4rem;
 }
 
+/* Absolutely positioned to fill .lightbox-stage exactly (`inset: 0`)
+   rather than sized with `max-height: 100%` — percentage heights
+   don't reliably resolve against a flex item whose own height is
+   content-driven/clamped rather than definite (see .lightbox-stage),
+   which let oversized images render unconstrained and spill into the
+   caption below. Absolute positioning sizes against the stage's
+   final, already-resolved box instead, so this fits it exactly no
+   matter how tall the caption forces the stage to shrink. */
 .lightbox-stage img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -1095,11 +1111,12 @@ body.lightbox-open {
   display: none;
 }
 
+/* Same reasoning as .lightbox-stage img above. */
 .lightbox-stage video {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -1110,9 +1127,12 @@ body.lightbox-open {
   display: none;
 }
 
+/* Same reasoning as .lightbox-stage img/video above: `position:
+   absolute; inset: 0` fills the stage exactly, where a `height: 100%`
+   here would have the same non-definite-parent resolution problem. */
 .lightbox-placeholder {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1180,6 +1200,10 @@ body.lightbox-open {
   line-height: 1;
 }
 
+/* Positioned relative to .lightbox-stage (its nearest `position`d
+   ancestor — see index.html), not the full overlay, so they stay
+   centered on the image itself regardless of the caption's height
+   below it, and can never overlap the caption. */
 .lightbox-arrow {
   top: 50%;
   transform: translateY(-50%);
@@ -1194,13 +1218,14 @@ body.lightbox-open {
 
 .lightbox-counter {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0.7rem;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   color: var(--text-sub);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 640px) {
