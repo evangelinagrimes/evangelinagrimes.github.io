@@ -9,9 +9,9 @@
      5.  Hero           (slow-breathing radial glow)
      6.  Region base    (shared section styles)
      7.  Coding section (deep navy grid-drift background)
-     8.  Artistic section (warm slate radial-pulse background)
-     9.  Project explorer split-pane (coding section)
-     10. Project card grid (artistic section)
+     8.  Creative section (warm slate radial-pulse background)
+     9.  Project explorer split-pane (shared: coding + creative)
+     10. Status badge (shared: coding + creative)
      11. About & headshot
      12. Scroll-reveal animations
      13. Responsive
@@ -25,7 +25,7 @@
   /* Backgrounds */
   --bg:          #0A0E17;   /* page base / hero */
   --bg-coding:   #0B1220;   /* deep navy for coding section */
-  --bg-artistic: #120E18;   /* dark warm slate for artistic section */
+  --bg-creative: #120E18;   /* dark warm slate for creative section */
   --bg-card:     #131929;   /* card & panel surfaces */
   --bg-surface:  #0F1726;   /* slightly lighter surface */
 
@@ -36,9 +36,13 @@
 
   /* Accents */
   --accent-coding:   #4FC3E8;   /* cool cyan  */
-  --accent-artistic: #E8A857;   /* warm gold  */
+  --accent-creative: #E8A857;   /* warm gold  */
   --accent-hero-a:   #3FE0C5;   /* teal  */
   --accent-hero-b:   #6C5CE7;   /* violet */
+
+  /* RGB triples of the two above, for rgba() tints — see --accent-rgb */
+  --accent-coding-rgb:   79, 195, 232;
+  --accent-creative-rgb: 232, 168, 87;
 
   /* Borders */
   --border:       rgba(255, 255, 255, 0.055);
@@ -119,7 +123,7 @@ h1, h2, h3 {
 }
 
 .region--coding   .eyebrow { color: var(--accent-coding); }
-.region--artistic .eyebrow { color: var(--accent-artistic); }
+.region--creative .eyebrow { color: var(--accent-creative); }
 
 
 /* ── 4. Nav & Footer ───────────────────────────────────────── */
@@ -286,11 +290,11 @@ h1, h2, h3 {
 }
 
 .region--coding   .region-header h2 { color: var(--accent-coding); }
-.region--artistic .region-header h2 { color: var(--accent-artistic); }
+.region--creative .region-header h2 { color: var(--accent-creative); }
 
 /* Short decorative line before the eyebrow */
 .region--coding   .eyebrow::before,
-.region--artistic .eyebrow::before {
+.region--creative .eyebrow::before {
   content: '';
   display: inline-block;
   width: 20px;
@@ -301,7 +305,7 @@ h1, h2, h3 {
 }
 
 .region--coding   .eyebrow::before { background: var(--accent-coding); }
-.region--artistic .eyebrow::before { background: var(--accent-artistic); }
+.region--creative .eyebrow::before { background: var(--accent-creative); }
 
 .region-sub {
   font-size: 0.92rem;
@@ -315,6 +319,11 @@ h1, h2, h3 {
 /* Deep navy with a drifting fine-grid overlay — technical/systematic feel */
 .region--coding {
   background-color: var(--bg-coding);
+  /* Shared explorer/gallery/lightbox component styles reference the
+     generic --accent(-rgb) rather than a hardcoded color, so the same
+     markup re-themes automatically per section. */
+  --accent:     var(--accent-coding);
+  --accent-rgb: var(--accent-coding-rgb);
 }
 
 .region--coding::before {
@@ -353,13 +362,15 @@ h1, h2, h3 {
 .region--coding > * { position: relative; z-index: 1; }
 
 
-/* ── 8. Artistic Section Background ────────────────────────── */
+/* ── 8. Creative Section Background ────────────────────────── */
 /* Dark warm slate with a slowly pulsing radial glow — organic/creative feel */
-.region--artistic {
-  background-color: var(--bg-artistic);
+.region--creative {
+  background-color: var(--bg-creative);
+  --accent:     var(--accent-creative);
+  --accent-rgb: var(--accent-creative-rgb);
 }
 
-.region--artistic::before {
+.region--creative::before {
   content: '';
   position: absolute;
   /* Oversized so the scale animation doesn't clip */
@@ -381,10 +392,10 @@ h1, h2, h3 {
   66%       { transform: scale(0.9) rotate(-3deg); opacity: 0.7; }
 }
 
-.region--artistic > * { position: relative; z-index: 1; }
+.region--creative > * { position: relative; z-index: 1; }
 
 
-/* ── 9. Project Explorer (Coding Split-Pane) ───────────────── */
+/* ── 9. Project Explorer (Shared: Coding + Creative) ───────── */
 .project-explorer {
   display: grid;
   /* Sidebar column sizes to the widest tab label (no wrap/scroll needed);
@@ -442,13 +453,13 @@ h1, h2, h3 {
 
 .explorer-tab:hover {
   color: var(--text-sub);
-  background: rgba(79, 195, 232, 0.05);
+  background: rgba(var(--accent-rgb), 0.05);
 }
 
 .explorer-tab.active {
-  color: var(--accent-coding);
-  border-left-color: var(--accent-coding);
-  background: rgba(79, 195, 232, 0.08);
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 
 /* Small category label under the project name in the tab */
@@ -617,7 +628,7 @@ h1, h2, h3 {
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--accent-coding);
+  color: var(--accent);
   margin-bottom: 0.5rem;
 }
 
@@ -648,8 +659,8 @@ h1, h2, h3 {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
-  background: rgba(79, 195, 232, 0.07);
-  border: 1px solid rgba(79, 195, 232, 0.15);
+  background: rgba(var(--accent-rgb), 0.07);
+  border: 1px solid rgba(var(--accent-rgb), 0.15);
   padding: 3px 9px;
   border-radius: 2px;
 }
@@ -668,15 +679,15 @@ h1, h2, h3 {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 7px 16px;
-  border: 1px solid var(--accent-coding);
-  color: var(--accent-coding);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   transition: background 0.18s, color 0.18s;
   border-radius: 2px;
 }
 
 .explorer-link:hover {
-  background: var(--accent-coding);
-  color: var(--bg-coding);
+  background: var(--accent);
+  color: var(--bg);
 }
 
 .explorer-link.secondary {
@@ -702,115 +713,8 @@ h1, h2, h3 {
 }
 
 
-/* ── 10. Project Card Grid (Artistic) ──────────────────────── */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-
-.project-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition:
-    border-color 0.25s,
-    transform 0.3s var(--ease-out),
-    box-shadow 0.3s;
-}
-
-.project-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 36px rgba(232, 168, 87, 0.10);
-}
-
-.card-img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #100C18;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.card-img-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  height: 100%;
-}
-
-.card-img-placeholder-icon  { font-size: 1.6rem; opacity: 0.15; }
-.card-img-placeholder-label {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: 0.45;
-}
-
-.card-body {
-  padding: 1.2rem 1.4rem 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-category {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--accent-artistic);
-  margin-bottom: 0.45rem;
-}
-
-.card-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.5rem;
-}
-
-.card-desc {
-  font-size: 0.83rem;
-  color: var(--text-sub);
-  line-height: 1.68;
-  flex: 1;
-}
-
-.card-link {
-  display: inline-block;
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  transition: color 0.2s;
-}
-
-.card-link:hover { color: var(--accent-artistic); }
-
+/* ── 10. Status Badge ───────────────────────────────────────── */
+/* Shared by the explorer detail panel (Coding + Creative) */
 .card-status {
   display: inline-flex;
   align-items: center;
@@ -906,12 +810,6 @@ h1, h2, h3 {
   transform: translateY(0);
 }
 
-.project-card.reveal:nth-child(2) { transition-delay: 0.07s; }
-.project-card.reveal:nth-child(3) { transition-delay: 0.14s; }
-.project-card.reveal:nth-child(4) { transition-delay: 0.21s; }
-.project-card.reveal:nth-child(5) { transition-delay: 0.28s; }
-.project-card.reveal:nth-child(6) { transition-delay: 0.35s; }
-
 
 /* ── 13. Responsive ────────────────────────────────────────── */
 
@@ -946,24 +844,24 @@ h1, h2, h3 {
     font-weight: 500;
     letter-spacing: 0.05em;
     color: var(--text);
-    background-color: rgba(79, 195, 232, 0.1);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234FC3E8' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-color: rgba(var(--accent-rgb), 0.1);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23EDEEF2' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 12px 8px;
     appearance: none;
     -webkit-appearance: none;
-    border: 1.5px solid var(--accent-coding);
+    border: 1.5px solid var(--accent);
     border-radius: 6px;
-    box-shadow: 0 2px 12px rgba(79, 195, 232, 0.18);
+    box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.18);
     cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s;
     animation: dropdown-attention 1.6s ease-in-out 0.4s 2;
   }
 
   .explorer-mobile-nav:hover {
-    background-color: rgba(79, 195, 232, 0.16);
-    box-shadow: 0 3px 16px rgba(79, 195, 232, 0.28);
+    background-color: rgba(var(--accent-rgb), 0.16);
+    box-shadow: 0 3px 16px rgba(var(--accent-rgb), 0.28);
   }
 
   .explorer-mobile-nav:active {
@@ -971,17 +869,17 @@ h1, h2, h3 {
   }
 
   .explorer-mobile-nav:focus-visible {
-    outline: 2px solid var(--accent-coding);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 
   @keyframes dropdown-attention {
     0%, 100% {
-      box-shadow: 0 2px 12px rgba(79, 195, 232, 0.18);
-      border-color: var(--accent-coding);
+      box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.18);
+      border-color: var(--accent);
     }
     50% {
-      box-shadow: 0 2px 22px rgba(79, 195, 232, 0.5);
+      box-shadow: 0 2px 22px rgba(var(--accent-rgb), 0.5);
       border-color: var(--accent-hero-a);
     }
   }
@@ -1002,7 +900,6 @@ h1, h2, h3 {
 
 @media (max-width: 640px) {
   .nav-links { display: none; }
-  .project-grid { grid-template-columns: 1fr; }
   .explorer-info { padding: 1.2rem 1.2rem 1.5rem; }
 
   .site-footer {
@@ -1020,7 +917,7 @@ h1, h2, h3 {
   /* Pause all CSS keyframe animations */
   .hero::before,
   .region--coding::before,
-  .region--artistic::before {
+  .region--creative::before {
     animation-play-state: paused;
   }
 
@@ -1035,7 +932,6 @@ h1, h2, h3 {
   }
 
   /* Suppress hover transitions */
-  .project-card,
   .explorer-tab,
   .explorer-link,
   .nav-links a,

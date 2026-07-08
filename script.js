@@ -4,11 +4,10 @@
    Sections (Ctrl+F to jump):
      A. PROJECT DATA       — edit here to add/change your work
      B. GALLERY & LIGHTBOX — multi-image preview + expanded viewer
-     C. EXPLORER RENDERER  — coding split-pane (sidebar + detail panel)
-     D. CARD RENDERER      — artistic card grid
-     E. SCROLL LOGIC       — nav reveal + section tracking
-     F. REVEAL             — fade-in-on-scroll for cards and headers
-     G. INIT               — wires everything together on page load
+     C. EXPLORER RENDERER  — split-pane shared by Coding + Creative
+     D. SCROLL LOGIC       — nav reveal + section tracking
+     E. REVEAL             — fade-in-on-scroll for cards and headers
+     F. INIT               — wires everything together on page load
    ───────────────────────────────────────────────────────────── */
 
 
@@ -17,14 +16,18 @@
    ─────────────────────────────────────────────────────────────
    This is the only part you'll edit regularly.
 
-   Coding projects (appear in the split-pane explorer):
+   Both PROJECTS.coding and PROJECTS.creative feed the same
+   split-pane explorer (sidebar tabs + mobile dropdown + detail
+   panel with gallery/lightbox) — see buildExplorer() in Section C.
+
+   PROJECTS.coding — a flat array of projects:
      title    — shown in the sidebar and as the panel heading
      category — short label in the accent color
      desc     — 1–2 sentences shown in the detail panel
      media    — array of image/video paths for the preview gallery.
                 Video files (.mp4/.webm/.mov/.m4v/.ogv) render as a
                 native <video controls> player instead of an image.
-                Each coding project has a matching folder under
+                Each project has a matching folder under
                 assets/coding/<project-slug>/ — drop numbered files
                 (1.jpg, 2.jpg, …) in there and they show up here
                 automatically. Until a file exists at that path, the
@@ -39,8 +42,17 @@
                 an empty array for a project with no links.
      status   — optional badge text, or null
 
-   Artistic projects (appear in the card grid):
-     title, category, desc, img, link, status  (same as before)
+   PROJECTS.creative — an array of organizations (who the work was
+   made for), flattened by flattenByOrganization() into the same flat
+   tab list buildExplorer() expects — organization isn't shown in the
+   UI, it's just how entries are grouped in this file for your own
+   editing sanity:
+     organization — label for your own reference, e.g. 'Pickleball Business'
+     pieces       — array of pieces, same shape as a coding project
+                    above (title/category/desc/media/links/status;
+                    tags are optional and rarely needed here). Each
+                    piece has its own folder under
+                    assets/creative/<org-slug>/.
    ═══════════════════════════════════════════════════════════════ */
 const PROJECTS = {
 
@@ -78,21 +90,21 @@ const PROJECTS = {
       ],
       status:    'Ongoing',
     },
-    {
-      title:     'Cafe Canna Webpage',
-      category:  'Web Development',
-      desc:      'Website for Cafe Canna, an in-the-works dispensary × cafe concept. Designed and built end-to-end with Claude Code.',
-      media:     [
-        'assets/coding/cafe-canna/Cafe_Landing_Page.png',
-        'assets/coding/cafe-canna/Cafe_About_Page.png',
-        'assets/coding/cafe-canna/Cafe_Product_Page.png',
-      ],
-      tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
-      links:     [
-        { url: 'https://cafe-canna.github.io/cafecannallc/', label: '-> Visit Live site <-' },
-      ],
-      status:    'template',
-    },
+    // {
+    //   title:     'Cafe Canna Webpage',
+    //   category:  'Web Development',
+    //   desc:      'I designed the webpage for a prospective business, Cafe Canna. Please note, I do not engage in any marajuana related business, this was purely a design exercise. The webpage is a static site built with HTML, CSS, and JavaScript. I used Claude Code to generate the initial code for the site, then I modified it to fit my design vision. This is an ongoing project and I will be adding more functionality to the site in the future.',
+    //   media:     [
+    //     'assets/coding/cafe-canna/Cafe_Landing_Page.png',
+    //     'assets/coding/cafe-canna/Cafe_About_Page.png',
+    //     'assets/coding/cafe-canna/Cafe_Product_Page.png',
+    //   ],
+    //   tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
+    //   links:     [
+    //     { url: 'https://cafe-canna.github.io/cafecannallc/', label: '-> Visit Live site <-' },
+    //   ],
+    //   status:    'template',
+    // },
     {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
@@ -171,38 +183,57 @@ const PROJECTS = {
     },
   ],
 
-  artistic: [
+  creative: [
     {
-      title:    'Startup Brand Identity',
-      category: 'Logo Design',
-      desc:     'Full identity system — wordmark, icon mark, color palette, and usage guidelines for an early-stage startup.',
-      img:      null,    // ▶ e.g. 'assets/brand-startup.jpg'
-      link:     null,
-      status:   'Case study coming',
+      organization: 'School',
+      pieces: [
+        {
+          title:    'Coursework',
+          category: 'Academic Design',
+          desc:     'Design work from coursework at Christopher Newport University.',
+          media:    [
+            'assets/creative/school/1.jpg',
+            'assets/creative/school/2.jpg',
+            'assets/creative/school/3.jpg',
+          ],
+          links:    [],
+          status:   'Coming soon',
+        },
+      ],
     },
     {
-      title:    'Twitch Stream Package',
-      category: 'Stream Design',
-      desc:     'Overlay, scene panels, alerts, and transition screens. Designed for legibility at 1080p and 1440p.',
-      img:      null,
-      link:     null,
-      status:   'In progress',
+      organization: 'Valorant Sticker Business',
+      pieces: [
+        {
+          title:    'Sticker & Brand Design',
+          category: 'Brand Identity',
+          desc:     'Logo design, sticker art, and brand assets for a Valorant beer league sticker business.',
+          media:    [
+            'assets/creative/valorant-sticker-business/1.jpg',
+            'assets/creative/valorant-sticker-business/2.jpg',
+            'assets/creative/valorant-sticker-business/3.jpg',
+          ],
+          links:    [],
+          status:   'Coming soon',
+        },
+      ],
     },
     {
-      title:    'LG Sticker Pack',
-      category: 'Sticker Design',
-      desc:     'Holographic die-cut stickers for Light Garden — LG-branded merch for a Valorant beer league franchise.',
-      img:      null,
-      link:     null,
-      status:   null,
-    },
-    {
-      title:    'LG Team Branding',
-      category: 'Brand Identity',
-      desc:     'Full visual identity for Light Garden — primary mark, secondary lockup, jersey numbers, and Discord server assets.',
-      img:      null,
-      link:     null,
-      status:   null,
+      organization: 'Pickleball Business',
+      pieces: [
+        {
+          title:    'Brand Identity',
+          category: 'Brand Identity',
+          desc:     'Logo and brand identity work for a pickleball business.',
+          media:    [
+            'assets/creative/pickleball-business/1.jpg',
+            'assets/creative/pickleball-business/2.jpg',
+            'assets/creative/pickleball-business/3.jpg',
+          ],
+          links:    [],
+          status:   'Coming soon',
+        },
+      ],
     },
   ],
 
@@ -552,12 +583,21 @@ function buildGallery(media, title) {
 /* ═══════════════════════════════════════════════════════════════
    C. EXPLORER RENDERER
    ─────────────────────────────────────────────────────────────
-   Builds the split-pane explorer for the Coding section:
-   left = sidebar list of project tabs
-   right = detail panel (image gallery + info)
+   Builds the split-pane explorer shared by the Coding and Creative
+   sections: left = sidebar list of project tabs, right = detail
+   panel (image/video gallery + info).
 
    You shouldn't need to edit this — add/change entries in PROJECTS.
    ═══════════════════════════════════════════════════════════════ */
+
+/**
+ * Flattens PROJECTS.creative's [{ organization, pieces }] into the
+ * single flat array buildExplorer() expects — organization is kept
+ * in the data for context, but isn't shown as a divider in the UI.
+ */
+function flattenByOrganization(organizations) {
+  return organizations.flatMap(org => org.pieces);
+}
 
 /**
  * Build the DOM for the right-hand detail panel of a project.
@@ -613,10 +653,10 @@ function buildExplorerPanel(project) {
 }
 
 /**
- * Populate the coding section's split-pane explorer.
- * Renders sidebar tabs (desktop/tablet), a select dropdown covering
- * the same projects (mobile — see Responsive in style.css), and the
- * initial detail panel for the first project.
+ * Populate a split-pane explorer: sidebar tabs (desktop/tablet), a
+ * select dropdown covering the same projects (mobile — see Responsive
+ * in style.css), and the initial detail panel for the first project.
+ * Used for both the Coding and Creative sections.
  */
 function buildExplorer(projects, sidebarEl, panelEl) {
   if (!projects.length || !sidebarEl || !panelEl) return;
@@ -669,102 +709,24 @@ function buildExplorer(projects, sidebarEl, panelEl) {
 }
 
 
-/* ═══════════════════════════════════════════════════════════════
-   D. CARD RENDERER
-   ─────────────────────────────────────────────────────────────
-   Builds the card grid for the Artistic section.
-   You shouldn't need to edit this.
-   ═══════════════════════════════════════════════════════════════ */
-
-/** Build one card <article> element from a single project object. */
-function buildCard(project) {
-  const card = document.createElement('article');
-  card.className = 'project-card reveal';
-
-  // ── Image zone ──
-  const imgWrap = document.createElement('div');
-  imgWrap.className = 'card-img';
-
-  if (project.img) {
-    const img = document.createElement('img');
-    img.src     = project.img;
-    img.alt     = project.title;
-    img.loading = 'lazy';
-    imgWrap.appendChild(img);
-  } else {
-    const ph = document.createElement('div');
-    ph.className = 'card-img-placeholder';
-    ph.innerHTML = `
-      <div class="card-img-placeholder-icon">◻</div>
-      <div class="card-img-placeholder-label">Image placeholder</div>
-    `;
-    imgWrap.appendChild(ph);
-  }
-
-  // ── Card body ──
-  const body = document.createElement('div');
-  body.className = 'card-body';
-
-  const cat = document.createElement('div');
-  cat.className   = 'card-category';
-  cat.textContent = project.category;
-
-  const title = document.createElement('h3');
-  title.className   = 'card-title';
-  title.textContent = project.title;
-
-  const desc = document.createElement('p');
-  desc.className   = 'card-desc';
-  desc.textContent = project.desc;
-
-  body.append(cat, title, desc);
-
-  if (project.link) {
-    const link = document.createElement('a');
-    link.className   = 'card-link';
-    link.href        = project.link;
-    link.target      = '_blank';
-    link.rel         = 'noopener noreferrer';
-    link.textContent = 'View project →';
-    body.appendChild(link);
-  }
-
-  if (project.status) {
-    const badge = document.createElement('div');
-    badge.className   = 'card-status';
-    badge.textContent = project.status;
-    body.appendChild(badge);
-  }
-
-  card.append(imgWrap, body);
-  return card;
-}
-
-/** Inject all project cards into the artistic grid. */
-function buildGrid(projects, gridEl) {
-  if (!gridEl) return;
-  projects.forEach(p => gridEl.appendChild(buildCard(p)));
-}
-
-/** Wire up both sections from PROJECTS data. */
+/** Wire up both sections from PROJECTS data — same explorer, different data. */
 function renderProjects() {
-  // Coding → split-pane explorer
   buildExplorer(
     PROJECTS.coding,
     document.getElementById('coding-sidebar'),
     document.getElementById('coding-panel')
   );
 
-  // Artistic → card grid
-  buildGrid(
-    PROJECTS.artistic,
-    document.getElementById('artistic-grid')
+  buildExplorer(
+    flattenByOrganization(PROJECTS.creative),
+    document.getElementById('creative-sidebar'),
+    document.getElementById('creative-panel')
   );
 }
 
 
 /* ═══════════════════════════════════════════════════════════════
-   E. SCROLL LOGIC
+   D. SCROLL LOGIC
    ─────────────────────────────────────────────────────────────
    Shows/hides the nav after the hero scrolls out of view.
    ═══════════════════════════════════════════════════════════════ */
@@ -784,7 +746,7 @@ function setupScrollLogic() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   F. SCROLL REVEAL
+   E. SCROLL REVEAL
    ─────────────────────────────────────────────────────────────
    IntersectionObserver adds .revealed to .reveal elements when
    they enter the viewport. CSS handles the fade-in animation.
@@ -807,7 +769,7 @@ function setupReveal() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   G. INIT
+   F. INIT
    ─────────────────────────────────────────────────────────────
    Runs once the HTML is fully parsed.
    Cards/tabs must be in the DOM before setupReveal() observes them.
@@ -817,7 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Wire up the lightbox overlay (used by galleries built in step 2)
   Lightbox.setup();
 
-  // 2. Build the coding explorer and artistic card grid
+  // 2. Build the coding explorer and creative section
   renderProjects();
 
   // 3. Scroll-driven nav reveal

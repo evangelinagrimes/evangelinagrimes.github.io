@@ -23,7 +23,7 @@
     <span class="nav-name">Eva Grimes Portfolio</span>
     <ul class="nav-links">
       <li><a href="#coding">Technical</a></li>
-      <li><a href="#artistic">Creative</a></li>
+      <li><a href="#creative">Creative</a></li>
       <li><a href="#about">About</a></li>
     </ul>
   </nav>
@@ -68,18 +68,26 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════
-         ARTISTIC — logos, stream assets, stickers, team branding
-         Regular card grid.
+         CREATIVE — logos, stream assets, stickers, brand work
+         Same split-pane explorer as Coding. JS populates it from
+         PROJECTS.creative (flattened via flattenByOrganization())
+         in script.js.
          ═══════════════════════════════════════════════════════════ -->
-    <section id="artistic" class="region region--artistic">
+    <section id="creative" class="region region--creative">
       <div class="region-header reveal">
-        <span class="eyebrow">02 — Artistic</span>
+        <span class="eyebrow">02 — Creative</span>
         <h2>Visual Work</h2>
         <!-- ▶ Edit this description -->
-        <p class="region-sub">Logo design, stream assets, sticker design, and team branding — for a startup, a beer league franchise, and the people in it.</p>
+        <p class="region-sub">Logo design, stickers, and brand work — grouped by who it was made for.</p>
       </div>
-      <!-- Cards injected by script.js → buildGrid() -->
-      <div class="project-grid" id="artistic-grid"></div>
+
+      <!-- The explorer is built by script.js → buildExplorer() -->
+      <div class="project-explorer" id="creative-explorer">
+        <!-- Sidebar: piece tabs -->
+        <nav class="explorer-sidebar" id="creative-sidebar" aria-label="Creative work"></nav>
+        <!-- Detail panel: gallery/lightbox + info, swapped on tab click -->
+        <div class="explorer-panel" id="creative-panel"></div>
+      </div>
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════
