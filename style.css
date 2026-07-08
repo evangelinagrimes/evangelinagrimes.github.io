@@ -1163,10 +1163,19 @@ body.lightbox-open {
   color: var(--text-muted);
 }
 
+/* z-index is required, not decorative: .lightbox-content is
+   non-positioned, but the <img>/<video> inside it are `position:
+   absolute` (see .lightbox-stage img above) and come later in the DOM
+   than these controls, so without an explicit stack level the image
+   paints (and captures clicks) on top of them wherever it geometrically
+   overlaps -- e.g. a tall portrait image on a narrow phone screen can
+   reach up under the close button or out past the stage into the
+   arrows, silently swallowing taps meant for the controls. */
 .lightbox-close,
 .lightbox-arrow {
   all: unset;
   position: absolute;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1226,6 +1235,7 @@ body.lightbox-open {
    center. */
 .lightbox-counter {
   position: absolute;
+  z-index: 2;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
