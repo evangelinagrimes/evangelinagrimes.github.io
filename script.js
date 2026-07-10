@@ -52,7 +52,7 @@
                     above (title/category/desc/media/links/status;
                     tags are optional and rarely needed here). Each
                     piece has its own folder under
-                    assets/creative/<org-slug>/.
+                    assets/creative/<org-slug>/<piece-slug>/.
    ═══════════════════════════════════════════════════════════════ */
 const PROJECTS = {
 
@@ -190,9 +190,9 @@ const PROJECTS = {
           category: 'Poster Design',
           desc:     'Design work from coursework and clubs at Christopher Newport University, including event promo art and logo work for a campus gaming club.',
           media:    [
-            'assets/creative/university/schoolar_work.jpg',
-            'assets/creative/university/Horror_Game_Night.jpg',
-            'assets/creative/university/CNU-logo.png',
+            'assets/creative/university/university-media/schoolar_work.jpg',
+            'assets/creative/university/university-media/Horror_Game_Night.jpg',
+            'assets/creative/university/university-media/CNU-logo.png',
           ],
           links:    [],
           status:   null,
@@ -207,12 +207,12 @@ const PROJECTS = {
           category: 'Brand Identity',
           desc:     'Logo design and color/style variants for Light Garden, a Valorant for-fun franchise. I created these designs as stickers to sell to fans of the franchise. It is the beginning of my small business.',
           media:    [
-            'assets/creative/valorant-franchise-content/swirly_logo.png',
-            'assets/creative/valorant-franchise-content/swirly_dark_logo.png',
-            'assets/creative/valorant-franchise-content/swirly_green_logo.png',
-            'assets/creative/valorant-franchise-content/swirly_simple_green_logo.png',
-            'assets/creative/valorant-franchise-content/swirly_white.png',
-            'assets/creative/valorant-franchise-content/clover_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_dark_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_green_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_simple_green_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_white.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/clover_logo.png',
           ],
           links:    [],
           status:   null,
@@ -222,11 +222,11 @@ const PROJECTS = {
           category: 'Sticker Design',
           desc:     'Player-nickname sticker designs sold for Light Garden, a Valorant beer league franchise.',
           media:    [
-            'assets/creative/valorant-franchise-content/Poster_1.png',
-            'assets/creative/valorant-franchise-content/Poster_2.png',
-            'assets/creative/valorant-franchise-content/Poster_3.png',
-            'assets/creative/valorant-franchise-content/Poster_4.png',
-            'assets/creative/valorant-franchise-content/Poster_5.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_1.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_2.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_3.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_4.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_5.png',
           ],
           links:    [],
           status:   null,
@@ -241,11 +241,11 @@ const PROJECTS = {
           category: 'Character Art',
           desc:     'Player character illustrations and broadcast banner art for the Light Garden roster, a Valorant for-fun league franchise.',
           media:    [
-            'assets/creative/video-game-content/CheeseBanner.jpg',
-            'assets/creative/video-game-content/GhostBanner4.jpg',
-            'assets/creative/video-game-content/UcklarBanner.jpg',
-            'assets/creative/video-game-content/ZuuBanner3.jpg',
-            'assets/creative/video-game-content/KayowBird.jpg',
+            'assets/creative/video-game-content/player-banner-art/CheeseBanner.jpg',
+            'assets/creative/video-game-content/player-banner-art/GhostBanner4.jpg',
+            'assets/creative/video-game-content/player-banner-art/UcklarBanner.jpg',
+            'assets/creative/video-game-content/player-banner-art/ZuuBanner3.jpg',
+            'assets/creative/video-game-content/player-banner-art/KayowBird.jpg',
           ],
           links:    [],
           status:   null,
@@ -255,8 +255,8 @@ const PROJECTS = {
           category: 'Illustration',
           desc:     'Video game fan art.',
           media:    [
-            'assets/creative/video-game-content/Wheatley.jpg',
-            'assets/creative/video-game-content/LifeIsStrangeArt.jpg',
+            'assets/creative/video-game-content/fan-art/Wheatley.jpg',
+            'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.jpg',
           ],
           links:    [],
           status:   null,
@@ -271,10 +271,10 @@ const PROJECTS = {
           category: 'Brand Identity',
           desc:     'Logo and brand identity work for a pickleball business.',
           media:    [
-            'assets/creative/pickleball-business/Pickle_and_Brew_Logo.jpg',
-            'assets/creative/pickleball-business/PicklePeakArtboard_2.jpg',
-            'assets/creative/pickleball-business/PicklePeakArtboard_21.jpg',
-            'assets/creative/pickleball-business/PicklePeakArtboard_3.png',
+            'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
           ],
           links:    [],
           status:   null,
