@@ -60,7 +60,7 @@ const PROJECTS = {
     {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
-      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pihawk systems. On my team of four, I implemented heterogeneous drone control with ROS2 (Kilted) action-based feedback for the Pihawks (Pixhawk 2.4.8 flight controller mounted on a raspberry pi) communicating commands via a telemetry module using the MAVLink protocol. The drones are flown in a netted drone cage using an Optitrack sensor system to track postition data. I configured the raspberry pi\'s on the Pihawks to take in the position data and fuse it with the flight controller via a direct UART connection.',
+      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pihawk systems. On my team of four, I implemented heterogeneous drone control with ROS2 (Kilted) action-based feedback for the Pihawks (Pixhawk 2.4.8 flight controller mounted on a raspberry pi) communicating commands via a telemetry module using the MAVLink protocol. The drones are flown in a netted drone cage using an Optitrack sensor system to track position data. I configured the raspberry pi\'s on the Pihawks to take in the position data and fuse it with the flight controller via a direct UART connection.',
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.jpg',
         'assets/coding/drone-research-platform/drones-2.jpg',
@@ -93,7 +93,7 @@ const PROJECTS = {
     // {
     //   title:     'Cafe Canna Webpage',
     //   category:  'Web Development',
-    //   desc:      'I designed the webpage for a prospective business, Cafe Canna. Please note, I do not engage in any marajuana related business, this was purely a design exercise. The webpage is a static site built with HTML, CSS, and JavaScript. I used Claude Code to generate the initial code for the site, then I modified it to fit my design vision. This is an ongoing project and I will be adding more functionality to the site in the future.',
+    //   desc:      'I designed the webpage for a prospective business, Cafe Canna. Please note, I do not engage in any marijuana related business, this was purely a design exercise. The webpage is a static site built with HTML, CSS, and JavaScript. I used Claude Code to generate the initial code for the site, then I modified it to fit my design vision. This is an ongoing project and I will be adding more functionality to the site in the future.',
     //   media:     [
     //     'assets/coding/cafe-canna/Cafe_Landing_Page.png',
     //     'assets/coding/cafe-canna/Cafe_About_Page.png',
@@ -108,7 +108,7 @@ const PROJECTS = {
     {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
-      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them after any MMR udpates. The primary data tabs are "RAW", "CONSTANTS", and "MASTER_PLAYERS." Everything else is a visual representation of the data in those three tabs. The "DETAILS" tab displays all the players in the given tier and any notes that were made on them. The "PIVOT" tab is a pivot table that filters players by role, tier, and franchise status. The "TEAMS" tab is a team planner that uses the pivot table to display the best possible team based on the selected filters and preferences.  ',
+      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them after any MMR updates. The primary data tabs are "RAW", "CONSTANTS", and "MASTER_PLAYERS." Everything else is a visual representation of the data in those three tabs. The "DETAILS" tab displays all the players in the given tier and any notes that were made on them. The "PIVOT" tab is a pivot table that filters players by role, tier, and franchise status. The "TEAMS" tab is a team planner that uses the pivot table to display the best possible team based on the selected filters and preferences.  ',
       media:     [
         'assets/coding/team-scouting-spreadsheet/VDC_Raw.png',
         'assets/coding/team-scouting-spreadsheet/VDC_Master.png',
