@@ -60,7 +60,7 @@ const PROJECTS = {
     {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
-      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pihawk systems. On my team of four, I implemented heterogeneous drone control with ROS2 (Kilted) action-based feedback for the Pihawks (Pixhawk 2.4.8 flight controller mounted on a raspberry pi) communicating commands via a telemetry module using the MAVLink protocol. The drones are flown in a netted drone cage using an Optitrack sensor system to track position data. I configured the raspberry pi\'s on the Pihawks to take in the position data and fuse it with the flight controller via a direct UART connection.',
+      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pixhawk systems, work that led to co-authoring an IEEE paper, "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones." On a team of four, I implemented heterogeneous drone control with ROS 2 (Kilted) action-based feedback for the Pihawks: a Pixhawk 2.4.8 flight controller mounted on a Raspberry Pi, communicating commands via a telemetry module using the MAVLink protocol. The drones fly in a netted drone cage using an OptiTrack motion capture system to track position data. I configured the Raspberry Pis on the Pixhawks to ingest that position data and fuse it with the flight controller via a direct UART connection. My role included Pihawk integration, action command implementation (arm, takeoff, land), Raspberry Pi configuration, and UART-based sensor fusion for real-time position tracking.',
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.jpg',
         'assets/coding/drone-research-platform/drones-2.jpg',
@@ -188,7 +188,7 @@ const PROJECTS = {
         {
           title:    'University Media',
           category: 'Poster Design',
-          desc:     'Design work from coursework and clubs at Christopher Newport University, including event promo art and logo work for a campus gaming club.',
+          desc:     'Design work from coursework and clubs at Christopher Newport University, including event promo art and logo work for a campus gaming club. ',
           media:    [
             'assets/creative/university/university-media/schoolar_work.jpg',
             'assets/creative/university/university-media/Horror_Game_Night.jpg',
@@ -220,7 +220,7 @@ const PROJECTS = {
         {
           title:    'Sticker Designs',
           category: 'Sticker Design',
-          desc:     'Player-nickname sticker designs sold for Light Garden, a Valorant beer league franchise.',
+          desc:     'Player-nickname sticker designs for players in Valorant league.',
           media:    [
             'assets/creative/valorant-franchise-content/sticker-designs/Poster_1.png',
             'assets/creative/valorant-franchise-content/sticker-designs/Poster_2.png',
@@ -245,7 +245,6 @@ const PROJECTS = {
             'assets/creative/video-game-content/player-banner-art/GhostBanner4.jpg',
             'assets/creative/video-game-content/player-banner-art/UcklarBanner.jpg',
             'assets/creative/video-game-content/player-banner-art/ZuuBanner3.jpg',
-            'assets/creative/video-game-content/player-banner-art/KayowBird.jpg',
           ],
           links:    [],
           status:   null,
@@ -257,30 +256,31 @@ const PROJECTS = {
           media:    [
             'assets/creative/video-game-content/fan-art/Wheatley.jpg',
             'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.jpg',
+            'assets/creative/video-game-content/fan-art/KayowBird.jpg',
           ],
           links:    [],
           status:   null,
         },
       ],
     },
-    {
-      organization: 'Pickleball Business',
-      pieces: [
-        {
-          title:    'Brand Identity',
-          category: 'Brand Identity',
-          desc:     'Logo and brand identity work for a pickleball business.',
-          media:    [
-            'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
-          ],
-          links:    [],
-          status:   null,
-        },
-      ],
-    },
+    // {
+    //   organization: 'Pickleball Business',
+    //   pieces: [
+    //     {
+    //       title:    'Brand Identity',
+    //       category: 'Brand Identity',
+    //       desc:     'Logo and brand identity work for a pickleball business.',
+    //       media:    [
+    //         'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
+    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
+    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
+    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
+    //       ],
+    //       links:    [],
+    //       status:   null,
+    //     },
+    //   ],
+    // },
   ],
 
 };
