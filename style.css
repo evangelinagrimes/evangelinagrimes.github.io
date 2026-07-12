@@ -1011,15 +1011,22 @@ h1, h2, h3 {
 
 .about-text em { font-style: italic; color: var(--text); }
 
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .contact-link {
   display: inline-block;
-  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   color: var(--accent-hero-a);
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s;
+  align-self: flex-start;
 }
 
 .contact-link:hover { border-bottom-color: var(--accent-hero-a); }

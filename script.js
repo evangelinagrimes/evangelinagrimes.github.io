@@ -165,6 +165,26 @@ const PROJECTS = {
       status:    null,
     },
     {
+      title:     'Cafe Canna Webpage',
+      category:  'Web Development',
+      desc:      'A static site design exercise for Cafe Canna, a prospective cannabis café concept. Built with HTML, CSS, and JavaScript using Claude Code for initial scaffolding, then customized to a specific design vision.',
+      outcome:   'Live site prototype at cafe-canna.github.io',
+      learned:   [
+        'Using Claude Code to scaffold a site quickly, then customizing the output to match a specific design vision',
+        'Designing distinct pages for different business needs (landing, about, products)',
+      ],
+      media:     [
+        'assets/coding/cafe-canna/Cafe_Landing_Page.png',
+        'assets/coding/cafe-canna/Cafe_About_Page.png',
+        'assets/coding/cafe-canna/Cafe_Product_Page.png',
+      ],
+      tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
+      links:     [
+        { url: 'https://cafe-canna.github.io/cafecannallc/', label: 'Live Site ↗' },
+      ],
+      status:    'Template',
+    },
+    {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
       desc:      'A Google Sheets system that ingests raw CSV data and auto-sorts players by tier and MMR for a Valorant esports franchise. Player notes follow individuals through MMR updates, and a pivot-based team planner suggests optimal rosters from the filtered pool.',
@@ -293,24 +313,24 @@ const PROJECTS = {
         },
       ],
     },
-    // {
-    //   organization: 'Pickleball Business',
-    //   pieces: [
-    //     {
-    //       title:    'Brand Identity',
-    //       category: 'Brand Identity',
-    //       desc:     'Logo and brand identity work for a pickleball business.',
-    //       media:    [
-    //         'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
-    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
-    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
-    //         'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
-    //       ],
-    //       links:    [],
-    //       status:   null,
-    //     },
-    //   ],
-    // },
+    {
+      organization: 'Pickleball Business',
+      pieces: [
+        {
+          title:    'Brand Identity',
+          category: 'Brand Identity',
+          desc:     'Logo and brand identity work for a pickleball business — logo design, color palette, and print-ready brand assets.',
+          media:    [
+            'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
+          ],
+          links:    [],
+          status:   null,
+        },
+      ],
+    },
   ],
 
 };
