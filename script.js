@@ -109,7 +109,7 @@ const PROJECTS = {
       title:     'Day Out Generator',
       category:  'Application Development',
       desc:      'A Python app that uses the Google Places API to generate a curated day out — restaurant, activity, then dessert — based on your location.',
-      outcome:   'Published on GitHub',
+      outcome:   'Custom application GUI that creates a three-step plan for an exciting day out',
       learned:   [
         'Querying the Google Places API to retrieve and filter location-based results',
         'Chaining multiple API calls to build a multi-stop day itinerary',
@@ -149,10 +149,10 @@ const PROJECTS = {
     {
       title:     'Senior RA Duty Schedule',
       category:  'Spreadsheet / Automation',
-      desc:      'A Google Sheets scheduling hub and swap board built for Eva\'s Resident Assistant staff. A master schedule tab feeds two visual views; a companion Apps Script automatically creates calendar events with shift type and length for each RA.',
-      outcome:   'Used by my RA staff for scheduling throughout the academic year',
+      desc:      'A Google Sheets scheduling hub and swap board built for my Resident Assistant staff. A master schedule tab feeds two visual views; a companion Apps Script automatically creates calendar events with shift type and length for each RA.',
+      outcome:   'Visual reference of semesterly duty rotation for RA staff throughout the academic year',
       learned:   [
-        'Writing Google Apps Script to automate calendar event creation from spreadsheet data',
+        'Writing a Google Apps Script to automate calendar event creation from spreadsheet data',
         'Linking multiple visual views to a single master data tab for consistent updates',
         'Designing a swap board so staff could flag and negotiate shift changes without a separate tool',
       ],
