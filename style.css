@@ -400,11 +400,6 @@ h1, h2, h3 {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(0.72) saturate(0.88);
-  transition: filter 0.4s;
-}
-
-.featured-project:hover .featured-project-image img {
   filter: brightness(0.84) saturate(1.0);
 }
 
