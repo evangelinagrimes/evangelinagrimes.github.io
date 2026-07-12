@@ -61,6 +61,26 @@ const PROJECTS = {
 
   coding: [
     {
+      title:     'Valorant Aim Trainer',
+      category:  'AI Development',
+      desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
+      outcome:   'Custom annotated dataset published on Roboflow',
+      learned:   [
+        'Building and annotating a training dataset from game screenshots using Roboflow',
+        'Training a custom YOLO model for object detection in a specific visual domain',
+        'Computing per-frame distance metrics from detected bounding boxes',
+        'Generating structured, actionable text reports from video analysis output',
+      ],
+      media:     [
+        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
+      ],
+      tags:      ['Python', 'YOLO', 'Computer Vision'],
+      links:     [
+        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
+      ],
+      status:    null,
+    },
+     {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
       desc:      'Hands-on research on autonomous drone control with Crazyflie and Pixhawk systems, leading to a co-authored IEEE publication on multi-drone coordination with ROS 2.',
@@ -86,46 +106,6 @@ const PROJECTS = {
       status:    'Ongoing',
     },
     {
-      title:     'Valorant Aim Trainer',
-      category:  'AI Development',
-      desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
-      outcome:   'Custom annotated dataset published on Roboflow',
-      learned:   [
-        'Building and annotating a training dataset from game screenshots using Roboflow',
-        'Training a custom YOLO model for object detection in a specific visual domain',
-        'Computing per-frame distance metrics from detected bounding boxes',
-        'Generating structured, actionable text reports from video analysis output',
-      ],
-      media:     [
-        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
-      ],
-      tags:      ['Python', 'YOLO', 'Computer Vision'],
-      links:     [
-        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
-      ],
-      status:    null,
-    },
-    {
-      title:     'Franchise Merch Webpage',
-      category:  'Web Development',
-      desc:      'A static storefront for selling stickers and merchandise for Light Garden, a Valorant for-fun franchise (VDC league). Built with HTML, CSS, and JavaScript; Shopify handles e-commerce checkout.',
-      outcome:   'Live site selling Light Garden franchise merchandise',
-      learned:   [
-        'Integrating Shopify e-commerce into a hand-built static HTML/CSS/JS site',
-        'Designing a product-focused storefront with a browse-to-checkout flow',
-      ],
-      media:     [
-        'assets/coding/lg-merch-site/Merch_Landing_Page.webp',
-        'assets/coding/lg-merch-site/Merch_Product_Page.webp',
-        'assets/coding/lg-merch-site/Merch_Order_Page.webp',
-      ],
-      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
-      links:     [
-        { url: 'https://bobert-merch.github.io/', label: 'Live Site ↗' },
-      ],
-      status:    'Ongoing',
-    },
-    {
       title:     'Day Out Generator',
       category:  'Application Development',
       desc:      'A Python app that uses the Google Places API to generate a curated day out — restaurant, activity, then dessert — based on your location.',
@@ -142,47 +122,6 @@ const PROJECTS = {
         { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: 'GitHub ↗' },
       ],
       status:    null,
-    },
-    {
-      title:     'UAS Competition Webpage',
-      category:  'Web Development',
-      desc:      'Initiated and led development of the CNU UAS Club website to meet SUAS international competition qualification requirements — the first website any of the four team members had ever built.',
-      outcome:   'Helped the CNU UAS Club meet SUAS competition qualification requirements',
-      learned:   [
-        'Leading a first-time web dev team through weekly sprint meetings and goal-setting',
-        'Structuring a multi-page static site to satisfy external technical requirements',
-        'Iterating publicly as a team under a real competition deadline',
-      ],
-      media:     [
-        'assets/coding/uas-competition-webpage/UAS_About.webp',
-        'assets/coding/uas-competition-webpage/UAS_Team.webp',
-      ],
-      tags:      ['HTML', 'CSS', 'JavaScript'],
-      links:     [
-        { url: 'https://cnuuas.github.io/', label: 'Live Site ↗' },
-        { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: 'GitHub ↗' },
-      ],
-      status:    null,
-    },
-    {
-      title:     'Cafe Canna Webpage',
-      category:  'Web Development',
-      desc:      'A static site design exercise for Cafe Canna, a prospective cannabis café concept. Built with HTML, CSS, and JavaScript using Claude Code for initial scaffolding, then customized to a specific design vision.',
-      outcome:   'Live site prototype at cafe-canna.github.io',
-      learned:   [
-        'Using Claude Code to scaffold a site quickly, then customizing the output to match a specific design vision',
-        'Designing distinct pages for different business needs (landing, about, products)',
-      ],
-      media:     [
-        'assets/coding/cafe-canna/Cafe_Landing_Page.webp',
-        'assets/coding/cafe-canna/Cafe_About_Page.webp',
-        'assets/coding/cafe-canna/Cafe_Product_Page.webp',
-      ],
-      tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
-      links:     [
-        { url: 'https://cafe-canna.github.io/cafecannallc/', label: 'Live Site ↗' },
-      ],
-      status:    'Template',
     },
     {
       title:     'Team Scouting Spreadsheet',
@@ -211,7 +150,7 @@ const PROJECTS = {
       title:     'Senior RA Duty Schedule',
       category:  'Spreadsheet / Automation',
       desc:      'A Google Sheets scheduling hub and swap board built for Eva\'s Resident Assistant staff. A master schedule tab feeds two visual views; a companion Apps Script automatically creates calendar events with shift type and length for each RA.',
-      outcome:   'Used by Eva\'s RA staff for scheduling throughout the academic year',
+      outcome:   'Used by my RA staff for scheduling throughout the academic year',
       learned:   [
         'Writing Google Apps Script to automate calendar event creation from spreadsheet data',
         'Linking multiple visual views to a single master data tab for consistent updates',
@@ -229,6 +168,68 @@ const PROJECTS = {
       ],
       status:    null,
     },
+    {
+      title:     'Franchise Merch Webpage',
+      category:  'Web Development',
+      desc:      'A static storefront for selling stickers and merchandise for Light Garden, a Valorant for-fun franchise (VDC league). Built with HTML, CSS, and JavaScript; Shopify handles e-commerce checkout.',
+      outcome:   'Live site selling Light Garden franchise merchandise',
+      learned:   [
+        'Integrating Shopify e-commerce into a hand-built static HTML/CSS/JS site',
+        'Designing a product-focused storefront with a browse-to-checkout flow',
+      ],
+      media:     [
+        'assets/coding/lg-merch-site/Merch_Landing_Page.webp',
+        'assets/coding/lg-merch-site/Merch_Product_Page.webp',
+        'assets/coding/lg-merch-site/Merch_Order_Page.webp',
+      ],
+      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
+      links:     [
+        { url: 'https://bobert-merch.github.io/', label: 'Live Site ↗' },
+      ],
+      status:    'Ongoing',
+    },
+     {
+      title:     'Cafe Canna Webpage',
+      category:  'Web Development',
+      desc:      'A static site design exercise for Cafe Canna, a prospective cannabis café concept. Built with HTML, CSS, and JavaScript using Claude Code for initial scaffolding, then customized to a specific design vision.',
+      outcome:   'Live site prototype at cafe-canna.github.io',
+      learned:   [
+        'Using Claude Code to scaffold a site quickly, then customizing the output to match a specific design vision',
+        'Designing distinct pages for different business needs (landing, about, products)',
+      ],
+      media:     [
+        'assets/coding/cafe-canna/Cafe_Landing_Page.webp',
+        'assets/coding/cafe-canna/Cafe_About_Page.webp',
+        'assets/coding/cafe-canna/Cafe_Product_Page.webp',
+      ],
+      tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
+      links:     [
+        { url: 'https://cafe-canna.github.io/cafecannallc/', label: 'Live Site ↗' },
+      ],
+      status:    'Template',
+    },
+    {
+      title:     'UAS Competition Webpage',
+      category:  'Web Development',
+      desc:      'Initiated and led development of the CNU UAS Club website to meet SUAS international competition qualification requirements — the first website any of the four team members had ever built.',
+      outcome:   'Helped the CNU UAS Club meet SUAS competition qualification requirements',
+      learned:   [
+        'Leading a first-time web dev team through weekly sprint meetings and goal-setting',
+        'Structuring a multi-page static site to satisfy external technical requirements',
+        'Iterating publicly as a team under a real competition deadline',
+      ],
+      media:     [
+        'assets/coding/uas-competition-webpage/UAS_About.webp',
+        'assets/coding/uas-competition-webpage/UAS_Team.webp',
+      ],
+      tags:      ['HTML', 'CSS', 'JavaScript'],
+      links:     [
+        { url: 'https://cnuuas.github.io/', label: 'Live Site ↗' },
+        { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: 'GitHub ↗' },
+      ],
+      status:    null,
+    },
+    
   ],
 
   creative: [
