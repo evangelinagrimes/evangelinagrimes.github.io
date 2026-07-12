@@ -205,8 +205,9 @@ h1, h2, h3 {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 65% 50% at 50% 40%, rgba(63, 224, 197, 0.10) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 35% at 70% 65%, rgba(108, 92, 231, 0.07) 0%, transparent 65%);
+    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(63, 224, 197, 0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 72% 68%, rgba(108, 92, 231, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 30% at 22% 60%, rgba(63, 224, 197, 0.05) 0%, transparent 60%);
   animation: hero-breathe 7s ease-in-out infinite;
   pointer-events: none;
 }
@@ -380,10 +381,11 @@ h1, h2, h3 {
 .featured-project {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 260px;
+  min-height: 280px;
   max-width: var(--max-w);
   margin: 0 auto clamp(2rem, 4vw, 3rem);
   border: 1px solid var(--border-strong);
+  border-top: 2px solid rgba(var(--accent-coding-rgb), 0.55);
   border-radius: 6px;
   overflow: hidden;
   background: var(--bg-card);
@@ -399,12 +401,12 @@ h1, h2, h3 {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(0.65) saturate(0.85);
+  filter: brightness(0.72) saturate(0.88);
   transition: filter 0.4s;
 }
 
 .featured-project:hover .featured-project-image img {
-  filter: brightness(0.75) saturate(0.95);
+  filter: brightness(0.84) saturate(1.0);
 }
 
 .featured-project-body {
@@ -821,7 +823,7 @@ h1, h2, h3 {
 
 /* Info area below the preview */
 .explorer-info {
-  padding: 1.6rem 2rem 1.8rem;
+  padding: 1.8rem 2rem 2rem;
   flex: 1;
   overflow-y: auto;
 }
@@ -832,13 +834,13 @@ h1, h2, h3 {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .explorer-info h3 {
-  font-size: 1.4rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
   font-family: var(--font-display);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Outcome line — one proof point rendered just below the title */
@@ -848,7 +850,7 @@ h1, h2, h3 {
   letter-spacing: 0.08em;
   color: var(--accent);
   line-height: 1.55;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
 }
 
 .explorer-info-desc {
@@ -1011,7 +1013,7 @@ h1, h2, h3 {
 
 .about-text h2 {
   font-size: clamp(2.5rem, 5vw, 4rem);
-  margin: 0.75rem 0 1.4rem;
+  margin: 0.5rem 0 1.6rem;
 }
 
 .about-text p {
