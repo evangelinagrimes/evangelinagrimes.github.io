@@ -24,6 +24,9 @@
      title    — shown in the sidebar and as the panel heading
      category — short label in the accent color
      desc     — 1–2 sentences shown in the detail panel
+     outcome  — one line of result/proof shown near the title
+     learned  — array of 2–4 short strings shown as a "What I
+                learned" block in the detail panel
      media    — array of image/video paths for the preview gallery.
                 Video files (.mp4/.webm/.mov/.m4v/.ogv) render as a
                 native <video controls> player instead of an image.
@@ -60,7 +63,14 @@ const PROJECTS = {
     {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
-      desc:      'I conducted hands-on research on autonomous drone control using the Crazyflie and Pixhawk systems, work that led to co-authoring an IEEE paper, "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones." On a team of four, I implemented heterogeneous drone control with ROS 2 (Kilted) action-based feedback for the Pihawks: a Pixhawk 2.4.8 flight controller mounted on a Raspberry Pi, communicating commands via a telemetry module using the MAVLink protocol. The drones fly in a netted drone cage using an OptiTrack motion capture system to track position data. I configured the Raspberry Pis on the Pixhawks to ingest that position data and fuse it with the flight controller via a direct UART connection. My role included Pihawk integration, action command implementation (arm, takeoff, land), Raspberry Pi configuration, and UART-based sensor fusion for real-time position tracking.',
+      desc:      'Hands-on research on autonomous drone control with Crazyflie and Pixhawk systems, leading to a co-authored IEEE publication on multi-drone coordination with ROS 2.',
+      outcome:   'Co-authored IEEE paper: "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones"',
+      learned:   [
+        'Fusing OptiTrack motion capture data with a Pixhawk flight controller over a direct UART connection',
+        'Designing ROS 2 action interfaces (arm, takeoff, land) for heterogeneous drone fleets',
+        'Configuring Raspberry Pi / Pixhawk (Pihawk) pairs for real-time MAVLink telemetry',
+        'Contributing Pihawk integration, action command implementation, and sensor fusion on a four-person research team',
+      ],
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.jpg',
         'assets/coding/drone-research-platform/drones-2.jpg',
@@ -70,15 +80,40 @@ const PROJECTS = {
       ],
       tags:      ['ROS2', 'Python', 'Pihawk', 'Crazyflie', 'Optitrack'],
       links:     [
-        { url: 'https://github.com/CNURobotics/flexible_drones', label: '-> Official GitHub Release <-' },
-        { url: 'https://ieeexplore.ieee.org/document/11476332', label: '-> IEEE paper <-' },
+        { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
+        { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
       ],
       status:    'Ongoing',
     },
     {
+      title:     'Valorant Aim Trainer',
+      category:  'AI Development',
+      desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
+      outcome:   'Custom annotated dataset published on Roboflow',
+      learned:   [
+        'Building and annotating a training dataset from game screenshots using Roboflow',
+        'Training a custom YOLO model for object detection in a specific visual domain',
+        'Computing per-frame distance metrics from detected bounding boxes',
+        'Generating structured, actionable text reports from video analysis output',
+      ],
+      media:     [
+        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
+      ],
+      tags:      ['Python', 'YOLO', 'Computer Vision'],
+      links:     [
+        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
+      ],
+      status:    null,
+    },
+    {
       title:     'Franchise Merch Webpage',
       category:  'Web Development',
-      desc:      'I created this webpage as a platform to sell stickers and various other franchise related merchandise. Valorant Draft Circuit (VDC) is a For-Fun Valorant League and Light Garden (LG) is the franchise I am representing. It is a static website built with HTML, CSS, and JavaScript. I used Shopify to handle the e-commerce functionality. This is an ongoing project and I will be adding more merchandise to the site in the future.  ',
+      desc:      'A static storefront for selling stickers and merchandise for Light Garden, a Valorant for-fun franchise (VDC league). Built with HTML, CSS, and JavaScript; Shopify handles e-commerce checkout.',
+      outcome:   'Live site selling Light Garden franchise merchandise',
+      learned:   [
+        'Integrating Shopify e-commerce into a hand-built static HTML/CSS/JS site',
+        'Designing a product-focused storefront with a browse-to-checkout flow',
+      ],
       media:     [
         'assets/coding/lg-merch-site/Merch_Landing_Page.png',
         'assets/coding/lg-merch-site/Merch_Product_Page.png',
@@ -86,29 +121,59 @@ const PROJECTS = {
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
       links:     [
-        { url: 'https://bobert-merch.github.io/', label: '-> Visit Live site <-' },
+        { url: 'https://bobert-merch.github.io/', label: 'Live Site ↗' },
       ],
       status:    'Ongoing',
     },
-    // {
-    //   title:     'Cafe Canna Webpage',
-    //   category:  'Web Development',
-    //   desc:      'I designed the webpage for a prospective business, Cafe Canna. Please note, I do not engage in any marijuana related business, this was purely a design exercise. The webpage is a static site built with HTML, CSS, and JavaScript. I used Claude Code to generate the initial code for the site, then I modified it to fit my design vision. This is an ongoing project and I will be adding more functionality to the site in the future.',
-    //   media:     [
-    //     'assets/coding/cafe-canna/Cafe_Landing_Page.png',
-    //     'assets/coding/cafe-canna/Cafe_About_Page.png',
-    //     'assets/coding/cafe-canna/Cafe_Product_Page.png',
-    //   ],
-    //   tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
-    //   links:     [
-    //     { url: 'https://cafe-canna.github.io/cafecannallc/', label: '-> Visit Live site <-' },
-    //   ],
-    //   status:    'template',
-    // },
+    {
+      title:     'Day Out Generator',
+      category:  'Application Development',
+      desc:      'A Python app that uses the Google Places API to generate a curated day out — restaurant, activity, then dessert — based on your location.',
+      outcome:   'Published on GitHub',
+      learned:   [
+        'Querying the Google Places API to retrieve and filter location-based results',
+        'Chaining multiple API calls to build a multi-stop day itinerary',
+      ],
+      media:     [
+        'assets/coding/day-out-generator/Egrimes_Demo_Web.mp4',
+      ],
+      tags:      ['Python', 'Google Places API'],
+      links:     [
+        { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: 'GitHub ↗' },
+      ],
+      status:    null,
+    },
+    {
+      title:     'UAS Competition Webpage',
+      category:  'Web Development',
+      desc:      'Initiated and led development of the CNU UAS Club website to meet SUAS international competition qualification requirements — the first website any of the four team members had ever built.',
+      outcome:   'Helped the CNU UAS Club meet SUAS competition qualification requirements',
+      learned:   [
+        'Leading a first-time web dev team through weekly sprint meetings and goal-setting',
+        'Structuring a multi-page static site to satisfy external technical requirements',
+        'Iterating publicly as a team under a real competition deadline',
+      ],
+      media:     [
+        'assets/coding/uas-competition-webpage/UAS_About.png',
+        'assets/coding/uas-competition-webpage/UAS_Team.png',
+      ],
+      tags:      ['HTML', 'CSS', 'JavaScript'],
+      links:     [
+        { url: 'https://cnuuas.github.io/', label: 'Live Site ↗' },
+        { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: 'GitHub ↗' },
+      ],
+      status:    null,
+    },
     {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
-      desc:      'To automate aspects of scouting for a Valorant Esport franchise, I created a spreadsheet that took in raw CSV data and auto-sorted players by tier and MMR. Any notes set to a specific player will follow them after any MMR updates. The primary data tabs are "RAW", "CONSTANTS", and "MASTER_PLAYERS." Everything else is a visual representation of the data in those three tabs. The "DETAILS" tab displays all the players in the given tier and any notes that were made on them. The "PIVOT" tab is a pivot table that filters players by role, tier, and franchise status. The "TEAMS" tab is a team planner that uses the pivot table to display the best possible team based on the selected filters and preferences.  ',
+      desc:      'A Google Sheets system that ingests raw CSV data and auto-sorts players by tier and MMR for a Valorant esports franchise. Player notes follow individuals through MMR updates, and a pivot-based team planner suggests optimal rosters from the filtered pool.',
+      outcome:   'Used for player scouting in a Valorant for-fun league franchise',
+      learned:   [
+        'Building a multi-tab data pipeline in Google Sheets driven by a single master data source',
+        'Preserving relational data (player notes) through automated sort and re-rank operations',
+        'Designing a pivot table and team planner to surface actionable scouting recommendations',
+      ],
       media:     [
         'assets/coding/team-scouting-spreadsheet/VDC_Raw.png',
         'assets/coding/team-scouting-spreadsheet/VDC_Master.png',
@@ -118,14 +183,20 @@ const PROJECTS = {
       ],
       tags:      ['Google Sheets', 'Pivot Tables', 'Data Automation'],
       links:     [
-        { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: '-> View Template <-' },
+        { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: 'View Template ↗' },
       ],
       status:    null,
     },
     {
-      title:     'Senior Resident Assistant Duty Schedule',
+      title:     'Senior RA Duty Schedule',
       category:  'Spreadsheet / Automation',
-      desc:      'As a Senior Resident Assistant (SRA) I was responsible for scheduling duty for my staff of Resident Assistants (RAs). I created this spreadsheet to act as a landing page for them so they had a visual reference of when they worked. This page also served as a swapping hub, where RAs could note what shifts they wanted to swap, wanted to keep, etc. The Master_Duty_Schedule tab serves as the primary data tab which both visual sheets refer to. In addition to the spreadsheet, I created an appscript that automatically created calendar events detailing who was working, the shift type, and the length of the shift.',
+      desc:      'A Google Sheets scheduling hub and swap board built for Eva\'s Resident Assistant staff. A master schedule tab feeds two visual views; a companion Apps Script automatically creates calendar events with shift type and length for each RA.',
+      outcome:   'Used by Eva\'s RA staff for scheduling throughout the academic year',
+      learned:   [
+        'Writing Google Apps Script to automate calendar event creation from spreadsheet data',
+        'Linking multiple visual views to a single master data tab for consistent updates',
+        'Designing a swap board so staff could flag and negotiate shift changes without a separate tool',
+      ],
       media:     [
         'assets/coding/sra-duty-schedule/SRA_Main.png',
         'assets/coding/sra-duty-schedule/SRA_Swap.png',
@@ -134,48 +205,7 @@ const PROJECTS = {
       ],
       tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
       links:     [
-        { url: 'https://docs.google.com/spreadsheets/d/1bC61uJsBbzzgJt6sBgBHMXJ60ZfcMeZZpcyo5NiNbQU/edit?usp=sharing', label: '-> View Spreadsheet <-' },
-      ],
-      status:    null,
-    },
-    {
-      title:     'Day Out Generator',
-      category:  'Application Development',
-      desc:      'With the use of the Google Places API, this application generates a day out with various activities — a restaurant, an activity, then dessert.',
-      media:     [
-        'assets/coding/day-out-generator/Egrimes_Demo_Web.mp4',
-      ],
-      tags:      ['Python', 'Google Places API'],
-      links:     [
-        { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: '-> GitHub repo <-' },
-      ],
-      status:    null,
-    },
-    {
-      title:     'UAS Competition Webpage',
-      category:  'Web Development',
-      desc:      'I initiated and led the development of the Unmanned Aerial System (UAS) Club\'s website to help the team meet the qualification requirements for the international SUAS competition. This was the first website the four of us had ever created, so while it is far from perfect, it was an excellent learning opportunity. We held weekly meetings during the semester to review our progress, discuss challenges, and set goals for the upcoming week.',
-      media:     [
-        'assets/coding/uas-competition-webpage/UAS_About.png',
-        'assets/coding/uas-competition-webpage/UAS_Team.png',
-      ],
-      tags:      ['HTML', 'CSS', 'JavaScript'],
-      links:     [
-        { url: 'https://cnuuas.github.io/', label: '-> Visit Live site <-' },
-        { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: '-> GitHub repo <-' },
-      ],
-      status:    null,
-    },
-    {
-      title:     'Valorant Aim Trainer',
-      category:  'AI Development',
-      desc:      'I created a simple "aim trainer" that takes the position of the player\'s crosshair and compares it with the distance from the opponent\'s head. Opposing players are identified by a custom trained YOLO model. After analyzing the video, a summary of the player\'s analysis and a general plan moving forward is created in a text file. To train the yolo model, I created my own annotated dataset of enemy outlines pulled from screenshots within the game.',
-      media:     [
-        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
-      ],
-      tags:      ['Python', 'YOLO', 'Computer Vision'],
-      links:     [
-        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: '-> Roboflow Dataset <-' }
+        { url: 'https://docs.google.com/spreadsheets/d/1bC61uJsBbzzgJt6sBgBHMXJ60ZfcMeZZpcyo5NiNbQU/edit?usp=sharing', label: 'View Spreadsheet ↗' },
       ],
       status:    null,
     },
@@ -252,7 +282,7 @@ const PROJECTS = {
         {
           title:    'Fan Art',
           category: 'Illustration',
-          desc:     'Video game fan art.',
+          desc:     'Digital illustrations of characters from games I love — including Wheatley from Portal 2, scenes from Life is Strange, and original character concepts.',
           media:    [
             'assets/creative/video-game-content/fan-art/Wheatley.jpg',
             'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.jpg',
@@ -581,6 +611,7 @@ function buildGalleryGrid(media, title, desc) {
       const img = document.createElement('img');
       img.alt     = `${title} — image ${i + 1} of ${media.length}`;
       img.loading = 'lazy';
+      img.decoding = 'async';
       // Same fallback as above, for images.
       img.addEventListener('error', () => {
         if (cell.contains(img)) renderPlaceholderCell(cell, i);
@@ -665,8 +696,9 @@ function buildGallerySlide(media, title, desc) {
       slide.replaceChildren(video);
     } else {
       const img = document.createElement('img');
-      img.alt     = `${title} — image ${index + 1} of ${media.length}`;
-      img.loading = 'lazy';
+      img.alt      = `${title} — image ${index + 1} of ${media.length}`;
+      img.loading  = 'lazy';
+      img.decoding = 'async';
       // Same fallback as above, for images.
       img.addEventListener('error', () => {
         if (slide.contains(img)) renderPlaceholder();
@@ -781,6 +813,21 @@ function buildExplorerPanel(project, galleryStyle) {
   previewWrap.appendChild(buildPreview(project.media, project.title, project.desc));
   panel.appendChild(previewWrap);
 
+  // ── Outcome line ──
+  const outcomeHTML = project.outcome
+    ? `<div class="explorer-outcome">${project.outcome}</div>`
+    : '';
+
+  // ── What I learned ──
+  const learnedHTML = project.learned && project.learned.length
+    ? `<div class="explorer-learned">
+         <div class="explorer-learned-label">What I learned</div>
+         <ul class="explorer-learned-list">
+           ${project.learned.map(item => `<li>${item}</li>`).join('')}
+         </ul>
+       </div>`
+    : '';
+
   // ── Tag chips ──
   const tagsHTML = project.tags && project.tags.length
     ? `<div class="explorer-tags">
@@ -811,7 +858,9 @@ function buildExplorerPanel(project, galleryStyle) {
   info.innerHTML = `
     <div class="explorer-info-category">${project.category}</div>
     <h3>${project.title}</h3>
+    ${outcomeHTML}
     <p class="explorer-info-desc">${project.desc}</p>
+    ${learnedHTML}
     ${tagsHTML}
     ${linksHTML}
     ${statusHTML}
