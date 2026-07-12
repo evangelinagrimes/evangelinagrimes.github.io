@@ -32,7 +32,7 @@
                 native <video controls> player instead of an image.
                 Each project has a matching folder under
                 assets/coding/<project-slug>/ — drop numbered files
-                (1.jpg, 2.jpg, …) in there and they show up here
+                (1.webp, 2.webp, or a .mp4 for video) in there and they show up here
                 automatically. Until a file exists at that path, the
                 gallery falls back to a placeholder slide, so it's
                 safe to list paths before the files exist. Multiple
@@ -72,11 +72,11 @@ const PROJECTS = {
         'Contributing Pihawk integration, action command implementation, and sensor fusion on a four-person research team',
       ],
       media:     [
-        'assets/coding/drone-research-platform/capwic_poster.jpg',
-        'assets/coding/drone-research-platform/drones-2.jpg',
+        'assets/coding/drone-research-platform/capwic_poster.webp',
+        'assets/coding/drone-research-platform/drones-2.webp',
         'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
-        'assets/coding/drone-research-platform/DSC_5330.JPG',
+        'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
       tags:      ['ROS2', 'Python', 'Pihawk', 'Crazyflie', 'Optitrack'],
       links:     [
@@ -115,9 +115,9 @@ const PROJECTS = {
         'Designing a product-focused storefront with a browse-to-checkout flow',
       ],
       media:     [
-        'assets/coding/lg-merch-site/Merch_Landing_Page.png',
-        'assets/coding/lg-merch-site/Merch_Product_Page.png',
-        'assets/coding/lg-merch-site/Merch_Order_Page.png',
+        'assets/coding/lg-merch-site/Merch_Landing_Page.webp',
+        'assets/coding/lg-merch-site/Merch_Product_Page.webp',
+        'assets/coding/lg-merch-site/Merch_Order_Page.webp',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
       links:     [
@@ -154,8 +154,8 @@ const PROJECTS = {
         'Iterating publicly as a team under a real competition deadline',
       ],
       media:     [
-        'assets/coding/uas-competition-webpage/UAS_About.png',
-        'assets/coding/uas-competition-webpage/UAS_Team.png',
+        'assets/coding/uas-competition-webpage/UAS_About.webp',
+        'assets/coding/uas-competition-webpage/UAS_Team.webp',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript'],
       links:     [
@@ -174,9 +174,9 @@ const PROJECTS = {
         'Designing distinct pages for different business needs (landing, about, products)',
       ],
       media:     [
-        'assets/coding/cafe-canna/Cafe_Landing_Page.png',
-        'assets/coding/cafe-canna/Cafe_About_Page.png',
-        'assets/coding/cafe-canna/Cafe_Product_Page.png',
+        'assets/coding/cafe-canna/Cafe_Landing_Page.webp',
+        'assets/coding/cafe-canna/Cafe_About_Page.webp',
+        'assets/coding/cafe-canna/Cafe_Product_Page.webp',
       ],
       tags:      ['HTML', 'CSS', 'JavaScript', 'Claude Code'],
       links:     [
@@ -195,11 +195,11 @@ const PROJECTS = {
         'Designing a pivot table and team planner to surface actionable scouting recommendations',
       ],
       media:     [
-        'assets/coding/team-scouting-spreadsheet/VDC_Raw.png',
-        'assets/coding/team-scouting-spreadsheet/VDC_Master.png',
-        'assets/coding/team-scouting-spreadsheet/VDC_Details.png',
-        'assets/coding/team-scouting-spreadsheet/VDC_Pivot.png',
-        'assets/coding/team-scouting-spreadsheet/VDC_Teams.png',
+        'assets/coding/team-scouting-spreadsheet/VDC_Raw.webp',
+        'assets/coding/team-scouting-spreadsheet/VDC_Master.webp',
+        'assets/coding/team-scouting-spreadsheet/VDC_Details.webp',
+        'assets/coding/team-scouting-spreadsheet/VDC_Pivot.webp',
+        'assets/coding/team-scouting-spreadsheet/VDC_Teams.webp',
       ],
       tags:      ['Google Sheets', 'Pivot Tables', 'Data Automation'],
       links:     [
@@ -218,10 +218,10 @@ const PROJECTS = {
         'Designing a swap board so staff could flag and negotiate shift changes without a separate tool',
       ],
       media:     [
-        'assets/coding/sra-duty-schedule/SRA_Main.png',
-        'assets/coding/sra-duty-schedule/SRA_Swap.png',
-        'assets/coding/sra-duty-schedule/SRA_Master.png',
-        'assets/coding/sra-duty-schedule/SRA_Calendar.png',
+        'assets/coding/sra-duty-schedule/SRA_Main.webp',
+        'assets/coding/sra-duty-schedule/SRA_Swap.webp',
+        'assets/coding/sra-duty-schedule/SRA_Master.webp',
+        'assets/coding/sra-duty-schedule/SRA_Calendar.webp',
       ],
       tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
       links:     [
@@ -240,9 +240,9 @@ const PROJECTS = {
           category: 'Poster Design',
           desc:     'Design work from coursework and clubs at Christopher Newport University, including event promo art and logo work for a campus gaming club. ',
           media:    [
-            'assets/creative/university/university-media/schoolar_work.jpg',
-            'assets/creative/university/university-media/Horror_Game_Night.jpg',
-            'assets/creative/university/university-media/CNU-logo.png',
+            'assets/creative/university/university-media/schoolar_work.webp',
+            'assets/creative/university/university-media/Horror_Game_Night.webp',
+            'assets/creative/university/university-media/CNU-logo.webp',
           ],
           links:    [],
           status:   null,
@@ -257,12 +257,12 @@ const PROJECTS = {
           category: 'Brand Identity',
           desc:     'Logo design and color/style variants for Light Garden, a Valorant for-fun franchise. I created these designs as stickers to sell to fans of the franchise. It is the beginning of my small business.',
           media:    [
-            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_logo.png',
-            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_dark_logo.png',
-            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_green_logo.png',
-            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_simple_green_logo.png',
-            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_white.png',
-            'assets/creative/valorant-franchise-content/franchise-logo-design/clover_logo.png',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_logo.webp',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_dark_logo.webp',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_green_logo.webp',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_simple_green_logo.webp',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/swirly_white.webp',
+            'assets/creative/valorant-franchise-content/franchise-logo-design/clover_logo.webp',
           ],
           links:    [],
           status:   null,
@@ -272,11 +272,11 @@ const PROJECTS = {
           category: 'Sticker Design',
           desc:     'Player-nickname sticker designs for players in Valorant league.',
           media:    [
-            'assets/creative/valorant-franchise-content/sticker-designs/Poster_1.png',
-            'assets/creative/valorant-franchise-content/sticker-designs/Poster_2.png',
-            'assets/creative/valorant-franchise-content/sticker-designs/Poster_3.png',
-            'assets/creative/valorant-franchise-content/sticker-designs/Poster_4.png',
-            'assets/creative/valorant-franchise-content/sticker-designs/Poster_5.png',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_1.webp',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_2.webp',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_3.webp',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_4.webp',
+            'assets/creative/valorant-franchise-content/sticker-designs/Poster_5.webp',
           ],
           links:    [],
           status:   null,
@@ -291,10 +291,10 @@ const PROJECTS = {
           category: 'Character Art',
           desc:     'Player character illustrations and broadcast banner art for the Light Garden roster, a Valorant for-fun league franchise.',
           media:    [
-            'assets/creative/video-game-content/player-banner-art/CheeseBanner.jpg',
-            'assets/creative/video-game-content/player-banner-art/GhostBanner4.jpg',
-            'assets/creative/video-game-content/player-banner-art/UcklarBanner.jpg',
-            'assets/creative/video-game-content/player-banner-art/ZuuBanner3.jpg',
+            'assets/creative/video-game-content/player-banner-art/CheeseBanner.webp',
+            'assets/creative/video-game-content/player-banner-art/GhostBanner4.webp',
+            'assets/creative/video-game-content/player-banner-art/UcklarBanner.webp',
+            'assets/creative/video-game-content/player-banner-art/ZuuBanner3.webp',
           ],
           links:    [],
           status:   null,
@@ -304,9 +304,9 @@ const PROJECTS = {
           category: 'Illustration',
           desc:     'Digital illustrations of characters from games I love — including Wheatley from Portal 2, scenes from Life is Strange, and original character concepts.',
           media:    [
-            'assets/creative/video-game-content/fan-art/Wheatley.jpg',
-            'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.jpg',
-            'assets/creative/video-game-content/fan-art/KayowBird.jpg',
+            'assets/creative/video-game-content/fan-art/Wheatley.webp',
+            'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.webp',
+            'assets/creative/video-game-content/fan-art/KayowBird.webp',
           ],
           links:    [],
           status:   null,
@@ -321,10 +321,10 @@ const PROJECTS = {
           category: 'Brand Identity',
           desc:     'Logo and brand identity work for a pickleball business — logo design, color palette, and print-ready brand assets.',
           media:    [
-            'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.jpg',
-            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.png',
+            'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.webp',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.webp',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_21.webp',
+            'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.webp',
           ],
           links:    [],
           status:   null,
@@ -977,12 +977,18 @@ function setupScrollLogic() {
   const hero = document.getElementById('hero');
   if (!nav || !hero) return;
 
+  let rafPending = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > hero.offsetHeight * 0.6) {
-      nav.classList.add('nav--visible');
-    } else {
-      nav.classList.remove('nav--visible');
-    }
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      rafPending = false;
+      if (window.scrollY > hero.offsetHeight * 0.6) {
+        nav.classList.add('nav--visible');
+      } else {
+        nav.classList.remove('nav--visible');
+      }
+    });
   }, { passive: true });
 }
 
