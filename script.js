@@ -429,6 +429,7 @@ const Lightbox = (() => {
   let index = 0;
   let titleText = '';
   let loadToken = 0;
+  let returnFocusEl = null;
 
   // Falls back to the placeholder slide — used both for projects with
   // no image/video yet and for files that don't exist at that path.
@@ -477,6 +478,13 @@ const Lightbox = (() => {
     render();
   }
 
+  // Returns all keyboard-focusable, visible elements inside the overlay.
+  function getFocusableEls() {
+    return Array.from(overlayEl.querySelectorAll(
+      'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.hidden);
+  }
+
   // Arrows/counter sit in the gutter beside .lightbox-content (see
   // style.css) so they never overlap the image itself, but that means
   // their vertical position can't be a static CSS percentage of the
@@ -505,6 +513,7 @@ const Lightbox = (() => {
   }
 
   function open(mediaList, startIndex, title, desc) {
+    returnFocusEl = document.activeElement;
     media     = mediaList;
     index     = startIndex || 0;
     titleText = title || '';
@@ -528,13 +537,28 @@ const Lightbox = (() => {
     overlayEl.hidden = true;
     overlayEl.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lightbox-open');
+    if (returnFocusEl) {
+      returnFocusEl.focus();
+      returnFocusEl = null;
+    }
   }
 
   function handleKeydown(e) {
     if (overlayEl.hidden) return;
-    if (e.key === 'Escape')    close();
-    if (e.key === 'ArrowLeft')  go(-1);
-    if (e.key === 'ArrowRight') go(1);
+    if (e.key === 'Escape')     { close(); return; }
+    if (e.key === 'ArrowLeft')  { go(-1); return; }
+    if (e.key === 'ArrowRight') { go(1);  return; }
+    if (e.key === 'Tab') {
+      const focusable = getFocusableEls();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    }
   }
 
   function setup() {
@@ -890,22 +914,32 @@ function buildExplorerPanel(project, galleryStyle) {
   return panel;
 }
 
+/** Turns a project title into a URL-safe slug: "Drone Research" → "drone-research" */
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
 /**
  * Populate a split-pane explorer: sidebar tabs (desktop/tablet), a
  * select dropdown covering the same projects (mobile — see Responsive
  * in style.css), and the initial detail panel for the first project.
  * Used for both the Coding and Creative sections — galleryStyle
  * ('slide' or 'grid') picks each one's detail-panel preview layout;
- * see buildExplorerPanel().
+ * see buildExplorerPanel(). hashPrefix ('coding' or 'creative') drives
+ * URL deep-linking so individual projects are directly shareable.
  */
-function buildExplorer(projects, sidebarEl, panelEl, galleryStyle) {
+function buildExplorer(projects, sidebarEl, panelEl, galleryStyle, hashPrefix) {
   if (!projects.length || !sidebarEl || !panelEl) return;
 
   const tabs = [];
 
-  function showProject(i) {
+  function showProject(i, pushHash) {
     tabs.forEach((t, ti) => t.classList.toggle('active', ti === i));
     select.value = String(i);
+
+    if (pushHash !== false && hashPrefix) {
+      history.replaceState(null, '', '#' + hashPrefix + '/' + slugify(projects[i].title));
+    }
 
     // Fade out, swap content, fade in
     panelEl.classList.add('swapping');
@@ -946,24 +980,43 @@ function buildExplorer(projects, sidebarEl, panelEl, galleryStyle) {
 
   // Render first project's detail panel immediately
   panelEl.replaceChildren(buildExplorerPanel(projects[0], galleryStyle));
+
+  return { showProject, projects };
 }
 
 
 /** Wire up both sections from PROJECTS data — same explorer, different gallery layout. */
 function renderProjects() {
-  buildExplorer(
+  const coding = buildExplorer(
     PROJECTS.coding,
     document.getElementById('coding-sidebar'),
     document.getElementById('coding-panel'),
-    'slide'
+    'slide',
+    'coding'
   );
 
-  buildExplorer(
+  const creative = buildExplorer(
     flattenByOrganization(PROJECTS.creative),
     document.getElementById('creative-sidebar'),
     document.getElementById('creative-panel'),
-    'grid'
+    'grid',
+    'creative'
   );
+
+  // Restore from URL hash on initial load (e.g. #coding/valorant-aim-trainer)
+  function restoreHash(hash) {
+    const match = hash.match(/^#(coding|creative)\/(.+)$/);
+    if (!match) return;
+    const explorer = match[1] === 'coding' ? coding : creative;
+    if (!explorer) return;
+    const slug = match[2];
+    const idx = explorer.projects.findIndex(p => slugify(p.title) === slug);
+    if (idx !== -1) explorer.showProject(idx, false);
+  }
+
+  restoreHash(window.location.hash);
+
+  window.addEventListener('popstate', () => restoreHash(window.location.hash));
 }
 
 
