@@ -11,12 +11,11 @@
      7.  Coding section (deep navy grid-drift background)
      8.  Creative section (warm slate radial-pulse background)
      9.  Project explorer split-pane (shared: coding + creative)
-     10. Status badge (shared: coding + creative)
-     11. About & headshot
-     12. Scroll-reveal animations
-     13. Responsive
-     14. Reduced-motion overrides
-     15. Lightbox (expanded image viewer)
+     10. About & headshot
+     11. Scroll-reveal animations
+     12. Responsive
+     13. Reduced-motion overrides
+     14. Lightbox (expanded image viewer)
    ───────────────────────────────────────────────────────────── */
 
 
@@ -971,30 +970,8 @@ h1, h2, h3 {
 }
 
 
-/* ── 10. Status Badge ───────────────────────────────────────── */
-/* Shared by the explorer detail panel (Coding + Creative) */
-.card-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-sub);
-}
 
-.card-status::before {
-  content: '';
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--text-sub);
-  flex-shrink: 0;
-}
-
-
-/* ── 11. About & Headshot ───────────────────────────────────── */
+/* ── 10. About & Headshot ───────────────────────────────────── */
 .region--about {
   background-color: var(--bg);
   max-width: 100%;
@@ -1061,7 +1038,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 12. Scroll-Reveal ─────────────────────────────────────── */
+/* ── 11. Scroll-Reveal ─────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -1076,7 +1053,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 13. Responsive ────────────────────────────────────────── */
+/* ── 12. Responsive ────────────────────────────────────────── */
 
 /* Explorer: collapse to stacked layout at medium width */
 @media (max-width: 860px) {
@@ -1175,7 +1152,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 14. Reduced-Motion ────────────────────────────────────── */
+/* ── 13. Reduced-Motion ────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -1207,7 +1184,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 15. Lightbox (Expanded Image Viewer) ──────────────────── */
+/* ── 14. Lightbox (Expanded Image Viewer) ──────────────────── */
 /* Full-screen overlay shared by every gallery on the page.
    Hidden by default; script.js's Lightbox module toggles [hidden]. */
 .lightbox {

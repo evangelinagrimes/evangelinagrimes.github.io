@@ -892,11 +892,6 @@ function buildExplorerPanel(project, galleryStyle) {
        </div>`
     : '';
 
-  // ── Status badge ──
-  const statusHTML = project.status
-    ? `<div class="card-status">${project.status}</div>`
-    : '';
-
   const info = document.createElement('div');
   info.className = 'explorer-info';
   info.innerHTML = `
@@ -907,7 +902,6 @@ function buildExplorerPanel(project, galleryStyle) {
     ${learnedHTML}
     ${tagsHTML}
     ${linksHTML}
-    ${statusHTML}
   `;
   panel.appendChild(info);
 
