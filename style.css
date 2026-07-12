@@ -83,9 +83,8 @@ body {
   font-size: 1rem;
   line-height: 1.65;
   overflow-x: hidden;
-  /* Disables double-tap-to-zoom (some mobile browsers still allow it
-     via this gesture even with the viewport meta tag's
-     user-scalable=no) without blocking normal scrolling. */
+  /* Prevents double-tap-to-zoom on mobile without blocking normal
+     scrolling or pinch-zoom (WCAG 1.4.4). */
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -316,6 +315,15 @@ h1, h2, h3 {
   color: var(--text-sub);
   line-height: 1.75;
   max-width: 520px;
+}
+
+.region-sub + .region-sub {
+  margin-top: 1.875rem;
+}
+
+.region-sub--emphasis {
+  font-weight: 600;
+  color: var(--text);
 }
 
 
