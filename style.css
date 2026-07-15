@@ -171,6 +171,19 @@ h1, h2, h3 {
 
 .nav-links a:hover { color: var(--text); }
 
+.nav-links a.nav-link--resume {
+  padding: 5px 14px;
+  border: 1px solid var(--accent-hero-a);
+  border-radius: 20px;
+  color: var(--accent-hero-a);
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-links a.nav-link--resume:hover {
+  background: var(--accent-hero-a);
+  color: var(--bg);
+}
+
 .site-footer {
   display: flex;
   align-items: center;

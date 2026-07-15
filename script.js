@@ -43,7 +43,6 @@
      links    — array of call-to-action buttons: { url, label }.
                 Renders one button per entry, in order. Omit or use
                 an empty array for a project with no links.
-     status   — optional badge text, or null
 
    PROJECTS.creative — an array of organizations (who the work was
    made for), flattened by flattenByOrganization() into the same flat
@@ -52,8 +51,8 @@
    editing sanity:
      organization — label for your own reference, e.g. 'Pickleball Business'
      pieces       — array of pieces, same shape as a coding project
-                    above (title/category/desc/media/links/status;
-                    tags are optional and rarely needed here). Each
+                    above (title/category/desc/media/links; tags are
+                    optional and rarely needed here). Each
                     piece has its own folder under
                     assets/creative/<org-slug>/<piece-slug>/.
    ═══════════════════════════════════════════════════════════════ */
@@ -68,22 +67,22 @@ const PROJECTS = {
       learned:   [
         'Fusing OptiTrack motion capture data with a Pixhawk flight controller over a direct UART connection',
         'Designing ROS 2 action interfaces (arm, takeoff, land) for heterogeneous drone fleets',
-        'Configuring Raspberry Pi / Pixhawk (Pihawk) pairs for real-time MAVLink telemetry',
-        'Contributing Pihawk integration, action command implementation, and sensor fusion on a four-person research team',
+        'Configuring Raspberry Pi / Pixhawk pairs for real-time MAVLink telemetry',
+        'Contributing Pixhawk integration, action command implementation, and sensor fusion on a four-person research team',
       ],
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.webp',
         'assets/coding/drone-research-platform/drones-2.webp',
         'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
+        'assets/coding/drone-research-platform/Ocs_3Sails_Takeoff_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
-      tags:      ['ROS2', 'Python', 'Pihawk', 'Crazyflie', 'Optitrack'],
+      tags:      ['ROS2', 'Python', 'Pixhawk', 'Crazyflie', 'OptiTrack'],
       links:     [
         { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
       ],
-      status:    'Ongoing',
     },
     {
       title:     'Valorant Aim Trainer',
@@ -103,7 +102,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
       ],
-      status:    null,
     },
     {
       title:     'Day Out Generator',
@@ -121,7 +119,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: 'GitHub ↗' },
       ],
-      status:    null,
     },
     {
       title:     'Team Scouting Spreadsheet',
@@ -144,7 +141,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: 'View Template ↗' },
       ],
-      status:    null,
     },
     {
       title:     'Senior RA Duty Schedule',
@@ -167,7 +163,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://docs.google.com/spreadsheets/d/1bC61uJsBbzzgJt6sBgBHMXJ60ZfcMeZZpcyo5NiNbQU/edit?usp=sharing', label: 'View Spreadsheet ↗' },
       ],
-      status:    null,
     },
     {
       title:     'Franchise Merch Webpage',
@@ -187,7 +182,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://bobert-merch.github.io/', label: 'Live Site ↗' },
       ],
-      status:    'Ongoing',
     },
      {
       title:     'Cafe Canna Webpage',
@@ -207,7 +201,6 @@ const PROJECTS = {
       links:     [
         { url: 'https://cafe-canna.github.io/cafecannallc/', label: 'Live Site ↗' },
       ],
-      status:    'Template',
     },
     {
       title:     'UAS Competition Webpage',
@@ -228,7 +221,6 @@ const PROJECTS = {
         { url: 'https://cnuuas.github.io/', label: 'Live Site ↗' },
         { url: 'https://github.com/CNUUAS/CNUUAS.github.io', label: 'GitHub ↗' },
       ],
-      status:    null,
     },
     
   ],
@@ -247,7 +239,6 @@ const PROJECTS = {
             'assets/creative/university/university-media/CNU-logo.webp',
           ],
           links:    [],
-          status:   null,
         },
       ],
     },
@@ -267,7 +258,6 @@ const PROJECTS = {
             'assets/creative/valorant-franchise-content/franchise-logo-design/clover_logo.webp',
           ],
           links:    [],
-          status:   null,
         },
         {
           title:    'Sticker Designs',
@@ -281,7 +271,6 @@ const PROJECTS = {
             'assets/creative/valorant-franchise-content/sticker-designs/Poster_5.webp',
           ],
           links:    [],
-          status:   null,
         },
       ],
     },
@@ -299,7 +288,6 @@ const PROJECTS = {
             'assets/creative/video-game-content/player-banner-art/ZuuBanner3.webp',
           ],
           links:    [],
-          status:   null,
         },
         {
           title:    'Fan Art',
@@ -311,7 +299,6 @@ const PROJECTS = {
             'assets/creative/video-game-content/fan-art/KayowBird.webp',
           ],
           links:    [],
-          status:   null,
         },
       ],
     },
@@ -329,7 +316,6 @@ const PROJECTS = {
             'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_3.webp',
           ],
           links:    [],
-          status:   null,
         },
       ],
     },
@@ -800,11 +786,20 @@ function buildGallerySlide(media, title, desc) {
       const dot = document.createElement('span');
       dot.className = `gallery-dot${i === 0 ? ' active' : ''}`;
       dot.setAttribute('role', 'button');
+      dot.setAttribute('tabindex', '0');
       dot.setAttribute('aria-label', `Go to item ${i + 1}`);
       dot.addEventListener('click', e => {
         e.stopPropagation();
         index = i;
         renderSlide();
+      });
+      dot.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          index = i;
+          renderSlide();
+        }
       });
       dotsWrap.appendChild(dot);
     });
