@@ -254,6 +254,37 @@ h1, h2, h3 {
   max-width: 700px;
 }
 
+/* Wraps .hero-name + .hero-tagline so they can be nudged down together
+   (below) without moving .scroll-cue. display/flex-direction/align-items
+   here just re-establish the same flex-item sizing .hero-name and
+   .hero-tagline had as direct children of .hero-content — otherwise, as
+   plain block children of this wrapper, they'd stretch to its full width
+   instead of each shrinking to its own text width, throwing off
+   text-align: center. */
+.hero-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .hero-content is centered as a whole (title + tagline + scroll cue), so
+   the title/tagline pair itself sits above that midpoint — the scroll
+   cue's height below has no equal counterweight above. Nudge the pair
+   down so it lands in the center of #skill-swarm's orbit ring, which is
+   centered on the raw hero midpoint (see setupSkillSwarm() in script.js).
+   Only applied where that ring is actually drawn — same fine-pointer,
+   motion-safe condition script.js checks before animating it — so touch/
+   reduced-motion visitors keep the plain centered layout. 4.125rem is
+   measured (half of the fixed vertical space below the pair: .hero-
+   tagline's 4rem margin-bottom + .scroll-cue's 1rem margin-top + its own
+   height — none of which scale with viewport); re-measure if any of
+   those change. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-heading {
+    transform: translateY(4.125rem);
+  }
+}
+
 .hero-name {
   font-size: clamp(3rem, 8vw, 6.5rem);
   font-weight: 700;
@@ -280,6 +311,7 @@ h1, h2, h3 {
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
+  margin-top: 1rem;
   color: var(--text-muted);
   transition: color 0.2s;
   animation: bob 2.5s ease-in-out infinite;
