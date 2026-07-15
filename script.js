@@ -60,26 +60,6 @@
 const PROJECTS = {
 
   coding: [
-    {
-      title:     'Valorant Aim Trainer',
-      category:  'AI Development',
-      desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
-      outcome:   'Custom annotated dataset published on Roboflow',
-      learned:   [
-        'Building and annotating a training dataset from game screenshots using Roboflow',
-        'Training a custom YOLO model for object detection in a specific visual domain',
-        'Computing per-frame distance metrics from detected bounding boxes',
-        'Generating structured, actionable text reports from video analysis output',
-      ],
-      media:     [
-        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
-      ],
-      tags:      ['Python', 'YOLO', 'Computer Vision'],
-      links:     [
-        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
-      ],
-      status:    null,
-    },
      {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
@@ -104,6 +84,26 @@ const PROJECTS = {
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
       ],
       status:    'Ongoing',
+    },
+    {
+      title:     'Valorant Aim Trainer',
+      category:  'AI Development',
+      desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
+      outcome:   'Custom annotated dataset published on Roboflow',
+      learned:   [
+        'Building and annotating a training dataset from game screenshots using Roboflow',
+        'Training a custom YOLO model for object detection in a specific visual domain',
+        'Computing per-frame distance metrics from detected bounding boxes',
+        'Generating structured, actionable text reports from video analysis output',
+      ],
+      media:     [
+        'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
+      ],
+      tags:      ['Python', 'YOLO', 'Computer Vision'],
+      links:     [
+        { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
+      ],
+      status:    null,
     },
     {
       title:     'Day Out Generator',
@@ -161,6 +161,7 @@ const PROJECTS = {
         'assets/coding/sra-duty-schedule/SRA_Swap.webp',
         'assets/coding/sra-duty-schedule/SRA_Master.webp',
         'assets/coding/sra-duty-schedule/SRA_Calendar.webp',
+        'assets/coding/sra-duty-schedule/SRA_Spreadsheet_Demo.mp4',
       ],
       tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
       links:     [
