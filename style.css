@@ -343,7 +343,8 @@ h1, h2, h3 {
   font-size: 0.92rem;
   color: var(--text-sub);
   line-height: 1.75;
-  max-width: 520px;
+  /* No max-width — let it run the same width as the explorer/images
+     below instead of sitting in its own narrower column. */
 }
 
 .region-sub + .region-sub {
@@ -885,14 +886,16 @@ h1, h2, h3 {
 /* Sits between the region header and the explorer it targets — see
    index.html — so a click never has to leave the section, only swap
    the already-visible explorer to the matching project. */
+/* Same low-opacity dark blue + grey outline as .explorer-sidebar /
+   .project-explorer below, so the skills bar reads as part of the
+   same container system instead of its own distinct card style. */
 .skills-filter {
   max-width: var(--max-w);
   box-sizing: border-box;
   margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
   padding: 1.25rem 1.5rem;
-  background: var(--bg-card);
+  background: rgba(10, 14, 23, 0.6);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent-hero-a);
   border-radius: 6px;
 }
 
