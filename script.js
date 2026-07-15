@@ -1053,7 +1053,6 @@ function renderProjects() {
    ═══════════════════════════════════════════════════════════════ */
 function setupSkills(coding) {
   const container = document.getElementById('skills-chips');
-  const explorerEl = document.getElementById('coding-explorer');
   if (!container || !coding) return;
 
   // Every unique tag across the coding projects, in first-seen order.
@@ -1089,14 +1088,12 @@ function setupSkills(coding) {
 
   function jumpTo(indices) {
     if (!indices.length) return;
-    const index = indices[0];
-    coding.showProject(index);
-    // Scroll the whole explorer (sidebar/dropdown + panel) into view
-    // rather than the individual tab button — below the 860px
-    // breakpoint .explorer-tab is display:none (a <select> takes over),
-    // so scrolling to the tab itself would silently do nothing there.
-    // The explorer container is always visible at every width.
-    (explorerEl || coding.tabs[index]).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // No scrollIntoView here on purpose: this only swaps the panel
+    // content (and, on mobile, the dropdown's selected value) in
+    // place. Scrolling the page on every click made repeatedly trying
+    // different chips annoying — it kept shoving the skills bar itself
+    // out of view, forcing a scroll back up between clicks.
+    coding.showProject(indices[0]);
   }
 
   tags.forEach(tag => {
