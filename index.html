@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eva Grimes Portfolio</title>
+  <title>Eva Grimes — Portfolio</title>
   <meta name="description" content="Portfolio of Eva Grimes — Computer Science graduate (Christopher Newport University). Drone/ROS 2 research, computer vision, web development, and digital art." />
   <meta name="theme-color" content="#0A0E17" />
 
@@ -60,9 +60,8 @@
     <ul class="nav-links">
       <li><a href="#coding">Technical</a></li>
       <li><a href="#creative">Creative</a></li>
-      <li><a href="#skills-filter">Skills</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="assets/documents/EGrimes_Resume.pdf" class="nav-link--resume" target="_blank" rel="noopener noreferrer">Resume</a></li>
+      <li class="nav-item--resume"><a href="assets/documents/EGrimes_Resume.pdf" class="nav-link--resume" target="_blank" rel="noopener noreferrer">Resume</a></li>
     </ul>
   </nav>
 
@@ -73,9 +72,10 @@
          ═══════════════════════════════════════════════════════════ -->
     <section id="hero" class="hero">
       <!-- Desktop-only flourish: a small flock of skill-logo icons that
-           drift and loosely follow the cursor — see setupSkillSwarm()
-           in script.js. Decorative only (aria-hidden); skipped entirely
-           on touch devices and when prefers-reduced-motion is set. -->
+           orbit the hero text and scatter away from the cursor — see
+           setupSkillSwarm() in script.js. Decorative only (aria-hidden);
+           skipped entirely on touch devices and when prefers-reduced-
+           motion is set. -->
       <canvas id="skill-swarm" class="skill-swarm" aria-hidden="true"></canvas>
       <div class="hero-content">
         <h1 class="hero-name">Portfolio o' Eva Grimes</h1>
@@ -88,13 +88,13 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════
-         CODING — drone research, ROS2, merch site, broadcast tools
+         CODING — drone research, computer vision, automation, and web dev
          Split-pane: sidebar list on the left, detail panel on the right.
          JS populates both from the PROJECTS.coding array in script.js.
          ═══════════════════════════════════════════════════════════ -->
     <section id="coding" class="region region--coding">
       <div class="region-header reveal">
-        <span class="eyebrow">01 — Technical  </span>
+        <span class="eyebrow">01 — Technical</span>
         <h2>Recent Projects</h2>
         <p class="region-sub">Drone systems, robotics software, network protocols, and the web projects that hold it all together.</p>
       </div>
@@ -129,7 +129,7 @@
         <span class="eyebrow">02 — Creative</span>
         <h2>Visual Work</h2>
         <p class="region-sub">In addition to coding projects, I like to dabble in different artistic mediums. Currently covering digital media: logo and brand work, sticker design, character illustration, and poster art.</p>
-        <p class="region-sub region-sub--emphasis">All work is developed by hand — no AI generation tools.</p>
+        <p class="region-sub region-sub--emphasis">All artwork below is developed by hand — no AI generation tools.</p>
       </div>
 
       <!-- The explorer is built by script.js → buildExplorer() -->
@@ -147,7 +147,7 @@
     <section id="about" class="region region--about">
       <div class="about-layout">
         <div class="about-text reveal">
-          <span class="eyebrow">About</span>
+          <span class="eyebrow">03 — About</span>
           <h2>Hello!</h2>
           <p>My name is Evangelina (Eva) Grimes. I am a recent graduate of Christopher Newport University, where I received a Bachelor of Science in Computer Science. </p>
           <p>I created this webpage to showcase my work, both technical and creative. It also serves as a chance to experiment with AI-assisted development.</p>
@@ -177,7 +177,7 @@
     <div class="footer-links">
       <a href="https://github.com/evangelinagrimes" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="https://www.linkedin.com/in/evangelina-g-37509b1b1" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-      <a href="mailto:evangelinagrimes@gmail.com" rel="noopener noreferrer">Contact</a>
+      <a href="mailto:evangelinagrimes@gmail.com" rel="noopener noreferrer">Contact ↗</a>
     </div>
   </footer>
 

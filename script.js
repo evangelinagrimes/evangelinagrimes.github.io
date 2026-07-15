@@ -82,7 +82,7 @@ const PROJECTS = {
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
-      tags:      ['ROS2', 'Python', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'],
+      tags:      ['ROS 2', 'Python', 'Pixhawk', 'ArduPilot', 'MAVLink', 'Crazyflie', 'OptiTrack', 'GazeboSim'],
       links:     [
         { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
@@ -341,10 +341,11 @@ const PROJECTS = {
    neutral/uncategorized color) — nothing to keep in sync.
    ───────────────────────────────────────────────────────────── */
 const SKILL_COLOR_GROUPS = [
-  { color: 'var(--accent-hero-a)',   tags: ['ROS2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'] },
+  { color: 'var(--accent-hero-a)',   tags: ['ROS 2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'] },
   { color: 'var(--accent-hero-b)',   tags: ['YOLO', 'Computer Vision'] },
   { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Google Places API'] },
   { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'] },
+  { color: 'var(--accent-coding)',   tags: ['Python'] },
 ];
 
 
@@ -1052,6 +1053,7 @@ function renderProjects() {
    ═══════════════════════════════════════════════════════════════ */
 function setupSkills(coding) {
   const container = document.getElementById('skills-chips');
+  const explorerEl = document.getElementById('coding-explorer');
   if (!container || !coding) return;
 
   // Every unique tag across the coding projects, in first-seen order.
@@ -1089,11 +1091,12 @@ function setupSkills(coding) {
     if (!indices.length) return;
     const index = indices[0];
     coding.showProject(index);
-    // 'nearest' rather than scrolling the whole section into view — the
-    // filter bar and the explorer it targets already share one section,
-    // so this only nudges the page if the tab happens to be scrolled
-    // out of the sidebar's own overflow area.
-    coding.tabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Scroll the whole explorer (sidebar/dropdown + panel) into view
+    // rather than the individual tab button — below the 860px
+    // breakpoint .explorer-tab is display:none (a <select> takes over),
+    // so scrolling to the tab itself would silently do nothing there.
+    // The explorer container is always visible at every width.
+    (explorerEl || coding.tabs[index]).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   tags.forEach(tag => {
@@ -1163,7 +1166,7 @@ function setupSkillSwarm() {
     'assets/icons/github.svg',
     'assets/icons/shopify.svg',
     'assets/icons/googlesheets.svg',
-    'assets/icons/opencv.svg',
+    'assets/icons/ros.svg',
     'assets/icons/claude.svg',
   ];
   const ICON_SIZE           = 38;   // CSS px, square

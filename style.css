@@ -1159,7 +1159,11 @@ h1, h2, h3 {
 }
 
 @media (max-width: 640px) {
-  .nav-links { display: none; }
+  /* Hide the section jump-links (the sections are one scroll away
+     anyway on a phone) but keep the Resume pill reachable — it
+     shouldn't take scrolling all the way to the contact card to find
+     it on mobile. */
+  .nav-links > li:not(.nav-item--resume) { display: none; }
   .explorer-info { padding: 1.2rem 1.2rem 1.5rem; }
 
   .site-footer {
