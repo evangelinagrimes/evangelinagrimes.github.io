@@ -8,9 +8,11 @@
      D. SKILLS             — tag-derived, color-grouped skill filter bar
                              (inside the Technical section), cross-
                              highlights into the explorer above
-     E. SCROLL LOGIC       — nav reveal + section tracking
-     F. REVEAL             — fade-in-on-scroll for cards and headers
-     G. INIT               — wires everything together on page load
+     E. SKILL SWARM        — cursor-reactive flocking skill-logo canvas
+                             in the hero (desktop-only)
+     F. SCROLL LOGIC       — nav reveal + section tracking
+     G. REVEAL             — fade-in-on-scroll for cards and headers
+     H. INIT               — wires everything together on page load
    ───────────────────────────────────────────────────────────── */
 
 
@@ -78,7 +80,6 @@ const PROJECTS = {
         'assets/coding/drone-research-platform/drones-2.webp',
         'assets/coding/drone-research-platform/Drone_Flying_Web.mp4',
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
-        'assets/coding/drone-research-platform/Ocs_3Sails_Takeoff_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
       tags:      ['ROS2', 'Python', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'],
@@ -1122,7 +1123,309 @@ function setupSkills(coding) {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   E. SCROLL LOGIC
+   E. SKILL SWARM
+   ─────────────────────────────────────────────────────────────
+   A small flock of skill-logo icons in #skill-swarm (the hero's
+   canvas), evenly spaced around one shared circular orbit at a
+   constant angular speed, that scatter away from the cursor when it
+   comes near (a stiff spring back toward that same radius is what
+   pulls them back into the circle once the cursor moves off). A light
+   separation force keeps two icons from overlapping if a repel ever
+   crosses their paths. Desktop-only and motion-safe: skips entirely on
+   touch/coarse pointers and when prefers-reduced-motion is set, and
+   pauses the animation loop whenever the hero scrolls out of view or
+   the tab is hidden.
+   ═══════════════════════════════════════════════════════════════ */
+function setupSkillSwarm() {
+  const canvas = document.getElementById('skill-swarm');
+  const hero = document.getElementById('hero');
+  if (!canvas || !hero) return;
+
+  // Desktop-only, motion-safe: bail before creating any state, listeners,
+  // or drawing a single frame if either check fails.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+  if (prefersReducedMotion || !isFinePointer) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  // ── Tunables ──
+  // One entry per real skill/tool used somewhere in PROJECTS.coding —
+  // no duplicates needed now that there's enough real variety to fill
+  // the ring on its own.
+  const ICON_SOURCES = [
+    'assets/icons/python.svg',
+    'assets/icons/javascript.svg',
+    'assets/icons/html5.svg',
+    'assets/icons/css3.svg',
+    'assets/icons/git.svg',
+    'assets/icons/github.svg',
+    'assets/icons/shopify.svg',
+    'assets/icons/googlesheets.svg',
+    'assets/icons/opencv.svg',
+    'assets/icons/claude.svg',
+  ];
+  const ICON_SIZE           = 38;   // CSS px, square
+  const ICON_OPACITY        = 0.65;
+  const SEPARATION_RADIUS   = 70;   // closer than this, push apart (ramps up near-linearly the closer they get)
+  const CURSOR_RADIUS       = 220;  // cursor pushes icons within this range — wide enough that a hover clearly scatters more than one
+  const MAX_SPEED           = 100;  // px/sec — raised so a repel reads as a real, visible launch rather than an instant clamp
+  const MIN_SPEED           = 8;    // px/sec — never fully freezes
+  const SEPARATION_WEIGHT   = 2.6;  // safety net only — the shared orbit ring already keeps icons apart in the common case
+  const ORBIT_WEIGHT        = 3.0;  // dominates when the cursor is away — this is the idle "gently orbiting" behavior
+  const ORBIT_TANGENT_SPEED = 30;   // px/sec-ish drive along the orbit — shared by every icon, so spacing never drifts
+  const ORBIT_RADIAL_STIFFNESS = 2.6; // stiff spring holding the exact ring radius — this is what makes it read as one clean circle, and what pulls icons back after a repel
+  const CURSOR_WEIGHT       = 2.2;  // strong, obvious scatter — see also the *70 scale where it's applied
+  const WANDER_WEIGHT       = 0.06; // just a hair of imperfection — the ring should read as a "perfect circle", not hand-drawn
+  const BOUNDARY_MARGIN     = 60;   // px from an edge before steering back in (rarely triggers; orbit already stays inbounds)
+  const BOUNDARY_WEIGHT     = 2.2;
+
+  const icons = ICON_SOURCES.map(src => {
+    const img = new Image();
+    img.src = src;
+    return {
+      img,
+      x: 0, y: 0, vx: 0, vy: 0,
+      orbitRadius: 0,           // shared radius, set once real size is known, below — same for every icon
+      wanderAngle: Math.random() * Math.PI * 2,
+    };
+  });
+
+  let width = 0, height = 0;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+  // Resizes the backing bitmap to the hero's actual CSS size (scaled by
+  // devicePixelRatio so icons stay crisp on high-DPI displays), and
+  // re-clamps existing icon positions into the new bounds so a window
+  // resize can't strand one off-canvas.
+  function resize() {
+    const rect = hero.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    icons.forEach(icon => {
+      icon.x = Math.min(Math.max(icon.x, 0), Math.max(width, 1));
+      icon.y = Math.min(Math.max(icon.y, 0), Math.max(height, 1));
+    });
+  }
+
+  resize();
+  // Seed each icon directly onto the shared orbit circle (rather than a
+  // random point it would otherwise spend a second or two spring-
+  // correcting into place), evenly spaced around it by index so they
+  // read as one deliberate ring, not a scatter that happens to circle.
+  {
+    const orbitRadius = Math.min(width, height) * 0.4;
+    icons.forEach((icon, i) => {
+      icon.orbitRadius = orbitRadius;
+
+      const theta = (i / icons.length) * Math.PI * 2;
+      icon.x = width / 2 + icon.orbitRadius * Math.cos(theta);
+      icon.y = height / 2 + icon.orbitRadius * Math.sin(theta);
+
+      // Start already moving tangentially so it eases into orbit
+      // immediately instead of snapping from a standing start.
+      icon.vx = -Math.sin(theta) * ORBIT_TANGENT_SPEED;
+      icon.vy = Math.cos(theta) * ORBIT_TANGENT_SPEED;
+    });
+  }
+
+  // mousemove/mouseleave just record where the cursor is — they never
+  // schedule a frame themselves; the already-running tick() below reads
+  // this every frame. That's a deliberate difference from
+  // setupScrollLogic()'s rafPending-guard idiom, which throttles a
+  // bursty *event*: this loop is a continuous simulation, not an
+  // event handler, so it schedules its own frames independently.
+  const pointer = { x: 0, y: 0, active: false };
+  hero.addEventListener('mousemove', e => {
+    const rect = hero.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+    pointer.active = true;
+  });
+  hero.addEventListener('mouseleave', () => { pointer.active = false; });
+
+  function clampSpeed(icon) {
+    const speed = Math.hypot(icon.vx, icon.vy);
+    if (speed > MAX_SPEED) {
+      const s = MAX_SPEED / speed;
+      icon.vx *= s; icon.vy *= s;
+    } else if (speed < MIN_SPEED) {
+      const s = speed > 0.0001 ? MIN_SPEED / speed : 1;
+      icon.vx = speed > 0.0001 ? icon.vx * s : MIN_SPEED;
+      icon.vy = speed > 0.0001 ? icon.vy * s : 0;
+    }
+  }
+
+  function update(dt) {
+    const cx = width / 2;
+    const cy = height / 2;
+
+    icons.forEach(icon => {
+      // Separation is now just a collision-avoidance safety net — orbit
+      // radii already keep icons apart in the common case, this only
+      // matters on the rare pass where two rings' angles briefly line up.
+      let sepX = 0, sepY = 0;
+      icons.forEach(other => {
+        if (other === icon) return;
+        const dx = icon.x - other.x;
+        const dy = icon.y - other.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < SEPARATION_RADIUS && dist > 0.0001) {
+          // Ramp the push-apart strength up the closer they get (1 at
+          // near-zero distance, 0 at the edge of the radius).
+          const strength = (SEPARATION_RADIUS - dist) / SEPARATION_RADIUS;
+          sepX += (dx / dist) * strength;
+          sepY += (dy / dist) * strength;
+        }
+      });
+
+      // Orbit around the hero center: a tangential drive (rotation) plus
+      // a radial spring back toward the shared orbit radius —
+      // the spring is what pulls it back into orbit after a cursor
+      // repel pushes it off-ring, with no special-cased "resume orbit"
+      // state needed; the two forces just keep summing every frame.
+      const rdx = icon.x - cx;
+      const rdy = icon.y - cy;
+      const r = Math.hypot(rdx, rdy) || 0.0001;
+      const tangentX = -rdy / r;
+      const tangentY = rdx / r;
+      const radialError = icon.orbitRadius - r; // + means pull outward, - means pull inward
+      const orbitX = tangentX * ORBIT_TANGENT_SPEED + (rdx / r) * radialError * ORBIT_RADIAL_STIFFNESS;
+      const orbitY = tangentY * ORBIT_TANGENT_SPEED + (rdy / r) * radialError * ORBIT_RADIAL_STIFFNESS;
+
+      // Cursor repel — pushes icons away from the pointer instead of
+      // toward it, so hovering scatters them off their orbit rather
+      // than pulling everything into a knot around the cursor.
+      let repelX = 0, repelY = 0;
+      if (pointer.active) {
+        const dx = icon.x - pointer.x;
+        const dy = icon.y - pointer.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < CURSOR_RADIUS && dist > 0.0001) {
+          repelX = dx / dist;
+          repelY = dy / dist;
+        }
+      }
+
+      // Idle wander: the target angle only drifts slowly (scaled by dt),
+      // not a fresh random direction every frame — a small nudge added
+      // on top of the orbit so it doesn't look mechanically perfect.
+      icon.wanderAngle += (Math.random() - 0.5) * 0.6 * dt;
+      const wanderX = Math.cos(icon.wanderAngle);
+      const wanderY = Math.sin(icon.wanderAngle);
+
+      // Soft boundary steering — safety net for the rare case a cursor
+      // repel pushes an icon toward an edge; nudges back inward rather
+      // than hard-bouncing or wrapping. The orbit itself already keeps
+      // icons inbounds in the common case.
+      let boundX = 0, boundY = 0;
+      if (icon.x < BOUNDARY_MARGIN) boundX = 1;
+      else if (icon.x > width - BOUNDARY_MARGIN) boundX = -1;
+      if (icon.y < BOUNDARY_MARGIN) boundY = 1;
+      else if (icon.y > height - BOUNDARY_MARGIN) boundY = -1;
+
+      const ax = SEPARATION_WEIGHT * sepX
+               + ORBIT_WEIGHT      * orbitX
+               + CURSOR_WEIGHT     * repelX * 70
+               + WANDER_WEIGHT     * wanderX * 20
+               + BOUNDARY_WEIGHT   * boundX * 30;
+      const ay = SEPARATION_WEIGHT * sepY
+               + ORBIT_WEIGHT      * orbitY
+               + CURSOR_WEIGHT     * repelY * 70
+               + WANDER_WEIGHT     * wanderY * 20
+               + BOUNDARY_WEIGHT   * boundY * 30;
+
+      icon.vx += ax * dt;
+      icon.vy += ay * dt;
+      clampSpeed(icon);
+
+      icon.x += icon.vx * dt;
+      icon.y += icon.vy * dt;
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalAlpha = ICON_OPACITY;
+    icons.forEach(icon => {
+      // Skip drawing until each small local SVG has actually loaded —
+      // avoids a blank/broken glyph flashing on the very first frames.
+      if (!icon.img.complete || !icon.img.naturalWidth) return;
+      ctx.drawImage(icon.img, icon.x - ICON_SIZE / 2, icon.y - ICON_SIZE / 2, ICON_SIZE, ICON_SIZE);
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  let running = false;
+  let rafId = null;
+  let lastTime = null;
+
+  function tick(timestamp) {
+    if (!running) return;
+    if (lastTime === null) lastTime = timestamp;
+    // Clamp dt so a long pause (tab backgrounded, slow frame) can't
+    // fling every icon across the canvas in one jump when it resumes.
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+    lastTime = timestamp;
+
+    update(dt);
+    draw();
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    lastTime = null;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function stop() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  // Resize handling — rAF-throttled the same way setupScrollLogic()
+  // throttles its scroll listener, since resize can also fire rapidly.
+  let resizePending = false;
+  window.addEventListener('resize', () => {
+    if (resizePending) return;
+    resizePending = true;
+    requestAnimationFrame(() => {
+      resizePending = false;
+      resize();
+    });
+  });
+
+  // Pause whenever the hero scrolls out of view — same IntersectionObserver
+  // idiom as setupReveal(), but this observer keeps firing indefinitely
+  // (no unobserve) since the hero can scroll in and out many times in
+  // one session, unlike a reveal-once fade-in.
+  let heroVisible = false;
+  const heroObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible && !document.hidden) start();
+      else stop();
+    });
+  }, { threshold: 0 });
+  heroObserver.observe(hero);
+
+  // ...and whenever the tab itself is hidden, independent of scroll position.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else if (heroVisible) start();
+  });
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   F. SCROLL LOGIC
    ─────────────────────────────────────────────────────────────
    Shows/hides the nav after the hero scrolls out of view.
    ═══════════════════════════════════════════════════════════════ */
@@ -1148,7 +1451,7 @@ function setupScrollLogic() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   F. SCROLL REVEAL
+   G. SCROLL REVEAL
    ─────────────────────────────────────────────────────────────
    IntersectionObserver adds .revealed to .reveal elements when
    they enter the viewport. CSS handles the fade-in animation.
@@ -1171,7 +1474,7 @@ function setupReveal() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   G. INIT
+   H. INIT
    ─────────────────────────────────────────────────────────────
    Runs once the HTML is fully parsed.
    Cards/tabs must be in the DOM before setupReveal() observes them.
@@ -1193,7 +1496,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Scroll reveal for headers and cards
   setupReveal();
 
-  // 6. Footer year — fills in automatically
+  // 6. Hero skill-logo swarm (desktop-only, motion-safe — no-ops otherwise)
+  setupSkillSwarm();
+
+  // 7. Footer year — fills in automatically
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
