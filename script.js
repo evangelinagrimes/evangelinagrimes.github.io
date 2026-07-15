@@ -67,13 +67,14 @@ const PROJECTS = {
      {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
-      desc:      'Research Apprentice in CNU\'s ORCA Department, doing hands-on autonomous drone control research with Crazyflie and Pixhawk systems — leading to a co-authored IEEE publication on multi-drone coordination with ROS 2.',
-      outcome:   'Selected to present at IEEE SoutheastCon 2026 and CAPWIC 2026 — co-authored paper: "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones"',
+      desc:      'As a Research Apprentice with Dr. David Conner at CNU, I do hands-on autonomous drone control research with Crazyflie and Pixhawk systems under the project title "Flexible Drones." Within this research, I co-authored an IEEE publication alongside three other fellow researchers. I focused on the PiHawk implementation and integration of ROS 2 action interfaces for multi-drone coordination, as well as sensor fusion with OptiTrack motion capture data via the onboard Raspberry Pi.',
+      outcome:   'Built a framework with a unified interface for multi-drone coordination, so other researchers could focus on higher-level questions instead of low-level implementation',
       learned:   [
-        'Fusing OptiTrack motion capture data with a Pixhawk flight controller over a direct UART connection',
-        'Designing ROS 2 action interfaces (arm, takeoff, land) for heterogeneous drone fleets',
-        'Configuring Raspberry Pi / Pixhawk pairs for real-time MAVLink telemetry',
-        'Contributing Pixhawk integration, action command implementation, and sensor fusion on a four-person research team',
+        'How to fuse OptiTrack position data with a Pixhawk flight controller over a direct UART connection with an onboard Raspberry Pi',
+        'How to design ROS 2 action interfaces (arm, takeoff, land) for Pixhawk systems, and implementing them in Python',
+        'How to configure a Raspberry Pi for real-time MAVLink telemetry and oboard ROS2 control',
+        'How to create a cloneable OS image and a "pre-boot" service that auto-configures unique parameters for each drone\'s Raspberry Pi at startup',
+        'How to assign unique serial IDs to telemetry modules and map them to fixed ports using UDEV rules',
       ],
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.webp',
@@ -82,7 +83,7 @@ const PROJECTS = {
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
-      tags:      ['ROS 2', 'Python', 'Pixhawk', 'ArduPilot', 'MAVLink', 'Crazyflie', 'OptiTrack', 'GazeboSim'],
+      tags:      ['ROS 2', 'Bash Scripts', 'Linux OS', 'Python', 'Raspberry Pi', 'Pixhawk', 'ArduPilot', 'MAVLink', 'Crazyflie', 'OptiTrack', 'GazeboSim', 'Mission Planner'],
       links:     [
         { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
