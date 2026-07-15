@@ -349,9 +349,9 @@ const PROJECTS = {
 const SKILL_COLOR_GROUPS = [
   { color: 'var(--accent-hero-a)',   tags: ['ROS 2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim', 'Mission Planner', 'Raspberry Pi', 'Bash Scripts', 'Linux OS'] },
   { color: 'var(--accent-hero-b)',   tags: ['YOLO', 'Computer Vision', 'OpenCV', 'Roboflow'] },
-  { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Apps Script', 'CSV Parsing'] },
-  { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Google Forms'] },
-  { color: 'var(--accent-coding)',   tags: ['Python', 'PyCharm', 'Tkinter', 'JSON Parsing', 'GUI Development', 'Google Places API'] },
+  { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Google Forms', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Apps Script', 'CSV Parsing', 'JSON Parsing'] },
+  { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify'] },
+  { color: 'var(--accent-coding)',   tags: ['Python', 'PyCharm', 'Tkinter', 'GUI Development', 'Google Places API'] },
   { color: '#6BCB77',                tags: ['Claude Code', 'Codex'] },
 ];
 
