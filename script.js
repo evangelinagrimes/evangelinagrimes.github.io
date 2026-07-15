@@ -1176,14 +1176,14 @@ function setupSkillSwarm() {
   const ICON_SIZE           = 38;   // CSS px, square
   const ICON_OPACITY        = 0.65;
   const SEPARATION_RADIUS   = 70;   // closer than this, push apart (ramps up near-linearly the closer they get)
-  const CURSOR_RADIUS       = 220;  // cursor pushes icons within this range — wide enough that a hover clearly scatters more than one
-  const MAX_SPEED           = 100;  // px/sec — raised so a repel reads as a real, visible launch rather than an instant clamp
+  const CURSOR_RADIUS       = 260;  // cursor pushes icons within this range — wide enough that a hover clearly scatters more than one
+  const MAX_SPEED           = 170;  // px/sec — raised so a close-range repel reads as a real, snappy launch rather than an instant clamp
   const MIN_SPEED           = 8;    // px/sec — never fully freezes
   const SEPARATION_WEIGHT   = 2.6;  // safety net only — the shared orbit ring already keeps icons apart in the common case
   const ORBIT_WEIGHT        = 3.0;  // dominates when the cursor is away — this is the idle "gently orbiting" behavior
   const ORBIT_TANGENT_SPEED = 30;   // px/sec-ish drive along the orbit — shared by every icon, so spacing never drifts
   const ORBIT_RADIAL_STIFFNESS = 2.6; // stiff spring holding the exact ring radius — this is what makes it read as one clean circle, and what pulls icons back after a repel
-  const CURSOR_WEIGHT       = 2.2;  // strong, obvious scatter — see also the *70 scale where it's applied
+  const CURSOR_WEIGHT       = 3.4;  // strong, obvious scatter — see also the *90 scale and the proximity ramp where it's applied
   const WANDER_WEIGHT       = 0.06; // just a hair of imperfection — the ring should read as a "perfect circle", not hand-drawn
   const BOUNDARY_MARGIN     = 60;   // px from an edge before steering back in (rarely triggers; orbit already stays inbounds)
   const BOUNDARY_WEIGHT     = 2.2;
@@ -1306,15 +1306,20 @@ function setupSkillSwarm() {
 
       // Cursor repel — pushes icons away from the pointer instead of
       // toward it, so hovering scatters them off their orbit rather
-      // than pulling everything into a knot around the cursor.
+      // than pulling everything into a knot around the cursor. Scaled
+      // by proximity (same ramp as separation, above) rather than a flat
+      // push anywhere inside the radius, so the reaction reads as
+      // immediate and alive as the cursor closes in, not a binary
+      // in-range/out-of-range toggle.
       let repelX = 0, repelY = 0;
       if (pointer.active) {
         const dx = icon.x - pointer.x;
         const dy = icon.y - pointer.y;
         const dist = Math.hypot(dx, dy);
         if (dist < CURSOR_RADIUS && dist > 0.0001) {
-          repelX = dx / dist;
-          repelY = dy / dist;
+          const proximity = (CURSOR_RADIUS - dist) / CURSOR_RADIUS;
+          repelX = (dx / dist) * proximity;
+          repelY = (dy / dist) * proximity;
         }
       }
 
@@ -1337,12 +1342,12 @@ function setupSkillSwarm() {
 
       const ax = SEPARATION_WEIGHT * sepX
                + ORBIT_WEIGHT      * orbitX
-               + CURSOR_WEIGHT     * repelX * 70
+               + CURSOR_WEIGHT     * repelX * 90
                + WANDER_WEIGHT     * wanderX * 20
                + BOUNDARY_WEIGHT   * boundX * 30;
       const ay = SEPARATION_WEIGHT * sepY
                + ORBIT_WEIGHT      * orbitY
-               + CURSOR_WEIGHT     * repelY * 70
+               + CURSOR_WEIGHT     * repelY * 90
                + WANDER_WEIGHT     * wanderY * 20
                + BOUNDARY_WEIGHT   * boundY * 30;
 
