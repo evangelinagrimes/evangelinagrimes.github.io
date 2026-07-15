@@ -75,6 +75,7 @@ const PROJECTS = {
         'How to configure a Raspberry Pi for real-time MAVLink telemetry and oboard ROS2 control',
         'How to create a cloneable OS image and a "pre-boot" service that auto-configures unique parameters for each drone\'s Raspberry Pi at startup',
         'How to assign unique serial IDs to telemetry modules and map them to fixed ports using UDEV rules',
+        'How to use Agentic AI (Claude Code/Codex) to assist in the development and learning process',
       ],
       media:     [
         'assets/coding/drone-research-platform/capwic_poster.webp',
@@ -83,7 +84,7 @@ const PROJECTS = {
         'assets/coding/drone-research-platform/First3Sails_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
-      tags:      ['ROS 2', 'Bash Scripts', 'Linux OS', 'Python', 'Raspberry Pi', 'Pixhawk', 'ArduPilot', 'MAVLink', 'Crazyflie', 'OptiTrack', 'GazeboSim', 'Mission Planner'],
+      tags:      ['ROS 2', 'Bash Scripts', 'Linux OS', 'Python', 'Raspberry Pi', 'Pixhawk', 'ArduPilot', 'MAVLink', 'Crazyflie', 'OptiTrack', 'GazeboSim', 'Mission Planner', 'Claude Code', 'Codex'],
       links:     [
         { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
@@ -93,17 +94,16 @@ const PROJECTS = {
       title:     'Valorant Aim Trainer',
       category:  'AI Development',
       desc:      'A video analysis tool that identifies opposing players with a custom-trained YOLO model, measures crosshair-to-head distance frame by frame, then generates a plain-text performance report and improvement plan.',
-      outcome:   'Custom annotated dataset published on Roboflow',
+      outcome:   'Custom YOLO model trained on a custom annotated dataset now published on Roboflow',
       learned:   [
-        'Building and annotating a training dataset from game screenshots using Roboflow',
-        'Training a custom YOLO model for object detection in a specific visual domain',
-        'Computing per-frame distance metrics from detected bounding boxes',
-        'Generating structured, actionable text reports from video analysis output',
+        'How to build and annotate a training dataset from in-game screenshots using Roboflow',
+        'How to train a custom YOLO model for object detection in a specific visual domain, i.e. Valorant gameplay',
+        'How to compute per-frame distance metrics from detected bounding boxes',
       ],
       media:     [
         'assets/coding/valorant-aim-trainer/Crosshair_Trainer_Demo_Web.mp4',
       ],
-      tags:      ['Python', 'YOLO', 'Computer Vision'],
+      tags:      ['Python', 'YOLO', 'Computer Vision', 'PyCharm', 'Roboflow', 'OpenCV'],
       links:     [
         { url: 'https://universe.roboflow.com/aipresentation-5zkno/valorant_enemy_detection-yrmqo/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true', label: 'Roboflow Dataset ↗' },
       ],
@@ -111,16 +111,18 @@ const PROJECTS = {
     {
       title:     'Day Out Generator',
       category:  'Application Development',
-      desc:      'A Python app that uses the Google Places API to generate a curated day out — restaurant, activity, then dessert — based on your location.',
+      desc:      'A Python app that uses the Google Places API to generate a personalized day out, including a restaurant, activity, then dessert based on your location.',
       outcome:   'Custom application GUI that creates a three-step plan for an exciting day out',
       learned:   [
-        'Querying the Google Places API to retrieve and filter location-based results',
-        'Chaining multiple API calls to build a multi-stop day itinerary',
+        'How to query the Google Places API to retrieve and filter location-based results',
+        'How to chain multiple API calls to build a multi-stop day itinerary',
+        'How to parse and filter JSON data to extract relevant parameters',
+        'How to develop a GUI application using Tkinter',
       ],
       media:     [
         'assets/coding/day-out-generator/Egrimes_Demo_Web.mp4',
       ],
-      tags:      ['Python', 'Google Places API'],
+      tags:      ['Python', 'Google Places API', 'Tkinter', 'JSON Parsing', 'GUI Development', 'PyCharm'],
       links:     [
         { url: 'https://github.com/evangelinagrimes/Day_Out_Generator_V1', label: 'GitHub ↗' },
       ],
@@ -128,12 +130,12 @@ const PROJECTS = {
     {
       title:     'Team Scouting Spreadsheet',
       category:  'Spreadsheet / Automation',
-      desc:      'A Google Sheets system that ingests raw CSV data and auto-sorts players by tier and MMR for a Valorant esports franchise. Player notes follow individuals through MMR updates, and a pivot-based team planner suggests optimal rosters from the filtered pool.',
-      outcome:   'Used for player scouting in a Valorant for-fun league franchise',
+      desc:      'I developed this Google Sheets system to take in raw CSV data and auto-sort players by tier and MMR for a Valorant esports league. Player notes follow individuals through MMR updates, and a pivot-based team planner display available players based on a series of conditions.',
+      outcome:   'An interactive spreadsheet used for player scouting in a Valorant for-fun league franchise',
       learned:   [
-        'Building a multi-tab data pipeline in Google Sheets driven by a single master data source',
-        'Preserving relational data (player notes) through automated sort and re-rank operations',
-        'Designing a pivot table and team planner to surface actionable scouting recommendations',
+        'How to build a multi-tab data pipeline in Google Sheets driven by a single master data source',
+        'How to preserve relational data (player notes) through automated sort and re-rank operations',
+        'How to design a pivot table and team planner to surface actionable scouting recommendations',
       ],
       media:     [
         'assets/coding/team-scouting-spreadsheet/VDC_Raw.webp',
@@ -142,20 +144,21 @@ const PROJECTS = {
         'assets/coding/team-scouting-spreadsheet/VDC_Pivot.webp',
         'assets/coding/team-scouting-spreadsheet/VDC_Teams.webp',
       ],
-      tags:      ['Google Sheets', 'Pivot Tables', 'Data Automation'],
+      tags:      ['Google Sheets', 'Pivot Tables', 'Data Automation', 'CSV Parsing'],
       links:     [
-        { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: 'View Template ↗' },
+        { url: 'https://docs.google.com/spreadsheets/d/1DYBbGsZIkx_Ndu5gCp6SY9YLeocEbdeAOWur2p733J8/edit?usp=sharing', label: 'View Spreadsheet ↗' },
       ],
     },
     {
       title:     'Senior RA Duty Schedule',
       category:  'Spreadsheet / Automation',
       desc:      'A Google Sheets scheduling hub and swap board built for my Resident Assistant staff. A master schedule tab feeds two visual views; a companion Apps Script automatically creates calendar events with shift type and length for each RA.',
-      outcome:   'Visual reference of semesterly duty rotation for RA staff throughout the academic year',
+      outcome:   'An interactive visual reference of semesterly duty rotation for RA staff throughout the academic year',
       learned:   [
-        'Writing a Google Apps Script to automate calendar event creation from spreadsheet data',
-        'Linking multiple visual views to a single master data tab for consistent updates',
-        'Designing a swap board so staff could flag and negotiate shift changes without a separate tool',
+        'How to write a Google Apps Script to automate calendar event creation from spreadsheet data',
+        'How to link multiple visual views to a single master data tab for consistent updates',
+        'How to design a swap board so staff could flag and negotiate shift changes without a separate tool',
+        'How to create an intuitive spreadsheet design for non-technical users to easily adapt to',
       ],
       media:     [
         'assets/coding/sra-duty-schedule/SRA_Spreadsheet_Demo.mp4',
@@ -165,7 +168,7 @@ const PROJECTS = {
         'assets/coding/sra-duty-schedule/SRA_Calendar.webp',
         
       ],
-      tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
+      tags:      ['Google Sheets', 'Scheduling', 'Data Automation', 'Apps Script'],
       links:     [
         { url: 'https://docs.google.com/spreadsheets/d/1bC61uJsBbzzgJt6sBgBHMXJ60ZfcMeZZpcyo5NiNbQU/edit?usp=sharing', label: 'View Spreadsheet ↗' },
       ],
@@ -176,15 +179,16 @@ const PROJECTS = {
       desc:      'A static storefront for selling stickers and merchandise for Light Garden, a Valorant for-fun franchise (VDC league). Built with HTML, CSS, and JavaScript; Shopify handles e-commerce checkout.',
       outcome:   'Live site selling Light Garden franchise merchandise',
       learned:   [
-        'Integrating Shopify e-commerce into a hand-built static HTML/CSS/JS site',
-        'Designing a product-focused storefront with a browse-to-checkout flow',
+        'How to integrate Shopify e-commerce into a hand-built static HTML/CSS/JS site',
+        'How to design a product-focused storefront with a browse-to-checkout flow',
+        'How to integrate Google Forms for customer feedback and product requests',
       ],
       media:     [
         'assets/coding/lg-merch-site/Merch_Landing_Page.webp',
         'assets/coding/lg-merch-site/Merch_Product_Page.webp',
         'assets/coding/lg-merch-site/Merch_Order_Page.webp',
       ],
-      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'],
+      tags:      ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code', 'Google Forms'],
       links:     [
         { url: 'https://bobert-merch.github.io/', label: 'Live Site ↗' },
       ],
@@ -193,10 +197,11 @@ const PROJECTS = {
       title:     'Cafe Canna Webpage',
       category:  'Web Development',
       desc:      'A static site design exercise for Cafe Canna, a prospective cannabis café concept. Built with HTML, CSS, and JavaScript using Claude Code for initial scaffolding, then customized to a specific design vision.',
-      outcome:   'Live site prototype at cafe-canna.github.io',
+      outcome:   'Live site prototype for Cafe Canna café concept',
       learned:   [
-        'Using Claude Code to scaffold a site quickly, then customizing the output to match a specific design vision',
-        'Designing distinct pages for different business needs (landing, about, products)',
+        'How to use Claude Code to scaffold a site quickly, then customizing the output to match a specific design vision',
+        'How to design distinct pages for different business needs (landing, about, products)',
+        'How to research and implement best practices for cannabis-related business websites',
       ],
       media:     [
         'assets/coding/cafe-canna/Cafe_Landing_Page.webp',
@@ -214,9 +219,9 @@ const PROJECTS = {
       desc:      'Initiated and led development of the CNU UAS Club website to meet SUAS international competition qualification requirements — the first website any of the four team members had ever built.',
       outcome:   'Helped the CNU UAS Club meet SUAS competition qualification requirements',
       learned:   [
-        'Leading a first-time web dev team through weekly sprint meetings and goal-setting',
-        'Structuring a multi-page static site to satisfy external technical requirements',
-        'Iterating publicly as a team under a real competition deadline',
+        'How to lead a first-time web dev team through weekly sprint meetings and goal-setting',
+        'How to structure a multi-page static site to satisfy external technical requirements',
+        'How to move delegate tasks and learning material while managing my own role as a developer under a real competition deadline',
       ],
       media:     [
         'assets/coding/uas-competition-webpage/UAS_About.webp',
