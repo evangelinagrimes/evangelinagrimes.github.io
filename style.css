@@ -867,7 +867,94 @@ h1, h2, h3 {
 
 
 
-/* ── 10. About & Headshot ───────────────────────────────────── */
+/* ── 10. Skills Filter Bar (inside Technical section) ───────── */
+/* Sits between the region header and the explorer it targets — see
+   index.html — so a click never has to leave the section, only swap
+   the already-visible explorer to the matching project. */
+/* Same card language as .contact-card in the About section (bg-card
+   surface, thin border, teal accent stripe) — kept in sync on purpose
+   so the two feel like one system rather than two different UI ideas. */
+.skills-filter {
+  max-width: var(--max-w);
+  box-sizing: border-box;
+  margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-hero-a);
+  border-radius: 6px;
+}
+
+.skills-filter-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 0.7rem;
+}
+
+.skills-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Colored via the --chip-color custom property set inline by
+   setupSkills() (one per tag, from SKILL_COLOR_GROUPS) — that's the
+   whole "grouped by color instead of a label" mechanism: same-hue
+   chips read as one cluster with no group heading printed. A tag
+   with no assigned color (--chip-color unset) falls back to the
+   neutral border/text below. */
+.skill-chip {
+  all: unset;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 6px 13px;
+  border: 1px solid var(--chip-color, var(--border-strong));
+  border-radius: 20px;
+  color: var(--chip-color, var(--text-sub));
+  transition: background 0.18s, transform 0.12s;
+}
+
+.skill-chip:hover,
+.skill-chip:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.skill-chip:focus-visible {
+  outline: 2px solid var(--chip-color, var(--accent-hero-a));
+  outline-offset: 2px;
+}
+
+.skill-chip:active { transform: scale(0.96); }
+
+/* Tags with no matching project still show, just not clickable proof
+   — dimmed so the interactive ones read as the primary path. In
+   practice every current tag matches at least one project. */
+.skill-chip:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+/* Cross-highlight: set on a sidebar tab in the Technical explorer by
+   setupSkills() in script.js while a matching skill chip has
+   hover/focus. --skill-match-color is set inline to that same chip's
+   color, so the highlight reinforces the chip's own color-coding
+   rather than introducing a separate signal color. */
+.explorer-tab.explorer-tab--skill-match {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--skill-match-color, var(--accent-hero-a));
+  box-shadow: inset 0 0 0 1px var(--skill-match-color, var(--accent-hero-a));
+}
+
+
+/* ── 11. About & Headshot ───────────────────────────────────── */
 .region--about {
   background-color: var(--bg);
   max-width: 100%;
@@ -955,7 +1042,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 11. Scroll-Reveal ─────────────────────────────────────── */
+/* ── 12. Scroll-Reveal ─────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -970,7 +1057,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 12. Responsive ────────────────────────────────────────── */
+/* ── 13. Responsive ────────────────────────────────────────── */
 
 /* Explorer: collapse to stacked layout at medium width */
 @media (max-width: 860px) {
@@ -1069,7 +1156,7 @@ h1, h2, h3 {
 }
 
 
-/* ── 13. Reduced-Motion ────────────────────────────────────── */
+/* ── 14. Reduced-Motion ────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -1095,13 +1182,14 @@ h1, h2, h3 {
   .explorer-link,
   .nav-links a,
   .contact-link,
-  .footer-links a {
+  .footer-links a,
+  .skill-chip {
     transition: none;
   }
 }
 
 
-/* ── 14. Lightbox (Expanded Image Viewer) ──────────────────── */
+/* ── 15. Lightbox (Expanded Image Viewer) ──────────────────── */
 /* Full-screen overlay shared by every gallery on the page.
    Hidden by default; script.js's Lightbox module toggles [hidden]. */
 .lightbox {

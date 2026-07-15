@@ -60,6 +60,7 @@
     <ul class="nav-links">
       <li><a href="#coding">Technical</a></li>
       <li><a href="#creative">Creative</a></li>
+      <li><a href="#skills-filter">Skills</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="assets/documents/EGrimes_Resume.pdf" class="nav-link--resume" target="_blank" rel="noopener noreferrer">Resume</a></li>
     </ul>
@@ -91,6 +92,16 @@
         <span class="eyebrow">01 — Technical  </span>
         <h2>Recent Projects</h2>
         <p class="region-sub">Drone systems, robotics software, network protocols, and the web projects that hold it all together.</p>
+      </div>
+
+      <!-- Skill filter — populated by script.js → setupSkills() from
+           every tag used below, colored by domain (see
+           SKILL_COLOR_GROUPS). Hover/focus a chip to highlight the
+           matching tab(s) in the explorer; click to jump straight to
+           it, all without leaving this section. -->
+      <div class="skills-filter reveal" id="skills-filter">
+        <span class="skills-filter-label">Skills, linked to proof — click a chip to jump:</span>
+        <div class="skills-chips" id="skills-chips"></div>
       </div>
 
       <!-- The explorer is built by script.js → buildExplorer() -->

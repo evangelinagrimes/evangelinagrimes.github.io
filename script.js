@@ -5,9 +5,12 @@
      A. PROJECT DATA       — edit here to add/change your work
      B. GALLERY & LIGHTBOX — multi-image preview + expanded viewer
      C. EXPLORER RENDERER  — split-pane shared by Coding + Creative
-     D. SCROLL LOGIC       — nav reveal + section tracking
-     E. REVEAL             — fade-in-on-scroll for cards and headers
-     F. INIT               — wires everything together on page load
+     D. SKILLS             — tag-derived, color-grouped skill filter bar
+                             (inside the Technical section), cross-
+                             highlights into the explorer above
+     E. SCROLL LOGIC       — nav reveal + section tracking
+     F. REVEAL             — fade-in-on-scroll for cards and headers
+     G. INIT               — wires everything together on page load
    ───────────────────────────────────────────────────────────── */
 
 
@@ -62,8 +65,8 @@ const PROJECTS = {
      {
       title:     'Flexible Drones Research',
       category:  'Research / Hardware',
-      desc:      'Hands-on research on autonomous drone control with Crazyflie and Pixhawk systems, leading to a co-authored IEEE publication on multi-drone coordination with ROS 2.',
-      outcome:   'Co-authored IEEE paper: "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones"',
+      desc:      'Research Apprentice in CNU\'s ORCA Department, doing hands-on autonomous drone control research with Crazyflie and Pixhawk systems — leading to a co-authored IEEE publication on multi-drone coordination with ROS 2.',
+      outcome:   'Selected to present at IEEE SoutheastCon 2026 and CAPWIC 2026 — co-authored paper: "Flexible Drones: ROS 2 Action-Based Coordination of Multiple Heterogeneous Drones"',
       learned:   [
         'Fusing OptiTrack motion capture data with a Pixhawk flight controller over a direct UART connection',
         'Designing ROS 2 action interfaces (arm, takeoff, land) for heterogeneous drone fleets',
@@ -78,7 +81,7 @@ const PROJECTS = {
         'assets/coding/drone-research-platform/Ocs_3Sails_Takeoff_Web.mp4',
         'assets/coding/drone-research-platform/DSC_5330.webp',
       ],
-      tags:      ['ROS2', 'Python', 'Pixhawk', 'Crazyflie', 'OptiTrack'],
+      tags:      ['ROS2', 'Python', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'],
       links:     [
         { url: 'https://ieeexplore.ieee.org/document/11476332', label: 'IEEE Paper ↗' },
         { url: 'https://github.com/CNURobotics/flexible_drones', label: 'GitHub ↗' },
@@ -153,11 +156,12 @@ const PROJECTS = {
         'Designing a swap board so staff could flag and negotiate shift changes without a separate tool',
       ],
       media:     [
+        'assets/coding/sra-duty-schedule/SRA_Spreadsheet_Demo.mp4',
         'assets/coding/sra-duty-schedule/SRA_Main.webp',
         'assets/coding/sra-duty-schedule/SRA_Swap.webp',
         'assets/coding/sra-duty-schedule/SRA_Master.webp',
         'assets/coding/sra-duty-schedule/SRA_Calendar.webp',
-        'assets/coding/sra-duty-schedule/SRA_Spreadsheet_Demo.mp4',
+        
       ],
       tags:      ['Google Sheets', 'Scheduling', 'Data Automation'],
       links:     [
@@ -322,6 +326,25 @@ const PROJECTS = {
   ],
 
 };
+
+
+/* ─────────────────────────────────────────────────────────────
+   SKILL_COLOR_GROUPS — feeds the skill filter bar (Section D).
+   The chips themselves aren't a separate list to maintain: every
+   tag used anywhere in PROJECTS.coding shows up automatically, and
+   which project(s) it links to is looked up from those same `tags`
+   arrays at render time. This config only decides color — which
+   bucket of related tags gets grouped under the same hue so the
+   bar reads as organized by domain without printing group labels.
+   A tag not listed in any group here still renders (just in the
+   neutral/uncategorized color) — nothing to keep in sync.
+   ───────────────────────────────────────────────────────────── */
+const SKILL_COLOR_GROUPS = [
+  { color: 'var(--accent-hero-a)',   tags: ['ROS2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'] },
+  { color: 'var(--accent-hero-b)',   tags: ['YOLO', 'Computer Vision'] },
+  { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Google Places API'] },
+  { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'] },
+];
 
 
 /* ═══════════════════════════════════════════════════════════════
@@ -972,7 +995,7 @@ function buildExplorer(projects, sidebarEl, panelEl, galleryStyle, hashPrefix) {
   // Render first project's detail panel immediately
   panelEl.replaceChildren(buildExplorerPanel(projects[0], galleryStyle));
 
-  return { showProject, projects };
+  return { showProject, projects, tabs };
 }
 
 
@@ -1008,11 +1031,98 @@ function renderProjects() {
   restoreHash(window.location.hash);
 
   window.addEventListener('popstate', () => restoreHash(window.location.hash));
+
+  return { coding, creative };
 }
 
 
 /* ═══════════════════════════════════════════════════════════════
-   D. SCROLL LOGIC
+   D. SKILLS
+   ─────────────────────────────────────────────────────────────
+   Renders every tag used across PROJECTS.coding as a chip in
+   #skills-chips — no separate skill list to maintain, tags are the
+   skills. Chips are colored by SKILL_COLOR_GROUPS (Section A) and
+   sorted so same-color chips sit together, grouping by domain
+   without printing a label. Hovering (or focusing) a chip
+   highlights the sidebar tab(s) of every project that uses that
+   tag — proof it isn't just a keyword — and clicking jumps to the
+   first one, switching its panel via the same showProject() the
+   tabs use.
+   ═══════════════════════════════════════════════════════════════ */
+function setupSkills(coding) {
+  const container = document.getElementById('skills-chips');
+  if (!container || !coding) return;
+
+  // Every unique tag across the coding projects, in first-seen order.
+  const tags = [];
+  coding.projects.forEach(p => (p.tags || []).forEach(t => {
+    if (!tags.includes(t)) tags.push(t);
+  }));
+
+  function colorGroupIndex(tag) {
+    const i = SKILL_COLOR_GROUPS.findIndex(g => g.tags.includes(tag));
+    return i === -1 ? SKILL_COLOR_GROUPS.length : i;
+  }
+  const colorOf = tag => (SKILL_COLOR_GROUPS.find(g => g.tags.includes(tag)) || {}).color;
+
+  // Cluster by color group (uncategorized tags trail at the end).
+  tags.sort((a, b) => colorGroupIndex(a) - colorGroupIndex(b));
+
+  function matchesFor(tag) {
+    return coding.projects
+      .map((p, i) => ({ p, i }))
+      .filter(({ p }) => (p.tags || []).includes(tag))
+      .map(({ i }) => i);
+  }
+
+  function highlight(indices, color, on) {
+    indices.forEach(i => {
+      const tab = coding.tabs[i];
+      if (!tab) return;
+      tab.classList.toggle('explorer-tab--skill-match', on);
+      if (on && color) tab.style.setProperty('--skill-match-color', color);
+    });
+  }
+
+  function jumpTo(indices) {
+    if (!indices.length) return;
+    const index = indices[0];
+    coding.showProject(index);
+    // 'nearest' rather than scrolling the whole section into view — the
+    // filter bar and the explorer it targets already share one section,
+    // so this only nudges the page if the tab happens to be scrolled
+    // out of the sidebar's own overflow area.
+    coding.tabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  tags.forEach(tag => {
+    const indices = matchesFor(tag);
+    const color = colorOf(tag);
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'skill-chip';
+    chip.textContent = tag;
+    if (color) chip.style.setProperty('--chip-color', color);
+
+    if (indices.length) {
+      const titles = indices.map(i => coding.projects[i].title).join(', ');
+      chip.setAttribute('aria-label', `${tag} — used in ${titles}. Activate to view.`);
+      chip.addEventListener('mouseenter', () => highlight(indices, color, true));
+      chip.addEventListener('mouseleave', () => highlight(indices, color, false));
+      chip.addEventListener('focus', () => highlight(indices, color, true));
+      chip.addEventListener('blur', () => highlight(indices, color, false));
+      chip.addEventListener('click', () => jumpTo(indices));
+    } else {
+      chip.disabled = true;
+    }
+
+    container.appendChild(chip);
+  });
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   E. SCROLL LOGIC
    ─────────────────────────────────────────────────────────────
    Shows/hides the nav after the hero scrolls out of view.
    ═══════════════════════════════════════════════════════════════ */
@@ -1038,7 +1148,7 @@ function setupScrollLogic() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   E. SCROLL REVEAL
+   F. SCROLL REVEAL
    ─────────────────────────────────────────────────────────────
    IntersectionObserver adds .revealed to .reveal elements when
    they enter the viewport. CSS handles the fade-in animation.
@@ -1061,7 +1171,7 @@ function setupReveal() {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   F. INIT
+   G. INIT
    ─────────────────────────────────────────────────────────────
    Runs once the HTML is fully parsed.
    Cards/tabs must be in the DOM before setupReveal() observes them.
@@ -1072,15 +1182,18 @@ document.addEventListener('DOMContentLoaded', () => {
   Lightbox.setup();
 
   // 2. Build the coding explorer and creative section
-  renderProjects();
+  const { coding, creative } = renderProjects();
 
-  // 3. Scroll-driven nav reveal
+  // 3. Skills filter bar — cross-links into the Technical explorer above
+  setupSkills(coding);
+
+  // 4. Scroll-driven nav reveal
   setupScrollLogic();
 
-  // 4. Scroll reveal for headers and cards
+  // 5. Scroll reveal for headers and cards
   setupReveal();
 
-  // 5. Footer year — fills in automatically
+  // 6. Footer year — fills in automatically
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
