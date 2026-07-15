@@ -103,9 +103,10 @@
            every tag used below, colored by domain (see
            SKILL_COLOR_GROUPS). Hover/focus a chip to highlight the
            matching tab(s) in the explorer; click to jump straight to
-           it, all without leaving this section. -->
-      <div class="skills-filter reveal" id="skills-filter">
-        <span class="skills-filter-label">Skills Bar — click a chip to jump</span>
+           it, all without leaving this section. No visible label — the
+           aria-label carries the same context for screen readers
+           without adding a line of text sighted visitors don't need. -->
+      <div class="skills-filter reveal" id="skills-filter" aria-label="Skill filter — click a skill to jump to a project that uses it">
         <div class="skills-chips" id="skills-chips"></div>
       </div>
 
@@ -152,14 +153,11 @@
           <p>My name is Evangelina (Eva) Grimes. I am a recent graduate of Christopher Newport University, where I received a Bachelor of Science in Computer Science. </p>
           <p>I created this webpage to showcase my work, both technical and creative. It also serves as a chance to experiment with AI-assisted development.</p>
           <p>I'm drawn to working with complex problems and systems. I found this area to be particularly engaging when working with software that meets the physical world through my drone research. If you're working on something in that space, I'd love to connect.</p>
-          <div class="contact-card">
-            <span class="contact-label">Get in Touch</span>
-            <div class="contact-links">
-              <a href="mailto:evangelinagrimes@gmail.com" class="contact-link">evangelinagrimes@gmail.com ↗</a>
-              <a href="https://www.linkedin.com/in/evangelina-g-37509b1b1" class="contact-link" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-              <a href="https://github.com/evangelinagrimes" class="contact-link" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-              <a href="assets/documents/EGrimes_Resume.pdf" class="contact-link" target="_blank" rel="noopener noreferrer">Resume (PDF) ↗</a>
-            </div>
+          <div class="contact-buttons">
+            <a href="mailto:evangelinagrimes@gmail.com" class="contact-button">Email ↗</a>
+            <a href="https://www.linkedin.com/in/evangelina-g-37509b1b1" class="contact-button" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/evangelinagrimes" class="contact-button" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href="assets/documents/EGrimes_Resume.pdf" class="contact-button" target="_blank" rel="noopener noreferrer">Resume ↗</a>
           </div>
         </div>
 

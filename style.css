@@ -885,9 +885,6 @@ h1, h2, h3 {
 /* Sits between the region header and the explorer it targets — see
    index.html — so a click never has to leave the section, only swap
    the already-visible explorer to the matching project. */
-/* Same card language as .contact-card in the About section (bg-card
-   surface, thin border, teal accent stripe) — kept in sync on purpose
-   so the two feel like one system rather than two different UI ideas. */
 .skills-filter {
   max-width: var(--max-w);
   box-sizing: border-box;
@@ -897,17 +894,6 @@ h1, h2, h3 {
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent-hero-a);
   border-radius: 6px;
-}
-
-.skills-filter-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-sub);
-  margin-bottom: 0.7rem;
 }
 
 .skills-chips {
@@ -999,46 +985,31 @@ h1, h2, h3 {
 
 .about-text em { font-style: italic; color: var(--text); }
 
-.contact-card {
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent-hero-a);
-  border-radius: 6px;
-}
-
-.contact-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-sub);
-  margin-bottom: 0.7rem;
-}
-
-.contact-links {
+/* Same pill shape as .nav-link--resume in the nav bar — kept in sync
+   on purpose so "Resume" reads as the same button wherever it appears. */
+.contact-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
 }
 
-.contact-link {
+.contact-button {
   display: inline-block;
+  padding: 7px 16px;
+  border: 1px solid var(--accent-hero-a);
+  border-radius: 20px;
+  color: var(--accent-hero-a);
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--accent-hero-a);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-  align-self: flex-start;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, color 0.2s;
 }
 
-.contact-link:hover { border-bottom-color: var(--accent-hero-a); }
+.contact-button:hover {
+  background: var(--accent-hero-a);
+  color: var(--bg);
+}
 
 .headshot-wrap {
   aspect-ratio: 1 / 1;
@@ -1204,7 +1175,7 @@ h1, h2, h3 {
   .explorer-tab,
   .explorer-link,
   .nav-links a,
-  .contact-link,
+  .contact-button,
   .footer-links a,
   .skill-chip {
     transition: none;
