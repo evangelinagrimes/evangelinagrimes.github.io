@@ -72,7 +72,7 @@ const PROJECTS = {
       learned:   [
         'How to fuse OptiTrack position data with a Pixhawk flight controller over a direct UART connection with an onboard Raspberry Pi',
         'How to design ROS 2 action interfaces (arm, takeoff, land) for Pixhawk systems, and implementing them in Python',
-        'How to configure a Raspberry Pi for real-time MAVLink telemetry and oboard ROS2 control',
+        'How to configure a Raspberry Pi for real-time MAVLink telemetry and onboard ROS2 control',
         'How to create a cloneable OS image and a "pre-boot" service that auto-configures unique parameters for each drone\'s Raspberry Pi at startup',
         'How to assign unique serial IDs to telemetry modules and map them to fixed ports using UDEV rules',
         'How to use Agentic AI (Claude Code/Codex) to assist in the development and learning process',
@@ -347,11 +347,12 @@ const PROJECTS = {
    neutral/uncategorized color) — nothing to keep in sync.
    ───────────────────────────────────────────────────────────── */
 const SKILL_COLOR_GROUPS = [
-  { color: 'var(--accent-hero-a)',   tags: ['ROS 2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim'] },
-  { color: 'var(--accent-hero-b)',   tags: ['YOLO', 'Computer Vision'] },
-  { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Google Places API'] },
-  { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Claude Code'] },
-  { color: 'var(--accent-coding)',   tags: ['Python'] },
+  { color: 'var(--accent-hero-a)',   tags: ['ROS 2', 'MAVLink', 'Pixhawk', 'ArduPilot', 'Crazyflie', 'OptiTrack', 'GazeboSim', 'Mission Planner', 'Raspberry Pi', 'Bash Scripts', 'Linux OS'] },
+  { color: 'var(--accent-hero-b)',   tags: ['YOLO', 'Computer Vision', 'OpenCV', 'Roboflow'] },
+  { color: 'var(--accent-creative)', tags: ['Google Sheets', 'Pivot Tables', 'Data Automation', 'Scheduling', 'Apps Script', 'CSV Parsing'] },
+  { color: '#E8618C',                tags: ['HTML', 'CSS', 'JavaScript', 'Shopify', 'Google Forms'] },
+  { color: 'var(--accent-coding)',   tags: ['Python', 'PyCharm', 'Tkinter', 'JSON Parsing', 'GUI Development', 'Google Places API'] },
+  { color: '#6BCB77',                tags: ['Claude Code', 'Codex'] },
 ];
 
 
