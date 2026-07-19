@@ -273,7 +273,7 @@ const PROJECTS = {
         {
           title:    'Sticker Designs',
           category: 'Sticker Design',
-          desc:     'Player-nickname sticker designs for players in Valorant league.',
+          desc:     'Player-nickname discord sticker designs for players in Valorant league.',
           media:    [
             'assets/creative/valorant-franchise-content/sticker-designs/Poster_1.webp',
             'assets/creative/valorant-franchise-content/sticker-designs/Poster_2.webp',
@@ -303,7 +303,7 @@ const PROJECTS = {
         {
           title:    'Fan Art',
           category: 'Illustration',
-          desc:     'Digital illustrations of characters from games I love — including Wheatley from Portal 2, scenes from Life is Strange, and original character concepts.',
+          desc:     'I ',
           media:    [
             'assets/creative/video-game-content/fan-art/Wheatley.webp',
             'assets/creative/video-game-content/fan-art/LifeIsStrangeArt.webp',
@@ -317,9 +317,9 @@ const PROJECTS = {
       organization: 'Pickleball Business',
       pieces: [
         {
-          title:    'Brand Identity',
-          category: 'Brand Identity',
-          desc:     'Logo and brand identity work for a pickleball business — logo design, color palette, and print-ready brand assets.',
+          title:    'Logo Design',
+          category: 'Logo Design',
+          desc:     'I had the opportunity to work with the owner of Pickle Peak and develop the official logo. The images include the final logo and some of the other designs we trialed.',
           media:    [
             'assets/creative/pickleball-business/brand-identity/Pickle_and_Brew_Logo.webp',
             'assets/creative/pickleball-business/brand-identity/PicklePeakArtboard_2.webp',
