@@ -43,10 +43,21 @@
   <meta name="twitter:description" content="CS grad building drone coordination software (published at IEEE), computer-vision tools, and the web that ties it together." />
   <meta name="twitter:image" content="https://evangelinagrimes.github.io/assets/member-headshot-eva.webp" />
 
-  <!-- Google Fonts: Space Grotesk (headings), Inter (body), IBM Plex Mono (labels/nav) -->
+  <!-- Google Fonts: Space Grotesk (headings), Inter (body), IBM Plex Mono (labels/nav).
+       Loaded non-render-blocking: media="print" makes the browser fetch it at low
+       priority without waiting on it for first paint, then onload flips it to
+       "all" once it's actually ready. noscript covers browsers with JS disabled. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </noscript>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -61,7 +72,7 @@
       <li><a href="#coding">Technical</a></li>
       <li><a href="#creative">Creative</a></li>
       <li><a href="#about">About</a></li>
-      <li class="nav-item--resume"><a href="assets/documents/EGrimes_Resume.pdf" class="nav-link--resume" target="_blank" rel="noopener noreferrer">Resume</a></li>
+      <li class="nav-item--resume"><a href="assets/documents/EGrimes_Resume.pdf" class="nav-link--resume pill-button" target="_blank" rel="noopener noreferrer">Resume</a></li>
     </ul>
   </nav>
 
@@ -156,10 +167,10 @@
           <p>I created this webpage to showcase my work, both technical and creative. It also serves as a chance to experiment with AI-assisted development.</p>
           <p>I'm drawn to working with complex problems and systems. I found this area to be particularly engaging when working with software that meets the physical world through my drone research. If you're working on something in that space, I'd love to connect.</p>
           <div class="contact-buttons">
-            <a href="mailto:evangelinagrimes@gmail.com" class="contact-button">Email ↗</a>
-            <a href="https://www.linkedin.com/in/evangelina-g-37509b1b1" class="contact-button" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-            <a href="https://github.com/evangelinagrimes" class="contact-button" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-            <a href="assets/documents/EGrimes_Resume.pdf" class="contact-button" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+            <a href="mailto:evangelinagrimes@gmail.com" class="contact-button pill-button">Email ↗</a>
+            <a href="https://www.linkedin.com/in/evangelina-g-37509b1b1" class="contact-button pill-button" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/evangelinagrimes" class="contact-button pill-button" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href="assets/documents/EGrimes_Resume.pdf" class="contact-button pill-button" target="_blank" rel="noopener noreferrer">Resume ↗</a>
           </div>
         </div>
 
@@ -185,7 +196,7 @@
        Full-screen expanded image viewer, shared by every gallery
        on the page. Hidden by default; script.js's Lightbox module
        populates and toggles it. -->
-  <div id="lightbox" class="lightbox" hidden aria-hidden="true">
+  <div id="lightbox" class="lightbox" hidden>
     <button class="lightbox-close" aria-label="Close expanded image">×</button>
     <!-- Arrows/counter live outside .lightbox-content, in the gutter
          beside it, so they never sit on top of the image itself. Their

@@ -171,15 +171,40 @@ h1, h2, h3 {
 
 .nav-links a:hover { color: var(--text); }
 
-.nav-links a.nav-link--resume {
-  padding: 5px 14px;
+/* Shared pill-button look — accent-hero-a outline that inverts to a
+   filled pill on hover. Also backs .contact-button in the About section
+   (10. About & Headshot, below); each context layers its own padding/
+   font sizing on top instead of repeating the border/color/hover. */
+.pill-button {
   border: 1px solid var(--accent-hero-a);
   border-radius: 20px;
   color: var(--accent-hero-a);
   transition: background 0.2s, color 0.2s;
 }
 
-.nav-links a.nav-link--resume:hover {
+.pill-button:hover {
+  background: var(--accent-hero-a);
+  color: var(--bg);
+}
+
+.nav-links a.nav-link--resume {
+  padding: 5px 14px;
+}
+
+/* .nav-links a (above) sets color/transition at higher specificity than
+   .pill-button alone (an extra .nav-links class), so it would otherwise
+   win and leave the resume pill's text gray with no background
+   transition — this re-asserts both at matching specificity. */
+.nav-links a.pill-button {
+  color: var(--accent-hero-a);
+  transition: background 0.2s, color 0.2s;
+}
+
+/* .nav-links a:hover (above) is likewise more specific than
+   .pill-button:hover alone, so it would otherwise win and leave
+   the resume pill's hover text the wrong color — this re-asserts the
+   pill's hover at matching specificity. */
+.nav-links a.pill-button:hover {
   background: var(--accent-hero-a);
   color: var(--bg);
 }
@@ -1020,8 +1045,6 @@ h1, h2, h3 {
 
 .about-text em { font-style: italic; color: var(--text); }
 
-/* Same pill shape as .nav-link--resume in the nav bar — kept in sync
-   on purpose so "Resume" reads as the same button wherever it appears. */
 .contact-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -1029,21 +1052,14 @@ h1, h2, h3 {
   margin-top: 1.5rem;
 }
 
+/* .pill-button (4. Nav & Footer, above) provides the border/color/hover;
+   this just adds this context's sizing. */
 .contact-button {
   display: inline-block;
   padding: 7px 16px;
-  border: 1px solid var(--accent-hero-a);
-  border-radius: 20px;
-  color: var(--accent-hero-a);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  transition: background 0.2s, color 0.2s;
-}
-
-.contact-button:hover {
-  background: var(--accent-hero-a);
-  color: var(--bg);
 }
 
 .headshot-wrap {
